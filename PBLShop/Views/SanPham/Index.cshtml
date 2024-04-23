@@ -1,0 +1,8 @@
+﻿@model IEnumerable<PBLShop.ViewModels.SanPhamVM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_DanhSachSanPham";
+}
+
+@await Html.PartialAsync("ProductItem", Model)

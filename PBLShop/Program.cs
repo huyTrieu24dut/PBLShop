@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using PBLShop.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<PblshopContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PBLShop"));
+});
 
 var app = builder.Build();
 

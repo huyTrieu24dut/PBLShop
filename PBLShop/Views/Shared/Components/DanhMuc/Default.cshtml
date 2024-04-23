@@ -1,0 +1,11 @@
+﻿@model IEnumerable<PBLShop.ViewModels.DanhMucVM>
+
+<div class="sidebar-widget category">
+    <h2 class="title">Danh Mục</h2>
+    <ul>
+        @foreach(var item in Model)
+        {
+            <li><a asp-controller="SanPham" asp-action="Index" asp-route-dm="@item.MaDM">@item.TenDM</a><span>@(item.SoLuong)</span></li>
+        }
+    </ul>
+</div>
