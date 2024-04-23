@@ -1,0 +1,5 @@
+﻿@model IEnumerable<PBLShop.ViewModels.ChiTietGhVM>
+@{
+    ViewData["Title"] = "Index";
+}
+@await Html.PartialAsync("CartItem", Model)
