@@ -57,7 +57,6 @@ namespace PBLShop.Controllers
             });
             return View(result);
         }
-
         //chi tiet san pham
         public IActionResult Detail(string id)
         {

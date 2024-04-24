@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using PBLShop.Models;
 
@@ -8,6 +9,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<PblshopContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("PBLShop"));
+});
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+    options.LoginPath = "/KhachHang/Login";
+    options.AccessDeniedPath = "/AccessDenied";
 });
 
 var app = builder.Build();
@@ -24,7 +31,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

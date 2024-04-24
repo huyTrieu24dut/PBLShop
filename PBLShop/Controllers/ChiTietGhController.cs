@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PBLShop.Models;
 using PBLShop.ViewModels;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -13,7 +14,7 @@ namespace PBLShop.Controllers
         {
             _context = context;
         }
-        
+        [Authorize]
         public IActionResult Index()
         {
             var cartItems = _context.ChiTietGhs.AsQueryable();
@@ -30,6 +31,7 @@ namespace PBLShop.Controllers
             });
             return View(result);
         }
+        [Authorize]
         public IActionResult Add(string masp)
         {
             var existingCartItem = _context.ChiTietGhs.FirstOrDefault(p => p.MaSp == masp);
@@ -67,6 +69,7 @@ namespace PBLShop.Controllers
 
             return View(cartItems);
         }
+        [Authorize]
         public IActionResult Remove(string masp)
         {
             var cartItem = _context.ChiTietGhs.FirstOrDefault(item => item.MaSp == masp);
