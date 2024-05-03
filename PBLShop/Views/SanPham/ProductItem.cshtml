@@ -2,29 +2,9 @@
 
 @foreach (var item in Model)
 {
-    <div class="col-lg-4">
-        <div class="product-item">
-            <div class="product-image">
-                <a asp-action="Detail" asp-controller="SanPham" asp-route-id="@item.MaSp">
-                    <img src="~/img/product-1.png" alt="Product Image">
-                </a>
-                <div class="product-action">
-                    <a asp-action="Add" asp-controller="ChiTietGh" asp-route-masp="@item.MaSp"><i class="fa fa-cart-plus"></i></a>
-                    <a href="#"><i class="fa fa-heart"></i></a>
-                    <a href="#"><i class="fa fa-search"></i></a>
-                </div>
-            </div>
-            <div class="product-content">
-                <div class="title"><a href="#">@item.TenSp</a></div>
-                <div class="ratting">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                </div>
-                <div class="price">@item.DonGia đ</div>
-            </div>
-        </div>
-    </div>
+    <a class="san-pham" asp-action="Detail" asp-controller="SanPham" asp-route-id="@item.MaSp">
+        <img src="~/image/product.jpg" alt=@item.TenSp>
+        <h3>@item.TenSp</h3>
+        <p>Giá: @item.DonGia đ</p>
+    </a>
 }

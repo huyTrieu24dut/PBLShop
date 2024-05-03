@@ -1,0 +1,67 @@
+/* inforcustomer*/
+
+
+#inforcustomers{
+    width: 80%;
+    margin: 0 auto;
+}
+/* Kiểu cho tiêu đề */
+#inforcustomers h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Kiểu cho phần thông tin */
+  #inforcustomers .thong-tin {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+  }
+  
+  /* Kiểu cho nhãn */
+  #inforcustomers .thong-tin label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  /* Kiểu cho giá trị thông tin (ẩn input) */
+  /* #inforcustomers input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"] {
+    display: none;
+  } */
+  
+  #inforcustomers .thong-tin span,
+  .thong-tin p {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Tùy chỉnh giao diện (tùy chọn) */
+  #inforcustomers .thong-tin span,
+  .thong-tin p {
+    background-color: #f8f8f8; /* Nền xám nhạt */
+  }
+  
+  #inforcustomers .thong-tin label {
+    color: #333; /* Màu xám đậm cho nhãn */
+  }
+  
+
+  #inforcustomers button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#inforcustomers #btnQuenMatKhau {
+    background-color: #dc3545;
+}
+

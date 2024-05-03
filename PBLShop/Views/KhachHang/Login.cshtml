@@ -1,42 +1,45 @@
 ﻿@model PBLShop.ViewModels.DangNhapVM
 
 @{
+    Layout = null;
     ViewData["title"] = "Đăng Nhập";
 }
-<div class="login">
-    <div class="container">
-        <div class="section-header">
-            <h3>Đăng nhập</h3>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra at massa sit amet ultricies. Nullam consequat, mauris non interdum cursus
-            </p>
-        </div>
-        <div class="login-form">
-            <form asp-action="Login" asp-route-url="@ViewBag.ReturnUrl">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label asp-for="@Model.MaKh"></label><sup>*</sup>
-                        <input asp-for="@Model.MaKh" class="form-control" type="text">
-                        <span asp-validation-for="MaKh" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label asp-for="@Model.MatKhau"></label><sup>*</sup>
-                        <input asp-for="@Model.MatKhau" class="form-control" type="password">
-                        <span asp-validation-for="MatKhau" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="newaccount">
-                            <label class="custom-control-label" for="newaccount">Keep me signed in</label>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <button class="btn" type="submit">Đăng nhập</button>
-                        <a asp-asp-controller="KhachHang" asp-action="QuenMatKhau"></a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/css/login.css">
+
+</head>
+<body>
+    <main>
+        <h1>Đăng nhập</h1>
+
+        <form asp-action="Login" asp-route-url="@ViewBag.ReturnUrl" id="LoginForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.Email"></label><sup>*</sup>
+                <input asp-for="@Model.Email" class="form-control" type="text">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.MatKhau"></label><sup>*</sup>
+                <input asp-for="@Model.MatKhau" class="form-control" type="password">
+                <span asp-validation-for="MatKhau" class="text-danger"></span>
+            </div>
+            <div class="form-group-login">
+                <button class="btn" type="submit">Đăng nhập</button>
+            </div>
+        </form>
+        <a href="#">Quên mật khẩu?</a>
+
+        <p><a asp-action="Register" asp-controller="KhachHang">Đăng ký tài khoản mới</a></p>
+
+    </main>
+
+    <script src="~/js/login.js"></script>
+</body>
+</html>
+

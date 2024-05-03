@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PBLShop.Models;
 using PBLShop.ViewModels;
+using System.Security.Claims;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PBLShop.Controllers
@@ -19,7 +20,9 @@ namespace PBLShop.Controllers
         {
             var cartItems = _context.ChiTietGhs.AsQueryable();
 
-            var result = cartItems.Select(p => new ChiTietGhVM
+            var result = cartItems
+            .Where(p => p.MaKh == HttpContext.User.FindFirstValue("MaKhachHang"))
+            .Select(p => new ChiTietGhVM
             {
                 MaSp = p.MaSp,
                 MaKh = p.MaKh,
@@ -32,29 +35,39 @@ namespace PBLShop.Controllers
             return View(result);
         }
         [Authorize]
-        public IActionResult Add(string masp)
+        public IActionResult Add(string masp, int? soluong)
         {
-            var existingCartItem = _context.ChiTietGhs.FirstOrDefault(p => p.MaSp == masp);
             if (masp != null)
             {
+                var existingCartItem = _context.ChiTietGhs.FirstOrDefault(p => p.MaSp == masp && p.MaKh == HttpContext.User.FindFirstValue("MaKhachHang"));
                 if (existingCartItem != null)
                 {
-                    existingCartItem.SoLuong += 1;
+                    existingCartItem.SoLuong += soluong;
                 }
-                else
+                else 
                 {
-                    var newCartItem = new ChiTietGh
+                    var sampham = _context.SanPhams.FirstOrDefault(sp =>  sp.MaSp == masp);
+                    if(sampham != null)
                     {
-                        MaKh = "KH1",
-                        MaSp = masp,
-                        SoLuong = 1
-                    };
-                    _context.ChiTietGhs.Add(newCartItem);
+                        var newCartItem = new ChiTietGh
+                        {
+                            MaKh = HttpContext.User.FindFirstValue("MaKhachHang"),
+                            MaSp = masp,
+                            SoLuong = soluong
+                        };
+                        _context.ChiTietGhs.Add(newCartItem);
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Không tìm thấy sản phẩm";
+                        return Redirect("/404");
+                    }
                 }
                 _context.SaveChanges();
             }
 
             var cartItems = _context.ChiTietGhs
+                .Where(p => p.MaKh == HttpContext.User.FindFirstValue("MaKhachHang"))
                 .Select(p => new ChiTietGhVM
                 {
                     MaSp = p.MaSp,
@@ -72,14 +85,20 @@ namespace PBLShop.Controllers
         [Authorize]
         public IActionResult Remove(string masp)
         {
-            var cartItem = _context.ChiTietGhs.FirstOrDefault(item => item.MaSp == masp);
+            var cartItem = _context.ChiTietGhs.FirstOrDefault(item => item.MaSp == masp && item.MaKh == HttpContext.User.FindFirstValue("MaKhachHang"));
 
             if (cartItem != null)
             {
                 _context.ChiTietGhs.Remove(cartItem);
                 _context.SaveChanges();
             }
+            else
+            {
+                TempData["Message"] = "Sản phẩm không có trong giỏ hàng";
+                return Redirect("/404");
+            }
             var cartItems = _context.ChiTietGhs
+                .Where(p => p.MaKh == HttpContext.User.FindFirstValue("MaKhachHang"))
                 .Select(p => new ChiTietGhVM
                 {
                     MaSp = p.MaSp,

@@ -26,21 +26,29 @@ namespace PBLShop.Controllers
         [HttpPost]
         public IActionResult Register(DangKyVM model)
         {
-            if (ModelState.IsValid)
+            var emailExists = _context.KhachHangs.Any(p => p.Email == model.Email);
+            if (!emailExists)
             {
-                KhachHang khachhang = new KhachHang();
-                khachhang.MaKh = model.MaKh;
-                khachhang.MatKhau = model.MatKhau;
-                khachhang.HoTen = model.HoTen;
-                khachhang.GioiTinh = model.GioiTinh;
-                khachhang.NgaySinh = model.NgaySinh;
-                khachhang.DiaChi = model.DiaChi;
-                khachhang.DienThoai = model.DienThoai;
-                khachhang.Email = model.Email;
-
+                var kh = _context.KhachHangs.ToList();
+                KhachHang khachhang = new()
+                {
+                    MaKh = "KH" + (kh.Count + 1).ToString(),
+                    MatKhau = model.MatKhau,
+                    HoTen = model.HoTen,
+                    GioiTinh = model.GioiTinh,
+                    NgaySinh = model.NgaySinh,
+                    DiaChi = model.DiaChi,
+                    DienThoai = model.DienThoai,
+                    Email = model.Email
+                };
                 _context.KhachHangs.Add(khachhang);
                 _context.SaveChanges();
             }
+            else
+            {
+                ModelState.AddModelError("loi", "Email đã tồn tại");
+            }
+            
             return RedirectToAction("Index", "Home");
         }
 
@@ -56,7 +64,7 @@ namespace PBLShop.Controllers
             ViewBag.ReturnUrl = url;
             if (ModelState.IsValid)
             {
-                var khachhang = _context.KhachHangs.FirstOrDefault(kh => kh.MaKh == model.MaKh);
+                var khachhang = _context.KhachHangs.FirstOrDefault(kh => kh.Email == model.Email);
                 if (khachhang == null)
                 {
                     ModelState.AddModelError("loi", "Sai Thông tin đăng nhập");
@@ -95,7 +103,7 @@ namespace PBLShop.Controllers
             }
             return View();
         }
-
+        [Authorize]
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync();
@@ -105,7 +113,8 @@ namespace PBLShop.Controllers
         [Authorize]
         public IActionResult Profile()
         {
-            return View();
+            var khachhang = _context.KhachHangs.FirstOrDefault(p => p.MaKh == HttpContext.User.FindFirstValue("MaKhachHang"));
+            return View(khachhang);
         }
     }
 }

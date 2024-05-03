@@ -1,0 +1,123 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Chia main thành ba cột, mỗi cột có kích thước bằng 1 phần */
+    gap: 20px;
+}
+
+  
+.product-info img {
+    width: 150px;
+    height: 150px;
+    margin: 0;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column; /* Xếp các phần tử trong product-info theo chiều dọc */
+    align-items: flex-start; /* Canh trái các phần tử trong product-info */
+    gap: 10px;
+}
+
+.product-info h2 {
+    margin: 10px 0;
+}
+
+.product-info p {
+    margin: 5px 0;
+}
+
+.product-options {
+    display: flex;
+    flex-direction: column; /* Xếp các phần tử trong product-options theo chiều dọc */
+    align-items: flex-start; /* Canh trái các phần tử trong product-options */
+    gap: 10px;
+}
+
+.product-options label {
+    display: block;
+    margin-bottom: 5px;
+}
+.product-options select,
+.product-options input[type="number"] {
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.product-options .btn-minus,
+.product-options .btn-plus {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.payment {
+    text-align: center;
+}
+
+.payment h2 {
+    margin-bottom: 20px;
+}
+
+.payment form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.payment label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.payment select,
+.payment input[type="text"],
+.payment input[type="number"] {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.payment button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.btn-buy-now {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block;
+    margin-left: auto; /* Căn phải nút */
+}
+.product-description {
+    width: 60%; /* Adjust width as needed */
+    margin: 0 auto; /* Center the section horizontally */
+    padding: 20px;
+    border: 1px solid #ccc;
+    text-align: center; /* Center the text within the section */
+  }
+  
+/* Responsive design */
+
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 1fr; /* Trên màn hình nhỏ, hiển thị cả hình ảnh và thông tin trên cùng một hàng */
+    }
+}

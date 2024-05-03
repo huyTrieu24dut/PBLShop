@@ -1,61 +1,71 @@
-﻿@model PBLShop.ViewModels.ChiTietSanPhamVM
-
-@{
-    ViewData["title"] = "Chi tiet san pham";
-    Layout = null;
-}
-
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout page</title>
-    <link rel="stylesheet" href="~/css/detailproduct.css">
-    <link rel="stylesheet" href="~/css/header.css">
-    <link rel="stylesheet" href="~/css/footer.css">
+    <link rel="stylesheet" href="css\detailproduct.css">
+    <link rel="stylesheet" href="css\header.css">
+    <link rel="stylesheet" href="css\footer.css">
 </head>
 <body>
     <header>
+
         <div class="logo-container">
-            <img src="~/image/logo.jpg" alt="Converse">
+            <img src="image\logo.jpg" alt="Converse">
         </div>
         <div class="header-content">
             <nav>
                 <ul>
-                    <li><a asp-action="Index" asp-controller="SanPham">SẢN PHẨM</a></li>
+                    <li><a href="#">SẢN PHẨM</a></li>
                     <li><a href="#">ÁO NAM</a></li>
                     <li><a href="#">QUẦN NAM</a></li>
+                    <li><a href="#">ZERAFASHION</a></li>
                     <li><a href="#">GIÀY NAM</a></li>
                     <li><a href="#">ĐỒ THỂ THAO</a></li>
-                    <li><a asp-action="Index" asp-controller="ChiTietGh">GIỎ HÀNG</a></li>
-                    <li><a asp-action="Profile" asp-controller="KhachHang">TÀI KHOẢN</a></li>
-                    <li><a asp-action="Login" asp-controller="KhachHang">ĐĂNG NHẬP</a></li>
+                    <li><a href="#">VỀ CHÚNG TÔI</a></li>
                 </ul>
             </nav>
         </div>
     </header>
     <main>
-        <img src="~/image/product.jpg" alt=@Model.TenSp>
+        <img src="image\product.jpg" alt="Áo Polo Nam CALUCI MPS464S">
         <div class="product-info">
             <div>
-                <h2>@Model.TenSp</h2>
-                <p>@Model.DonGia ₫</p>
+                <h2>Áo Polo Nam CALUCI MPS464S</h2>
+                <p>500.000₫</p>
                 <p>Tình trạng: Còn hàng</p>
             </div>
         </div>
 
         <div class="product-options">
-            <form asp-action="Add" asp-controller="ChiTietGh" asp-route-masp=@Model.MaSp>
-                <div>
-                    <label for="quantity">Số lượng:</label>
-                    <input type="text" id="quantity" value="1" min="1" max="100" name="soluong">
-                </div>
-                <div>
-                    <button class="btn-buy-now">Mua ngay</button>
-                </div>
-            </form>
+            <div>
+                <label for="color">Màu sắc:</label>
+                <select id="color">
+                    <option value="xanh-navy">Xanh Navy</option>
+                    <option value="den-ke-soc">Đen kẻ sọc</option>
+                    <option value="do-do">Đỏ đô</option>
+                </select>
+            </div>
+            <div>
+                <label for="size">Kích thước:</label>
+                <select id="size">
+                    <option value="m">M</option>
+                    <option value="l">L</option>
+                    <option value="xl">XL</option>
+                    <option value="xxl">XXL</option>
+                </select>
+            </div>
+            <div>
+                <label for="quantity">Số lượng:</label>
+                <input type="number" id="quantity" value="1" min="1" max="10">
+                <button class="btn-minus">-</button>
+                <span id="current-quantity">1</span>
+                <button class="btn-plus">+</button>
+            </div>
+            <div>
+                <button class="btn-buy-now">Mua ngay</button>
+            </div>
         </div>
 
     </main>

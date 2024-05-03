@@ -1,11 +1,25 @@
 ﻿@model IEnumerable<PBLShop.ViewModels.DanhMucVM>
 
-<div class="sidebar-widget category">
-    <h2 class="title">Danh Mục</h2>
+
+<aside class="bo-loc">
+    <h2>Bộ lọc</h2>
     <ul>
-        @foreach(var item in Model)
-        {
-            <li><a asp-controller="SanPham" asp-action="Index" asp-route-dm="@item.MaDM">@item.TenDM</a><span>@(item.SoLuong)</span></li>
-        }
+        <a href="#">Loại sản phẩm:</a>
+        <ul class="loai-san-pham">
+            @foreach (var item in Model)
+            {
+                <li><a asp-controller="SanPham" asp-action="Index" asp-route-dm="@item.MaDM">@item.TenDM</a></li>
+            }
+        </ul>
+        <div class="kich-thuoc">
+            <label for="kich-thuoc">Kích thước:</label>
+            <select id="kich-thuoc">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+        </div>
     </ul>
-</div>
+</aside>

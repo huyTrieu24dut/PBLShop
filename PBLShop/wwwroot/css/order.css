@@ -1,0 +1,118 @@
+/* ... (CSS chung cho body, header, footer, v.v.) */
+
+/* Main */
+main {
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - 333px); /* Chiều rộng 1/3 màn hình */
+    margin: 0 333px; /* Khoảng cách 2 bên */
+}
+
+/* Wrapper sản phẩm */
+.wrapper-san-pham {
+    flex: 2;
+}
+
+/* Wrapper thanh toán */
+.wrapper-thanh-toan {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 20px;
+}
+
+/* Sản phẩm */
+.san-pham {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.hinh-anh {
+    width: 150px; /* Chiều rộng cố định */
+    height: auto; /* Chiều cao tự động */
+    margin: 0;
+}
+
+.hinh-anh img {
+    width: 100%;
+    height: auto;
+}
+
+.thong-tin {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.thong-tin h2 {
+    margin: 0;
+}
+
+.thong-tin p {
+    margin-bottom: 5px;
+}
+
+.gia {
+    font-weight: bold;
+    color: red;
+}
+
+.chi-tiet {
+    text-decoration: none;
+    color: blue;
+}
+
+/* Tổng tiền */
+.tong-tien {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tong-tien p {
+    margin: 0;
+}
+
+.tong-tien .gia {
+    font-weight: bold;
+    color: red;
+}
+
+/* Nút bấm */
+.nut-bam {
+    display: flex;
+    justify-content: space-between;
+}
+
+.thanh-toan {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.tiep-tuc {
+    background-color: #d9534f;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Media query cho màn hình nhỏ */
+@media (max-width: 768px) {
+    .san-pham {
+        flex-direction: column;
+    }
+
+    .hinh-anh {
+        width: 100%;
+    }
+
+    .wrapper-thanh-toan {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
