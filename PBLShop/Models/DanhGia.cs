@@ -5,13 +5,17 @@ namespace PBLShop.Models;
 
 public partial class DanhGia
 {
-    public string MaDanhGia { get; set; } = null!;
+    public int MaDg { get; set; }
 
-    public string MaSp { get; set; } = null!;
+    public int MaSp { get; set; }
 
-    public decimal SoSao { get; set; }
+    public int MaNguoiDung { get; set; }
 
     public string? NoiDung { get; set; }
+
+    public decimal? SoSao { get; set; }
+
+    public virtual NguoiDung MaNguoiDungNavigation { get; set; } = null!;
 
     public virtual SanPham MaSpNavigation { get; set; } = null!;
 }

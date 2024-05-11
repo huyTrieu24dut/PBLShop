@@ -8,8 +8,7 @@ public partial class KhachHang
     public string MaKh { get; set; } = null!;
 
     public string MatKhau { get; set; } = null!;
-
-    public string HoTen { get; set; } = null!;
+        public string HoTen { get; set; } = null!;
 
     public bool GioiTinh { get; set; }
 

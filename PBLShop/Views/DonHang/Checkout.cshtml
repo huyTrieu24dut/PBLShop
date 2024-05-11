@@ -1,0 +1,37 @@
+﻿@model PBLShop.ViewModels.CheckoutVM
+@{
+    ViewData["Title"] = "Create";
+}
+<div id="buy-content__wrapper">
+    <section class="buy-content__payment">
+        <h2>Thông tin giao hàng</h2>
+        <form asp-action="Checkout" asp-controller="DonHang">
+            <div>
+                <label for="inputNameCus">Họ và Tên:</label>
+                <input asp-for="@Model.TenNguoiNhan" type="text" id="inputNameCus"placeholder="Tên khách hàng..." required>
+            </div>
+            <div>
+                <label for="inputTelCus">Số điện thoại:</label>
+                <input asp-for="@Model.DienThoai" type="tel" id="inputTelCus" placeholder="Số điện thoại..." required>
+            </div>
+            <div>
+                <label for="inputAddressDetailCus">Địa chỉ cụ thể:</label>
+                <input asp-for="@Model.DiaChi" type="text" id="inputAddressDetailCus" placeholder="Địa chỉ..." required>
+            </div>
+            <div>
+                <label for="PaymentMethod">Phương thức thanh toán</label>
+                <select asp-for="@Model.MaPhuongThuc" name="MaPhuongThuc" id="PaymentMethod">
+                    <option value="1">Thanh toán khi nhận hàng</option>
+                    <option value="2">Thanh toán qua thẻ tín dụng</option>
+                </select>
+            </div>
+            <div>
+                <a href="order.html">Giỏ hàng</a>
+                <button type="submit">Hoàn tất đơn hàng</button>
+            </div>
+        </form>
+    </section>
+    <section class="buy-content__order">
+        @await Component.InvokeAsync("Checkout")
+    </section>
+</div>

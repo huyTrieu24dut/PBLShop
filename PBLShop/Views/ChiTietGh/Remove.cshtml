@@ -1,78 +1,26 @@
 ﻿@model IEnumerable<PBLShop.ViewModels.ChiTietGhVM>
 @{
     ViewData["Title"] = "Remove";
-    Layout = null;
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="~/css/order.css">
-    <link rel="stylesheet" href="~/css/header.css">
-    <link rel="stylesheet" href="~/css/footer.css">
-</head>
-<body>
-    <header>
-
-        <div class="logo-container">
-            <img src="~/image/logo.jpg" alt="Converse">
-        </div>
-        <div class="header-content">
-            <nav>
-                <ul>
-                    <li><a asp-action="Index" asp-controller="SanPham">SẢN PHẨM</a></li>
-                    <li><a href="#">ÁO NAM</a></li>
-                    <li><a href="#">QUẦN NAM</a></li>
-                    <li><a href="#">GIÀY NAM</a></li>
-                    <li><a href="#">ĐỒ THỂ THAO</a></li>
-                    <li><a asp-action="Index" asp-controller="ChiTietGh">GIỎ HÀNG</a></li>
-                    <li><a asp-action="Profile" asp-controller="KhachHang">TÀI KHOẢN</a></li>
-                    <li><a asp-action="Login" asp-controller="KhachHang">ĐĂNG NHẬP</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <main>
-        <div class="wrapper-san-pham">
-            @await Html.PartialAsync("CartItem", Model)
-        </div>
-        <div class="wrapper-thanh-toan">
-            <section class="tong-tien">
-                <p>Tổng tiền:</p>
-                @{
-                    int? total = 0;
-                    foreach (var item in Model)
-                    {
-                        total += item.SoLuong * item.DonGia;
-                    }
-                    <span class="gia">@total ₫</span>
+<div id="order">
+    <div class="san-pham-ben-trai">
+        @await Html.PartialAsync("CartItem", Model)
+    </div>
+    <div class="thanh-toan-ben-phai">
+        <section class="tong-tien">
+            <p>Tổng tiền:</p>
+            @{
+                int? total = 0;
+                foreach (var item in Model)
+                {
+                    total += item.SoLuong * item.DonGia;
                 }
-            </section>
-            <section class="nut-bam">
-                <a asp-action="Create" asp-controller="DonHang" class="thanh-toan">THANH TOÁN NGAY</a>
-                <a asp-action="Index" asp-controller="SanPham" class="tiep-tuc">TIẾP TỤC MUA HÀNG</a>
-            </section>
-        </div>
-    </main>
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-left">
-                <p>&copy; 2024 ZERAFASHION</p>
-                <ul class="social-links">
-                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                </ul>
-            </div>
-            <div class="footer-right">
-                <p>Địa chỉ: 54 Nguyễn Lương Bằng, phường Hòa Khánh, quận Liên Chiểu, thành phố Đà  Mạng</p>
-                <p>Điện thoại: 03533884230</p>
-                <p>Email: chinhdeit@gmail.com</p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
-
+                <span class="gia">@total ₫</span>
+            }
+        </section>
+        <section class="nut-bam">
+            <a asp-action="Checkout" asp-controller="DonHang" class="thanh-toan">THANH TOÁN NGAY</a>
+            <a asp-action="Index" asp-controller="SanPham" class="tiep-tuc">TIẾP TỤC MUA HÀNG</a>
+        </section>
+    </div>
+</div>

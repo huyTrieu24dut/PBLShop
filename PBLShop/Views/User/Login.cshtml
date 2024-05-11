@@ -9,24 +9,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="~/css/login.css">
+    <title>login</title>
+    <link rel="stylesheet" href="~/css/main.css">
 
 </head>
 <body>
-    <main>
+
+    <div id="login">
         <h1>Đăng nhập</h1>
 
         <form asp-action="Login" asp-route-url="@ViewBag.ReturnUrl" id="LoginForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="@Model.Email"></label><sup>*</sup>
-                <input asp-for="@Model.Email" class="form-control" type="text">
+                <label asp-for="@Model.Email"></label>
+                <input asp-for="@Model.Email" class="form-control" type="text" required>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.MatKhau"></label><sup>*</sup>
-                <input asp-for="@Model.MatKhau" class="form-control" type="password">
+                <label asp-for="@Model.MatKhau"></label>
+                <input asp-for="@Model.MatKhau" class="form-control" type="password" required>
                 <span asp-validation-for="MatKhau" class="text-danger"></span>
             </div>
             <div class="form-group-login">
@@ -37,9 +38,11 @@
 
         <p><a asp-action="Register" asp-controller="KhachHang">Đăng ký tài khoản mới</a></p>
 
-    </main>
-
-    <script src="~/js/login.js"></script>
+    </div>
+    <script src="~/js/script.js"> </script>
 </body>
 </html>
+
+
+
 

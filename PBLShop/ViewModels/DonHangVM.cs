@@ -2,8 +2,14 @@
 {
     public class DonHangVM
     {
-        public string? TenKh {  get; set; }
-        public string? DiaChi { get; set; }
-        public string? DienThoai { get; set; }
+        public DonHangVM()
+        {
+            chiTietDhVMs = new List<ChiTietDhVM>(); // Initialize chiTietDhVMs in the constructor
+        }
+        public int MaDh { get; set; }
+        public string TenKh { get; set; }
+        public string TrangThai { get; set; }
+        public int TongTien { get; set; }
+        public List<ChiTietDhVM> chiTietDhVMs { get; set; }
     }
 }

@@ -2,103 +2,67 @@
 
 @{
     ViewData["title"] = "Chi tiet san pham";
-    Layout = null;
 }
-
-
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout page</title>
-    <link rel="stylesheet" href="~/css/detailproduct.css">
-    <link rel="stylesheet" href="~/css/header.css">
-    <link rel="stylesheet" href="~/css/footer.css">
-</head>
-<body>
-    <header>
-        <div class="logo-container">
-            <img src="~/image/logo.jpg" alt="Converse">
+<div id="detailproduct">
+    <img src="~/image/product.jpg" alt="Áo Polo Nam CALUCI MPS464S">
+    <div class="product-info">
+        <div>
+            <h2>@Model.TenSp</h2>
+            <p>@Model.DonGia ₫</p>
+            <p>Tình trạng: Còn hàng</p>
         </div>
-        <div class="header-content">
-            <nav>
-                <ul>
-                    <li><a asp-action="Index" asp-controller="SanPham">SẢN PHẨM</a></li>
-                    <li><a href="#">ÁO NAM</a></li>
-                    <li><a href="#">QUẦN NAM</a></li>
-                    <li><a href="#">GIÀY NAM</a></li>
-                    <li><a href="#">ĐỒ THỂ THAO</a></li>
-                    <li><a asp-action="Index" asp-controller="ChiTietGh">GIỎ HÀNG</a></li>
-                    <li><a asp-action="Profile" asp-controller="KhachHang">TÀI KHOẢN</a></li>
-                    <li><a asp-action="Login" asp-controller="KhachHang">ĐĂNG NHẬP</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <main>
-        <img src="~/image/product.jpg" alt=@Model.TenSp>
-        <div class="product-info">
-            <div>
-                <h2>@Model.TenSp</h2>
-                <p>@Model.DonGia ₫</p>
-                <p>Tình trạng: Còn hàng</p>
-            </div>
-        </div>
-
-        <div class="product-options">
-            <form asp-action="Add" asp-controller="ChiTietGh" asp-route-masp=@Model.MaSp>
-                <div>
-                    <label for="quantity">Số lượng:</label>
-                    <input type="text" id="quantity" value="1" min="1" max="100" name="soluong">
-                </div>
-                <div>
-                    <button class="btn-buy-now">Mua ngay</button>
-                </div>
-            </form>
-        </div>
-
-    </main>
-    <div class="product-description">
-        <h2>Mô tả sản phẩm</h2>
-        <p>
-            Áo Polo Nam CALUCI MPS464S là sự lựa chọn hoàn hảo cho những chàng trai yêu thích phong cách lịch lãm, sang trọng.
-            Được làm từ chất liệu vải Cotton cao cấp, mềm mại, thoáng mát, thấm hút mồ hôi tốt, mang lại cảm giác thoải mái cho người mặc.
-            Thiết kế form Slimfit ôm vừa vặn theo dáng người, tôn lên vóc dáng khỏe khoắn.
-            Cổ áo polo bẻ gập gọn gàng, mang lại nét thanh lịch, trẻ trung.
-            Logo thương hiệu CALUCI được thêu tinh tế trên ngực áo, tạo điểm nhấn sang trọng.
-        </p>
-        <ul class="product-features">
-            <li>Chất liệu: Cotton cao cấp</li>
-            <li>Form dáng: Slimfit</li>
-            <li>Cổ áo: Polo bẻ gập</li>
-            <li>Logo thương hiệu: Thêu tinh tế</li>
-            <li>Tình trạng: Còn hàng (Số lượng có hạn)</li>
-        </ul>
-        <p>
-            Áo Polo Nam CALUCI MPS464S phù hợp với nhiều hoàn cảnh, có thể mặc đi chơi, đi làm, đi học hay tham gia các sự kiện quan trọng.
-            Áo dễ dàng phối hợp với nhiều trang phục khác nhau như quần âu, quần jean, chinos,... tạo nên set đồ hoàn chỉnh, lịch lãm.
-        </p>
-        <p><b>Lưu ý:</b> Vui lòng giặt tay hoặc giặt khô để giữ form áo được bền đẹp.</p>
     </div>
 
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-left">
-                <p>&copy; 2024 ZERAFASHION</p>
-                <ul class="social-links">
-                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                </ul>
+    <div class="product-options">
+        <form asp-action="Add" asp-controller="ChitietGh">
+            <div>
+                <label for="color">Màu sắc:</label>
+                <select id="color" name="mausac">
+                    @foreach (var item in Model.MauSac)
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
             </div>
-            <div class="footer-right">
-                <p>Địa chỉ: 54 Nguyễn Lương Bằng, phường Hòa Khánh, quận Liên Chiểu, thành phố Đà  Mạng</p>
-                <p>Điện thoại: 03533884230</p>
-                <p>Email: chinhdeit@gmail.com</p>
+            <div>
+                <label for="size">Kích thước:</label>
+                <select id="size" name="size">
+                    @foreach (var item in Model.KichThuoc)
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
             </div>
-        </div>
-    </footer>
-</body>
-</html>
+            <div>
+                <label for="quantity">Số lượng:</label>
+                <input type="number" id="quantity" value="1" min="1" max="10" name="soluong">
+            </div>
+            <div>
+                <button type="submit" class="btn-buy-now">Mua ngay</button>
+            </div>
+        </form>
+        
+    </div>
+</div>
+<div class="product-description">
+    <h2>Mô tả sản phẩm</h2>
+    <p>
+        Áo Polo Nam CALUCI MPS464S là sự lựa chọn hoàn hảo cho những chàng trai yêu thích phong cách lịch lãm, sang trọng.
+        Được làm từ chất liệu vải Cotton cao cấp, mềm mại, thoáng mát, thấm hút mồ hôi tốt, mang lại cảm giác thoải mái cho người mặc.
+        Thiết kế form Slimfit ôm vừa vặn theo dáng người, tôn lên vóc dáng khỏe khoắn.
+        Cổ áo polo bẻ gập gọn gàng, mang lại nét thanh lịch, trẻ trung.
+        Logo thương hiệu CALUCI được thêu tinh tế trên ngực áo, tạo điểm nhấn sang trọng.
+    </p>
+    <ul class="product-features">
+        <li>Chất liệu: Cotton cao cấp</li>
+        <li>Form dáng: Slimfit</li>
+        <li>Cổ áo: Polo bẻ gập</li>
+        <li>Logo thương hiệu: Thêu tinh tế</li>
+        <li>Tình trạng: Còn hàng (Số lượng có hạn)</li>
+    </ul>
+    <p>
+        Áo Polo Nam CALUCI MPS464S phù hợp với nhiều hoàn cảnh, có thể mặc đi chơi, đi làm, đi học hay tham gia các sự kiện quan trọng.
+        Áo dễ dàng phối hợp với nhiều trang phục khác nhau như quần âu, quần jean, chinos,... tạo nên set đồ hoàn chỉnh, lịch lãm.
+    </p>
+    <p><b>Lưu ý:</b> Vui lòng giặt tay hoặc giặt khô để giữ form áo được bền đẹp.</p>
+</div>

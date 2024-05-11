@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PBLShop.Models;
 using PBLShop.ViewModels;
 using System.Security.Claims;
@@ -9,83 +10,101 @@ namespace PBLShop.Controllers
 {
     public class ChiTietGhController : Controller
     {
-        private readonly PblshopContext _context;
+        private readonly WebShopContext _context;
 
-        public ChiTietGhController(PblshopContext context)
+        public ChiTietGhController(WebShopContext context)
         {
             _context = context;
         }
-        [Authorize]
+        [Authorize(Roles = "KhachHang")]
         public IActionResult Index()
         {
-            var cartItems = _context.ChiTietGhs.AsQueryable();
+            var cartItems = _context.ChiTietGhs
+                .Include(p => p.MaMauNavigation)
+                .Include(p => p.MaMauNavigation.MaSpNavigation)
+                .Include(p => p.MaKtNavigation)
+                .Include(p => p.MaMauNavigation.MaSpNavigation.MaDmNavigation)
+                .AsQueryable();
 
             var result = cartItems
-            .Where(p => p.MaKh == HttpContext.User.FindFirstValue("MaKhachHang"))
+            .Where(p => p.MaKh.ToString() == HttpContext.User.FindFirstValue("MaNguoiDung"))
             .Select(p => new ChiTietGhVM
             {
-                MaSp = p.MaSp,
                 MaKh = p.MaKh,
-                TenSp = p.MaSpNavigation.TenSp,
-                DonGia = p.MaSpNavigation.DonGia,
+                MaSp = p.MaMauNavigation.MaSp,
+                TenSp = p.MaMauNavigation.MaSpNavigation.TenSp,
+                MauSp = p.MaMauNavigation.TenMau,
+                size = p.MaKtNavigation.Size,
+                DonGia = p.MaMauNavigation.MaSpNavigation.DonGia,
                 SoLuong = p.SoLuong,
-                HinhAnh = p.MaSpNavigation.HinhAnh,
-                DanhMuc = p.MaSpNavigation.MaDmNavigation.TenDm
+                HinhAnh = p.MaMauNavigation.AnhSp,
+                DanhMuc = p.MaMauNavigation.MaSpNavigation.MaDmNavigation.TenDanhMuc,
             });
             return View(result);
         }
-        [Authorize]
-        public IActionResult Add(string masp, int? soluong)
+
+        [Authorize(Roles = "KhachHang")]
+        public IActionResult Add(string? mausac, string? size, int? soluong)
         {
-            if (masp != null)
+            var chitietsp = _context.QuanLySanPhams
+                .Include(p => p.MaMauNavigation)
+                .Include(p => p.MaKichThuocNavigation)
+                .FirstOrDefault(p => p.MaMauNavigation.TenMau == mausac && p.MaKichThuocNavigation.Size == size);
+            if (chitietsp != null)
             {
-                var existingCartItem = _context.ChiTietGhs.FirstOrDefault(p => p.MaSp == masp && p.MaKh == HttpContext.User.FindFirstValue("MaKhachHang"));
+                var existingCartItem = _context.ChiTietGhs.FirstOrDefault(p => p.MaMau == chitietsp.MaMau && p.MaKt == chitietsp.MaKichThuoc && p.MaKh.ToString() == HttpContext.User.FindFirstValue("MaNguoiDung"));
                 if (existingCartItem != null)
                 {
                     existingCartItem.SoLuong += soluong;
                 }
-                else 
+                else
                 {
-                    var sampham = _context.SanPhams.FirstOrDefault(sp =>  sp.MaSp == masp);
-                    if(sampham != null)
+                    var newCartItem = new ChiTietGh
                     {
-                        var newCartItem = new ChiTietGh
-                        {
-                            MaKh = HttpContext.User.FindFirstValue("MaKhachHang"),
-                            MaSp = masp,
-                            SoLuong = soluong
-                        };
-                        _context.ChiTietGhs.Add(newCartItem);
-                    }
-                    else
-                    {
-                        TempData["Message"] = "Không tìm thấy sản phẩm";
-                        return Redirect("/404");
-                    }
+                        MaKh = Convert.ToInt32(HttpContext.User.FindFirstValue("MaNguoiDung")),
+                        MaMau = chitietsp.MaMau,
+                        MaKt = chitietsp.MaKichThuoc,
+                        SoLuong = soluong
+                    };
+                    _context.ChiTietGhs.Add(newCartItem);
+
                 }
-                _context.SaveChanges();
             }
+            else
+            {
+                TempData["Message"] = "Không tìm thấy sản phẩm";
+                return Redirect("/404");
+            }
+            _context.SaveChanges();
 
             var cartItems = _context.ChiTietGhs
-                .Where(p => p.MaKh == HttpContext.User.FindFirstValue("MaKhachHang"))
+                .Include(p => p.MaMauNavigation)
+                .Include(p => p.MaKhNavigation)
+                .Include(p => p.MaKtNavigation)
+                .Include(p => p.MaMauNavigation.MaSpNavigation)
+                .Include(p => p.MaMauNavigation.MaSpNavigation.MaDmNavigation)
+                .Where(p => p.MaKh.ToString() == HttpContext.User.FindFirstValue("MaNguoiDung"))
                 .Select(p => new ChiTietGhVM
                 {
-                    MaSp = p.MaSp,
                     MaKh = p.MaKh,
-                    TenSp = p.MaSpNavigation.TenSp,
-                    DonGia = p.MaSpNavigation.DonGia,
+                    MaSp = p.MaMauNavigation.MaSp,
+                    TenSp = p.MaMauNavigation.MaSpNavigation.TenSp,
+                    DonGia = p.MaMauNavigation.MaSpNavigation.DonGia,
+                    MauSp = p.MaMauNavigation.TenMau,
+                    size = p.MaKtNavigation.Size,
                     SoLuong = p.SoLuong,
-                    HinhAnh = p.MaSpNavigation.HinhAnh,
-                    DanhMuc = p.MaSpNavigation.MaDmNavigation.TenDm
+                    HinhAnh = p.MaMauNavigation.AnhSp,
+                    DanhMuc = p.MaMauNavigation.MaSpNavigation.MaDmNavigation.TenDanhMuc
                 })
                 .ToList();
 
             return View(cartItems);
         }
-        [Authorize]
-        public IActionResult Remove(string masp)
+
+        [Authorize(Roles = "KhachHang")]
+        public IActionResult Remove(string mausac, string size)
         {
-            var cartItem = _context.ChiTietGhs.FirstOrDefault(item => item.MaSp == masp && item.MaKh == HttpContext.User.FindFirstValue("MaKhachHang"));
+            var cartItem = _context.ChiTietGhs.FirstOrDefault(item => item.MaMauNavigation.TenMau == mausac && item.MaKtNavigation.Size == size && item.MaKh.ToString() == HttpContext.User.FindFirstValue("MaNguoiDung"));
 
             if (cartItem != null)
             {
@@ -98,19 +117,26 @@ namespace PBLShop.Controllers
                 return Redirect("/404");
             }
             var cartItems = _context.ChiTietGhs
-                .Where(p => p.MaKh == HttpContext.User.FindFirstValue("MaKhachHang"))
+                .Include(p => p.MaMauNavigation)
+                .Include(p => p.MaKhNavigation)
+                .Include(p => p.MaKtNavigation)
+                .Include(p => p.MaMauNavigation.MaSpNavigation)
+                .Include(p => p.MaMauNavigation.MaSpNavigation.MaDmNavigation)
+                .Where(p => p.MaKh.ToString() == HttpContext.User.FindFirstValue("MaNguoiDung"))
                 .Select(p => new ChiTietGhVM
                 {
-                    MaSp = p.MaSp,
                     MaKh = p.MaKh,
-                    TenSp = p.MaSpNavigation.TenSp,
-                    DonGia = p.MaSpNavigation.DonGia,
+                    MaSp = p.MaMauNavigation.MaSp,
+                    TenSp = p.MaMauNavigation.MaSpNavigation.TenSp,
+                    DonGia = p.MaMauNavigation.MaSpNavigation.DonGia,
+                    MauSp = p.MaMauNavigation.TenMau,
+                    size = p.MaKtNavigation.Size,
                     SoLuong = p.SoLuong,
-                    HinhAnh = p.MaSpNavigation.HinhAnh,
-                    DanhMuc = p.MaSpNavigation.MaDmNavigation.TenDm
+                    HinhAnh = p.MaMauNavigation.AnhSp,
+                    DanhMuc = p.MaMauNavigation.MaSpNavigation.MaDmNavigation.TenDanhMuc
                 })
                 .ToList();
             return View(cartItems);
         }
     }
-}
+    }

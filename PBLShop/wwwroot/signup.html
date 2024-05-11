@@ -3,51 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css\signup.css">
+    <title>signup</title>
+    <link rel="stylesheet" href="css\main.css">
 </head>
 <body>
-    <main>
-    <h1>Đăng ký</h1>
-
-        <form action="#">
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+    <header class = "header">
+        <section class = "header__logo">
+            <div class="header__logo-ads" id="ads">
+                <span class="ad-text">Miễn phí vận chuyển cho đơn hàng từ 800.000đ</span>
+                <span class="ad-text">Giao hàng nội thành trong ngày</span>
+                <span class="ad-text">Đổi trả trong 7 ngày</span>
             </div>
+            <div class="header__logo-img">
+                <a href="#"><img id="logo" src="./image/ZERAFASHION.png" alt="Logo"></a>
+            </div class>
 
-            <div class="form-group">
-                <label for="password">Mật khẩu:</label>
-                <input type="password" id="password" name="password" required>
+            <div class="header__logo-mininav">
+                <!-- <div class="header__logo-mininavitem"><input type="text" id="searchInput" name="searchInput" placeholder="Nhập từ khóa tìm kiếm..."></div> -->
+                <div class="header__logo-mininavitem">
+                    <button class="header__logo--icon" id= "searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+                <div class="header__logo-mininavitem" id = "dropdown-user">
+                    <span class="header__logo--icon"><i class="fa-solid fa-circle-user"></i></span>
+                    <div class="dropdown-user-content">
+                        <a href="#">Thông tin cá nhân</a>
+                        <a href="#">Lịch sử mua hàng</a>
+                        <a href="#">Đăng xuất</a>
+                    </div>
+                </div>
+                <div class="header__logo-mininavitem">
+                    <a href="#" class="header__logo--icon">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span class="count_item_pr">99</span>
+                    </a>
+                </div>
             </div>
+        </section>
+        <!-- search bar -->
+        <div id="searchBar" class="search-bar">
+            <input type="text" placeholder="Nhập từ khóa">
+            <button class="search-bar__button" id= "searchButton-search-bar"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button class="search-bar__button" id = "exit-searchBar"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <!-- end header__logo-->
+        <nav class="header__navbar">
+            <ul class="header__navbar-list">
+                <h3>
+                  <li class="header__navbar-item"> <a href="#" id="a1">SẢN PHẨM</a></li>
+                  <li class="header__navbar-item"> <a href="#" id="a1">ÁO NAM</a></li>
+                  <li class="header__navbar-item"> <a href="#" id="a1">QUẦN NAM</a></li>
+                  <li class="header__navbar-item"> <a href="#" id="a1">GIÀY NAM</a></li>
+                  <li class="header__navbar-item"> <a href="#" id="a1">ĐỒ THỂ THAO</a></li>
+                  <li class="header__navbar-item"> <a href="#" id="a1">VỀ CHÚNG TÔI</a></li>
+                </h3>
+            </ul>
+        </nav>
 
-            <div class="form-group">
-                <label for="name">Tên khách hàng:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
+        <!-- end header__navbar -->
+    </header>
+    
+    <!-- end header -->
 
-            <div class="form-group">
-                <label for="address">Địa chỉ:</label>
-                <input type="text" id="address" name="address" required>
-            </div>
-
-            <div class="form-group">
-                <label for="phone">Số điện thoại:</label>
-                <input type="text" id="phone" name="phone" required>
-            </div>
-
-            <div class="form-group">
-                <label for="birthday">Ngày sinh:</label>
-                <input type="date" id="birthday" name="birthday" required>
-            </div>
-            <div class = "form-group-signup">
-            <button type="submit">Đăng ký</button>
-            </div>
-        </form>
-
-       
-    </main>
-      
+    <div id="signup"> 
+        <h1>Đăng ký</h1>
+    
+            <form action="#">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="password">Mật khẩu:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="name">Tên khách hàng:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="address">Địa chỉ:</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Giới tính:</label>
+                    <select id="gender" name="gender" required>
+                      <option value="">Chọn giới tính</option>
+                      <option value="nam">Nam</option>
+                      <option value="nu">Nữ</option>
+                      <option value="khac">Khác</option>
+                      </select>
+                  </div>
+                <div class="form-group">
+                    <label for="phone">Số điện thoại:</label>
+                    <input type="text" id="phone" name="phone" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="birthday">Ngày sinh:</label>
+                    <input type="date" id="birthday" name="birthday" required>
+                </div>
+                <div class = "form-group-signup">
+                <button type="submit">Đăng ký</button>
+                </div>
+            </form>     
+        </div>     
     <script src="script.js"></script>
 </body>
 </html>

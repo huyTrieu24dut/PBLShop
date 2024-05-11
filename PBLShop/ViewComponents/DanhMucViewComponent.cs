@@ -6,22 +6,34 @@ namespace PBLShop.ViewComponents
 {
     public class DanhMucViewComponent : ViewComponent
     {
-        private readonly PblshopContext _context;
+        private readonly WebShopContext _context;
 
-        public DanhMucViewComponent(PblshopContext context)
+        public DanhMucViewComponent(WebShopContext context)
         {
             _context = context;
         }
 
         public IViewComponentResult Invoke()
         {
-            var data = _context.DanhMucs.Select(dm => new DanhMucVM
-            {
-               MaDM = dm.MaDm,
-               TenDM = dm.TenDm,
-               SoLuong = dm.SanPhams.Count
-            });
+            var data = _context.DanhMucs
+                .Where(dm => dm.MaDmcha == null)
+                .Select(dm => new DanhMucVM
+                {
+                    MaDM = dm.MaDm,
+                    TenDM = dm.TenDanhMuc,
+                    SoLuong = dm.SanPhams.Count,
+                    DanhMucCon = dm.InverseMaDmchaNavigation.Select(con => new DanhMucVM
+                    {
+                        MaDM = con.MaDm,
+                        TenDM = con.TenDanhMuc,
+                        SoLuong = con.SanPhams.Count,
+                    }).ToList()
+                })
+                .ToList();
+
             return View(data);
         }
+
+
     }
 }

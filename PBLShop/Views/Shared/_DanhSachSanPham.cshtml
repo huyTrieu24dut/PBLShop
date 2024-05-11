@@ -1,13 +1,12 @@
 ﻿@{
     Layout = "_LayoutCustomer";
 }
-<div class="container">
-    @await Component.InvokeAsync("DanhMuc")
-    <section class="danh-muc">
-        <h2>Danh mục sản phẩm</h2>
-        <div class="danh-muc-san-pham">
+<div id="inforproduct">
+    <div class="container">
+        @await Component.InvokeAsync("DanhMuc")
+        <section class="danh-muc">
+            <h2>Danh mục sản phẩm</h2>
             @RenderBody()
-        </div>
-    </section>
-
+        </section>
+    </div>
 </div>

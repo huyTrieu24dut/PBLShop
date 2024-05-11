@@ -5,15 +5,17 @@ namespace PBLShop.Models;
 
 public partial class ChiTietDh
 {
-    public string MaDh { get; set; } = null!;
+    public int MaDh { get; set; }
 
-    public string MaSp { get; set; } = null!;
+    public int MaMau { get; set; }
 
-    public int SoLuong { get; set; }
+    public int MaKt { get; set; }
 
-    public int SoTien { get; set; }
+    public int? SoLuong { get; set; }
 
     public virtual DonHang MaDhNavigation { get; set; } = null!;
 
-    public virtual SanPham MaSpNavigation { get; set; } = null!;
+    public virtual KichThuoc MaKtNavigation { get; set; } = null!;
+
+    public virtual MauSac MaMauNavigation { get; set; } = null!;
 }

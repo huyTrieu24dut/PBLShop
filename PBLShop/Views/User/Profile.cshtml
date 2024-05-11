@@ -1,0 +1,36 @@
+﻿@model PBLShop.ViewModels.NguoiDungVM
+
+@{
+    ViewData["title"] = "Thông tin tài khoản";
+}
+<div id="inforcustomers">
+    <h1>Thông tin khách hàng</h1>
+
+    <form asp-action="Modify" asp-controller="User">
+        <section class="thong-tin">
+            <label for="hoTen">Họ tên:</label>
+            <span id="hoTenSpan">@Model.HoTen</span>
+
+            <label for="email">Email:</label>
+            <span id="emailSpan">@Model.Email</span>
+
+            <label for="soDienThoai">Giới tính:</label>
+            <span id="gioitinhSpan">@Model.GioiTinh</span>
+
+            <label for="soDienThoai">Số điện thoại:</label>
+            <span id="soDienThoaiSpan">@Model.SoDienThoai</span>
+
+            <label for="diaChi">Địa chỉ:</label>
+            <span id="diaChiSpan">@Model.DiaChi</span>
+
+            <label for="ngaySinh">Ngày Sinh:</label>
+            @{
+                DateTime NgaySinh = (DateTime)@Model.NgaySinh;
+                var ns = NgaySinh.ToString("dd/MM/yyyy");
+                <span id="ngaySinhSpan">@ns</span>
+            }
+        </section>
+
+        <button type="submit" id="btnChinhSua">Chỉnh sửa</button>
+    </form>
+</div>

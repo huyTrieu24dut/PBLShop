@@ -6,14 +6,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<PblshopContext>(options =>
+builder.Services.AddDbContext<WebShopContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("PBLShop"));
 });
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
     options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
-    options.LoginPath = "/KhachHang/Login";
+    options.LoginPath = "/User/Login";
     options.AccessDeniedPath = "/AccessDenied";
 });
 

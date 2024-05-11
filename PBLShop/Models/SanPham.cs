@@ -5,9 +5,9 @@ namespace PBLShop.Models;
 
 public partial class SanPham
 {
-    public string MaSp { get; set; } = null!;
+    public int MaSp { get; set; }
 
-    public string MaDm { get; set; } = null!;
+    public int MaDm { get; set; }
 
     public string TenSp { get; set; } = null!;
 
@@ -15,17 +15,9 @@ public partial class SanPham
 
     public string? MoTa { get; set; }
 
-    public int SoLuong { get; set; }
+    public string? AnhSp { get; set; }
 
-    public string? HinhAnh { get; set; }
-
-    public virtual ICollection<ChiTietDh> ChiTietDhs { get; set; } = new List<ChiTietDh>();
-
-    public virtual ICollection<ChiTietGh> ChiTietGhs { get; set; } = new List<ChiTietGh>();
-
-    public virtual ICollection<DanhGia> DanhGias { get; set; } = new List<DanhGia>();
-
-    public virtual ICollection<KichThuoc> KichThuocs { get; set; } = new List<KichThuoc>();
+    public virtual ICollection<DanhGia> DanhGia { get; set; } = new List<DanhGia>();
 
     public virtual DanhMuc MaDmNavigation { get; set; } = null!;
 

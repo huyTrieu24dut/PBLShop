@@ -5,27 +5,33 @@ namespace PBLShop.Models;
 
 public partial class DonHang
 {
-    public string MaDh { get; set; } = null!;
+    public int MaDh { get; set; }
 
-    public string MaKh { get; set; } = null!;
+    public int MaNguoiDung { get; set; }
 
-    public DateTime NgayDat { get; set; }
+    public string? TenNguoiNhan { get; set; }
 
-    public string DiaChi { get; set; } = null!;
+    public string? DiaChi { get; set; }
 
-    public int? TongTien { get; set; }
+    public string? SdtnguoiNhan { get; set; }
 
-    public string TrangThai { get; set; } = null!;
+    public int TongTien { get; set; }
 
-    public string MaPhuongThuc { get; set; } = null!;
+    public int MaPttt { get; set; }
+
+    public DateTime? NgayDatHang { get; set; }
+
+    public int? MaTrangThai { get; set; }
 
     public virtual ICollection<ChiTietDh> ChiTietDhs { get; set; } = new List<ChiTietDh>();
 
-    public virtual ICollection<HoaDon> HoaDons { get; set; } = new List<HoaDon>();
+    public virtual HoaDon? HoaDon { get; set; }
 
-    public virtual KhachHang MaKhNavigation { get; set; } = null!;
+    public virtual NguoiDung MaNguoiDungNavigation { get; set; } = null!;
 
-    public virtual PhuongThucThanhToan MaPhuongThucNavigation { get; set; } = null!;
+    public virtual PhuongThucThanhToan MaPtttNavigation { get; set; } = null!;
+
+    public virtual TrangThai? MaTrangThaiNavigation { get; set; }
 
     public virtual ICollection<QuanLyDh> QuanLyDhs { get; set; } = new List<QuanLyDh>();
 }

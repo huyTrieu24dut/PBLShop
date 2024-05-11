@@ -2,8 +2,10 @@
 {
     public class DanhMucVM
     {
-        public string? MaDM {  get; set; }
+        public int? MaDM {  get; set; }
         public string? TenDM { get; set; }
         public int SoLuong { get; set; }
+        public int? MaDMCha { get; set; }
+        public List<DanhMucVM> DanhMucCon {  get; set; }
     }
 }

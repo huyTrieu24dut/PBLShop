@@ -5,7 +5,9 @@ namespace PBLShop.Models;
 
 public partial class PhuongThucThanhToan
 {
-    public string MaPhuongThuc { get; set; } = null!;
+    public int MaPttt { get; set; }
 
-    public string TenPhuongThuc { get; set; } = null!;
+    public string? TenPt { get; set; }
+
+    public virtual ICollection<DonHang> DonHangs { get; set; } = new List<DonHang>();
 }

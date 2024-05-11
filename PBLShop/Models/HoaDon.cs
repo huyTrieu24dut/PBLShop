@@ -5,13 +5,13 @@ namespace PBLShop.Models;
 
 public partial class HoaDon
 {
-    public string MaHoaDon { get; set; } = null!;
+    public int MaHd { get; set; }
 
-    public string MaDh { get; set; } = null!;
+    public int MaDh { get; set; }
 
     public DateTime? NgayHoanThanh { get; set; }
 
-    public string? File { get; set; }
+    public string? FileHoaDon { get; set; }
 
     public virtual DonHang MaDhNavigation { get; set; } = null!;
 }

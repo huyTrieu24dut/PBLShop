@@ -1,11 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>writel</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lịch sử mua hàng</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.history {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.order-item {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.order-info {
+    margin-bottom: 10px;
+}
+
+.order-info h2 {
+    margin-top: 0;
+}
+
+.order-products h3 {
+    margin-top: 0;
+}
+
+</style>
 </head>
 <body>
-    
+<div class="history">
+    <h1>Lịch sử mua hàng</h1>
+    <ul class="order-list">
+        <li class="order-item">
+            <div class="order-info">
+                <h2>Đơn hàng #12345</h2>
+                <p>Ngày đặt hàng: 10/05/2024</p>
+                <p>Tổng tiền: $50</p>
+            </div>
+            <div class="order-products">
+                <h3>Sản phẩm:</h3>
+                <ul>
+                    <li>Sản phẩm 1</li>
+                    <li>Sản phẩm 2</li>
+                    <li>Sản phẩm 3</li>
+                </ul>
+            </div>
+        </li>
+        <!-- Thêm các đơn hàng khác ở đây -->
+    </ul>
+</div>
 </body>
 </html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Làm mờ web khi nhấn nút tìm kiếm</title>
+    <style>
+        /* style.css */
+
+        body {
+            font-family: sans-serif;
+        }
+
+        header {
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        #search-box {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        #search-box input[type="text"] {
+            width: 50%;
+            padding: 10px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+        }
+
+        #search-box button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tiêu đề trang web</h1>
+        <button id="btn-search">Tìm kiếm</button>
+    </header>
+
+    <main>
+        <div class="content">
+            Nội dung trang web
+        </div>
+
+        <div id="search-box">
+            <input type="text" placeholder="Nhập từ khóa">
+            <button type="submit">Tìm kiếm</button>
+        </div>
+    </main>
+
+    <script>
+        // script.js
+
+        const btnSearch = document.getElementById('btn-search');
+        const searchBox = document.getElementById('search-box');
+
+        btnSearch.addEventListener('click', function() {
+            searchBox.style.display = 'block';
+        });
+
+        searchBox.addEventListener('click', function(event) {
+            if (event.target === searchBox) {
+                searchBox.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

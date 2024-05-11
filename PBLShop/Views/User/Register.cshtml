@@ -11,10 +11,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="~/css/signup.css">
+    <link rel="stylesheet" href="~/css/main.css">
 </head>
 <body>
-    <main>
+    <div id="signup">
         <h1>Đăng ký</h1>
 
         <form asp-action="Register" asp-route-url="@ViewBag.ReturnUrl">
@@ -26,40 +26,44 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.MatKhau"></label><sup>*</sup>
+                <label asp-for="@Model.MatKhau"></label>
                 <input asp-for="@Model.MatKhau" class="form-control" type="password">
                 <span asp-validation-for="MatKhau" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.HoTen"></label><sup>*</sup>
+                <label asp-for="@Model.HoTen"></label>
                 <input asp-for="@Model.HoTen" class="form-control" type="text">
                 <span asp-validation-for="HoTen" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.GioiTinh">Giới tính</label>
-                <div class="form-check">
-                    <input asp-for="@Model.GioiTinh" class="form-check-input" type="checkbox">
-                    <label class="form-check-label" asp-for="@Model.GioiTinh">Nam?</label>
+                <div class="form-group">
+                    <label for="gender">Giới tính:</label>
+                    <select asp-for="@Model.GioiTinh" id="gender" name="gender" required>
+                        <option value="">Chọn giới tính</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                        <option value="Khác">Khác</option>
+                    </select>
                 </div>
                 <span asp-validation-for="GioiTinh" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.DiaChi"></label><sup>*</sup>
+                <label asp-for="@Model.DiaChi"></label>
                 <input asp-for="@Model.DiaChi" class="form-control" type="text">
                 <span asp-validation-for="DiaChi" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.DienThoai"></label><sup>*</sup>
+                <label asp-for="@Model.DienThoai"></label>
                 <input asp-for="@Model.DienThoai" class="form-control" type="text">
                 <span asp-validation-for="DienThoai" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.NgaySinh">Ngày Sinh</label><sup>*</sup>
+                <label asp-for="@Model.NgaySinh">Ngày Sinh</label>
                 <input asp-for="@Model.NgaySinh" class="form-control" type="date">
                 <span asp-validation-for="NgaySinh" class="text-danger"></span>
             </div>
@@ -69,7 +73,7 @@
         </form>
 
 
-    </main>
+    </div>
 
 </body>
 </html>

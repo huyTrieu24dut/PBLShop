@@ -1,0 +1,70 @@
+﻿@model IEnumerable<PBLShop.ViewModels.DonHangVM>
+@{
+}
+<div id="OrderHistory" class="grid">
+    <div class="grid__row">
+        <div class="grid__column-2">
+            <aside class="OrderHistory__usermenu">
+                <p id="OrderHistory__usermenu-name">Xin chào @User.Identity.Name</p>
+                <div class="OrderHistory__usermenu-account">
+                    <div class="OrderHistory__usermenu-option">
+                        <i class="fa-solid fa-user"></i>
+                        <a href="#">Tài khoản của tôi</a>
+                    </div>
+                    <div class="OrderHistory__usermenu-option">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        <a href="">Đơn mua</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <div class="grid__column-10">
+            <section class="OrderHistory-orders">
+                <nav class="OrderHistory-orders-nav">
+                    <a class="OrderHistory-orders-option" asp-action="Index" asp-controller="DonHang">Tất cả</a> |
+                    <a class="OrderHistory-orders-option" asp-action="Index" asp-controller="DonHang" asp-route-matrangthai="1">Chờ xác nhận</a> |
+                    <a class="OrderHistory-orders-option" asp-action="Index" asp-controller="DonHang" asp-route-matrangthai="3">Đang giao</a> |
+                    <a class="OrderHistory-orders-option" asp-action="Index" asp-controller="DonHang" asp-route-matrangthai="4">Thành công</a> |
+                    <a class="OrderHistory-orders-option" asp-action="Index" asp-controller="DonHang" asp-route-matrangthai="5">Đã hủy</a> |
+                </nav>
+
+                <div class="OrderHistory-orders-list">
+                    @foreach (var item in Model){
+                        <div class="OrderHistory-orders-item">
+                            <div class="OrderHistory-orders-itemID">
+                                <p id="OrderHistory-orders-MaDonHang">Mã đơn hàng: @item.MaDh</p>
+                                <p id="OrderHistory-orders-TrangThai">Trạng thái: @item.TrangThai</p>
+                            </div>
+                            <div class="OrderHistory-orders-products">
+                                @foreach (var chitiet in item.chiTietDhVMs)
+                                {
+                                    <div class="OrderHistory-orders-product grid__row">
+                                        <img class="OrderHistory-orders-products grid__column-1dot2" src="~/image//product.jpg" alt="AnhSP">
+                                        <p class="grid__column-8dot4">@chitiet.TenSp-@chitiet.MauSp-@chitiet.size</p>
+                                        <p class="OrderHistory-orders-product-price grid__column-2dot4">@chitiet.DonGia đ</p>
+                                    </div>
+                                }
+                            </div>
+                            <p class="OrderHistory-orders-product-total">Thành tiền: @item.TongTien đ</p>
+                            <div>
+                                @if(item.TrangThai == "Đã hủy")
+                                {
+                                    <p id="OrderHistory-orders-exitBy">Hủy bởi: Người mua</p>
+                                }
+                                <!-- nếu đơn hàng bị hủy -->
+                                <form asp-action="Cancel" asp-controller="DonHang" asp-route-id="@item.MaDh">
+                                    <button type="submit" class="OrderHistory-orders-product-btn">Hủy đơn hàng</button>
+                                </form>
+                                <!-- nếu đơn hàng đang chờ xác nhận -->
+                                <button class="OrderHistory-orders-product-btn">Xem hóa đơn</button>
+                                <!--nếu đơn hàng thành công -->
+                            </div>
+                        </div>
+                    }
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>

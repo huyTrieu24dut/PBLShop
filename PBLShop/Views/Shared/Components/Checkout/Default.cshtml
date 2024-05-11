@@ -1,0 +1,39 @@
+﻿@model IEnumerable<PBLShop.ViewModels.ChiTietGhVM>
+
+<div class="buy-content__order-products">
+    @foreach (var item in Model)
+    {
+
+        <div class="buy-content__order-san-pham">
+            <div class="buy-content__order-hinh-anh">
+                <img src="~/image/product.jpg" alt="Hình ảnh sản phẩm">
+            </div>
+            <div class="buy-content__order-thong-tin">
+                <h2>@item.TenSp</h2>
+                <p class="buy-content__order-gia">Màu: @item.MauSp ₫</p>
+                <p class="buy-content__order-gia">Size @item.size ₫</p>
+                <p class="buy-content__order-gia">@item.DonGia ₫</p>
+                <a href="#" class="buy-content__order-chi-tiet">Chi tiết</a>
+            </div>
+        </div>
+    }
+</div>
+@{
+    int? total = 0;
+    foreach (var item in Model)
+    {
+        total += item.SoLuong * item.DonGia;
+    }
+    <div>
+        <p>Tạm tính</p>
+        <p>@total đ</p>
+    </div>
+    <div>
+        <p>Phí vận chuyển</p>
+        <p>0đ</p>
+    </div>
+    <div>
+        <p>Tổng cộng</p>
+        <p>@total đ</p>
+    </div>
+}

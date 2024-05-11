@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<PBLShop.ViewModels.SanPhamVM>
-
-@foreach (var item in Model)
-{
-    <a class="san-pham" asp-action="Detail" asp-controller="SanPham" asp-route-id="@item.MaSp">
-        <img src="~/image/product.jpg" alt=@item.TenSp>
-        <h3>@item.TenSp</h3>
-        <p>Giá: @item.DonGia đ</p>
-    </a>
-}
+<div class="danh-muc-san-pham">
+    @foreach (var item in Model)
+    {
+        <a class="san-pham" asp-action="Detail" asp-controller="SanPham" asp-route-id="@item.MaSp">
+            <img src="~/image/product.jpg" alt=@item.TenSp>
+            <h3>@item.TenSp</h3>
+            <p>Giá: @item.DonGia đ</p>
+        </a>
+    }
+</div>

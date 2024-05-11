@@ -5,15 +5,17 @@ namespace PBLShop.Models;
 
 public partial class QuanLyDh
 {
-    public string MaNv { get; set; } = null!;
+    public int MaQldh { get; set; }
 
-    public string MaDh { get; set; } = null!;
+    public int MaNv { get; set; }
+
+    public int MaDh { get; set; }
 
     public DateTime ThoiGian { get; set; }
 
-    public string TrangThaiCapNhat { get; set; } = null!;
+    public int MaTrangThai { get; set; }
 
     public virtual DonHang MaDhNavigation { get; set; } = null!;
 
-    public virtual NhanVien MaNvNavigation { get; set; } = null!;
+    public virtual NguoiDung MaNvNavigation { get; set; } = null!;
 }

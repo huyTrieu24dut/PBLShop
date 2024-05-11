@@ -7,21 +7,22 @@ namespace PBLShop.Controllers
 {
     public class SanPhamController : Controller
     {
-        private readonly PblshopContext _context;
+        private readonly WebShopContext _context;
 
-        public SanPhamController(PblshopContext context)
+        public SanPhamController(WebShopContext context)
         {
             _context = context;
         }
 
         //Hien thi theo danh muc
-        public IActionResult Index(string? DM)
+        public IActionResult Index(int? DM)
         {
             var sanphams = _context.SanPhams.AsQueryable();
 
             if(DM != null)
             {
-                sanphams = sanphams.Where(p => p.MaDm == DM);
+                var danhMucCon = _context.DanhMucs.Where(dm => dm.MaDmcha == DM).Select(dm => dm.MaDm).ToList();
+                sanphams = sanphams.Where(p => p.MaDm == DM || danhMucCon.Contains(p.MaDm));
             }
 
             var result = sanphams.Select(p => new SanPhamVM
@@ -29,9 +30,8 @@ namespace PBLShop.Controllers
                 MaSp = p.MaSp,
                 TenSp = p.TenSp,
                 DonGia = p.DonGia,
-                SoLuong = p.SoLuong,
-                HinhAnh = p.HinhAnh,
-                DanhMuc = p.MaDmNavigation.TenDm
+                HinhAnh = p.AnhSp,
+                DanhMuc = p.MaDmNavigation.TenDanhMuc
             });
             return View(result);
         }
@@ -51,34 +51,58 @@ namespace PBLShop.Controllers
                 MaSp = p.MaSp,
                 TenSp = p.TenSp,
                 DonGia = p.DonGia,
-                SoLuong = p.SoLuong,
-                HinhAnh = p.HinhAnh,
-                DanhMuc = p.MaDmNavigation.TenDm
+                HinhAnh = p.AnhSp,
+                DanhMuc = p.MaDmNavigation.TenDanhMuc
             });
             return View(result);
         }
         //chi tiet san pham
-        public IActionResult Detail(string id)
+        public IActionResult Detail(int id)
         {
-            var data = _context.SanPhams
-                .Include(p => p.MaDmNavigation)
-                .SingleOrDefault(p => p.MaSp == id);
-            if(data == null)
+            var data = _context.QuanLySanPhams
+                .Include(p => p.MaMauNavigation)
+                .Include(p => p.MaMauNavigation.MaSpNavigation)
+                .Include(p => p.MaMauNavigation.MaSpNavigation.MaDmNavigation)
+                .Include(p => p.MaKichThuocNavigation)
+                .Where(p => p.MaMauNavigation.MaSp == id).ToList();
+            if(data.Count == 0)
             {
-                TempData["Message"] = "Không tìm thấy sản phẩm";
+                TempData["Message"] = "Không tìm thấy sản phẩm1";
                 return Redirect("/404");
             }
-            var result = new ChiTietSanPhamVM
+            var result = new ChiTietSanPhamVM();
+            result.MaSp = 0;
+            result.MauSac = new List<string>();
+            result.KichThuoc = new List<string>();
+            foreach (var detail in data)
             {
-                MaSp = data.MaSp,
-                TenSp = data.TenSp,
-                DonGia = data.DonGia,
-                SoLuong = data.SoLuong,
-                MoTa = data.MoTa ?? string.Empty,
-                HinhAnh = data.HinhAnh ?? string.Empty,
-                DanhMuc = data.MaDmNavigation.TenDm,
-                SoSao = 5
-            };
+                if (result.MaSp == 0)
+                {
+                    result.MaSp = detail.MaMauNavigation.MaSp;
+                    result.TenSp = detail.MaMauNavigation.MaSpNavigation.TenSp;
+                    result.DonGia = detail.MaMauNavigation.MaSpNavigation.DonGia;
+                    result.MoTa = detail.MaMauNavigation.MaSpNavigation.MoTa ?? string.Empty;
+                    result.DanhMuc = detail.MaMauNavigation.MaSpNavigation.MaDmNavigation.TenDanhMuc;
+                }
+
+                if (detail.MaMauNavigation != null && detail.MaMauNavigation.TenMau != null)
+                {
+                    if (!result.MauSac.Contains(detail.MaMauNavigation.TenMau))
+                    {
+                        result.MauSac.Add(detail.MaMauNavigation.TenMau);
+                    }
+                }
+
+                if (detail.MaKichThuocNavigation != null)
+                {
+                    if (!result.KichThuoc.Contains(detail.MaKichThuocNavigation.Size))
+                    {
+                        result.KichThuoc.Add(detail.MaKichThuocNavigation.Size);
+                    }
+                }
+
+                result.SoLuong += detail.SoLuong;
+            }
             return View(result);
         }
     }

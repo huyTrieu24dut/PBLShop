@@ -1,10 +1,9 @@
 ﻿@model IEnumerable<PBLShop.ViewModels.ChiTietGhVM>
 @{
     ViewData["Title"] = "Add";
-    Layout = null;
 }
-<h1>Giỏ hàng ( @Model.Count() sản phẩm ) </h1>
-<section class="gio-hang">
+<h2>Giỏ hàng ( @Model.Count() sản phẩm)</h2>
+<section class="danh-sach-san-pham">
     @foreach(var item in Model)
     {
         <div class="san-pham">
@@ -13,11 +12,13 @@
             </div>
             <div class="thong-tin">
                 <h2>@item.TenSp</h2>
-                <p class="gia">Số Lượng @item.SoLuong</p>
+                <p class="gia">Số Lượng: @item.SoLuong</p>
+                <p class="gia">Màu: @item.MauSp</p>
+                <p class="gia">Size: @item.size</p>
                 <p class="gia">Đơn Giá: @item.DonGia đ</p>
                 <a asp-action="Detail" asp-controller="SanPham" asp-route-id="@item.MaSp" class="chi-tiet">Chi tiết</a>
             </div>
-            <form asp-controller="ChiTietGh" asp-action="Remove" asp-route-masp="@item.MaSp">
+            <form asp-controller="ChiTietGh" asp-action="Remove" asp-route-mausac="@item.MauSp" asp-route-size="@item.size">
                 <button><i class="fa fa-trash">Xóa</i></button>
             </form>
         </div>

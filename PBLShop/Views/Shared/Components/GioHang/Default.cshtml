@@ -1,10 +1,8 @@
 ﻿@model PBLShop.ViewModels.GioHangVM
 
-<form asp-action="Index" asp-controller="ChiTietGh">
-    <div class="cart">
-
-        <button>Giỏ hàng</button><i class="fa fa-cart-plus"></i>
-
-        <span>(@Model.SoLuong)</span>
-    </div>
-</form>
+<div class="header__logo-mininavitem">
+    <a asp-action="Index" asp-controller="ChitietGh" class="header__logo--icon">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span class="count_item_pr">@Model.SoLuong</span>
+    </a>
+</div>
