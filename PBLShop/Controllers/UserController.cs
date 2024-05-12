@@ -19,6 +19,30 @@ namespace PBLShop.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Index()
+        {
+            var users = _context.NguoiDungs
+                .Include(p => p.MaGioiTinhNavigation)
+                .Where(p => p.MaVaiTro == 3 && p.TrangThai == true).ToList();
+            List<NguoiDungVM> result = new List<NguoiDungVM>();
+            foreach (var kh in users)
+            {
+                result.Add(new NguoiDungVM
+                {
+                    ID = kh.MaNguoiDung,
+                    HoTen = kh.HoTen,
+                    Email = kh.Email,
+                    GioiTinh = kh.MaGioiTinhNavigation.TenGioiTinh,
+                    NgaySinh = kh.NgaySinh,
+                    SoDienThoai = kh.SoDienThoai,
+                    DiaChi = kh.DiaChi
+                });
+            }
+            return View(users);
+        }
+
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -94,17 +118,17 @@ namespace PBLShop.Controllers
 
                             new Claim(ClaimTypes.Role, "KhachHang")
                         };
-                        if (user.MaVaiTroNavigation.TenVaiTro == "Admin")
+                        if (user.MaVaiTro == 2)
                         {
                             claims.Add(new Claim(ClaimTypes.Role, "Admin"));
                         }
-                        else if (user.MaVaiTroNavigation.TenVaiTro == "Khách hàng")
+                        else if (user.MaVaiTro == 3)
                         {
                             claims.Add(new Claim(ClaimTypes.Role, "KhachHang"));
                         }
                         else
                         {
-                            claims.Add(new Claim(ClaimTypes.Role, "Nhanvien"));
+                            claims.Add(new Claim(ClaimTypes.Role, "NhanVien"));
                         }
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -145,10 +169,11 @@ namespace PBLShop.Controllers
             }
             var khachhangvm = new NguoiDungVM
             {
+                ID = khachhang.MaNguoiDung,
                 HoTen = khachhang.HoTen,
                 Email = khachhang.Email,
                 GioiTinh = khachhang.MaGioiTinhNavigation.TenGioiTinh,
-                NgaySinh = (DateTime)khachhang.NgaySinh,
+                NgaySinh = khachhang.NgaySinh,
                 SoDienThoai = khachhang.SoDienThoai,
                 DiaChi = khachhang.DiaChi
             };

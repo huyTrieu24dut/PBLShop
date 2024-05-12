@@ -57,7 +57,10 @@
                                     <button type="submit" class="OrderHistory-orders-product-btn">Hủy đơn hàng</button>
                                 </form>
                                 <!-- nếu đơn hàng đang chờ xác nhận -->
-                                <button class="OrderHistory-orders-product-btn">Xem hóa đơn</button>
+                                @if(item.TrangThai == "Đã hoàn thành")
+                                {
+                                    <button class="OrderHistory-orders-product-btn">Xem hóa đơn</button>
+                                }
                                 <!--nếu đơn hàng thành công -->
                             </div>
                         </div>
