@@ -19,7 +19,7 @@ namespace PBLShop.ViewModels
         public string HoTen { get; set; }
 
         [Display(Name = "Giới tính")]
-        public string GioiTinh { get; set; }
+        public int MaGioiTinh { get; set; }
 
         [Display(Name = "Ngày sinh")]
         [DataType(DataType.Date)]

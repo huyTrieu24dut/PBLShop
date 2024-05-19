@@ -1,0 +1,10 @@
+﻿@model IEnumerable<PBLShop.ViewModels.NguoiDungVM>
+
+@{
+    Layout = "_LayoutAdmin";
+
+}
+<main class="px-3">
+    <h3 class="my-3">Danh sách nhân viên</h3>
+    @await Html.PartialAsync("StaffList", Model)
+</main>

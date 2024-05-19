@@ -8,4 +8,9 @@
         public int? MaDMCha { get; set; }
         public List<DanhMucVM> DanhMucCon {  get; set; }
     }
+    public class DanhMucList
+    {
+        public int MaDm { get; set; }
+        public string? TenDm { get; set; }
+    }
 }

@@ -17,13 +17,22 @@ namespace PBLShop.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public IActionResult Index()
+        public IActionResult Index(bool? trangThai)
         {
-            var khachhangs = _context.NguoiDungs
+            var nhanviens = _context.NguoiDungs
                 .Include(p => p.MaGioiTinhNavigation)
-                .Where(p => p.MaVaiTro == 1 && p.TrangThai == true).ToList();
+                .Include(p => p.MaVaiTroNavigation)
+                .Where(p => p.MaVaiTro != 3).ToList();
             List<NguoiDungVM> result = new List<NguoiDungVM>();
-            foreach (var kh in khachhangs)
+            if (trangThai != null)
+            {
+                nhanviens = nhanviens.Where(p => p.TrangThai == trangThai).ToList();
+            }
+            else
+            {
+                nhanviens = nhanviens.Where(p => p.TrangThai == true).ToList();
+            }
+            foreach (var kh in nhanviens)
             {
                 result.Add(new NguoiDungVM
                 {
@@ -33,10 +42,12 @@ namespace PBLShop.Controllers
                     GioiTinh = kh.MaGioiTinhNavigation.TenGioiTinh,
                     NgaySinh = kh.NgaySinh,
                     SoDienThoai = kh.SoDienThoai,
-                    DiaChi = kh.DiaChi
+                    DiaChi = kh.DiaChi,
+                    trangThai = kh.TrangThai,
+                    vaiTro = kh.MaVaiTroNavigation.TenVaiTro 
                 });
             }
-            return View(khachhangs);
+            return View(result);
         }
 
         [HttpGet]
@@ -53,16 +64,15 @@ namespace PBLShop.Controllers
             if (ModelState.IsValid)
             {
                 var emailExists = _context.NguoiDungs
-                    .Any(p => p.Email == p.Email);
+                    .Any(p => p.Email == model.Email);
                 if (!emailExists)
                 {
-                    var gioiTinh = _context.GioiTinhs.FirstOrDefault(gt => gt.TenGioiTinh == model.GioiTinh);
                     NguoiDung nhanvien = new()
                     {
                         Email = model.Email,
                         MatKhau = model.MatKhau,
                         HoTen = model.HoTen,
-                        MaGioiTinh = gioiTinh != null ? gioiTinh.MaGioiTinh : 1,
+                        MaGioiTinh = model.MaGioiTinh,
                         NgaySinh = model.NgaySinh,
                         DiaChi = model.DiaChi,
                         SoDienThoai = model.DienThoai,
@@ -83,21 +93,36 @@ namespace PBLShop.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public IActionResult Update()
+        public IActionResult Update(int id)
         {
+            var nhanVien = _context.NguoiDungs.FirstOrDefault(p => p.MaNguoiDung == id);
+            if (nhanVien != null)
+            {
+                var nv = new ThongTinNVVM
+                {
+                    ID = nhanVien.MaNguoiDung,
+                    Email = nhanVien.Email,
+                    HoTen = nhanVien.HoTen,
+                    MaGioiTinh = (int)nhanVien.MaGioiTinh,
+                    NgaySinh = nhanVien.NgaySinh,
+                    DiaChi = nhanVien.DiaChi,
+                    DienThoai = nhanVien.SoDienThoai,
+                    MaVaiTro = nhanVien.MaVaiTro,
+                };
+                return View(nv);
+            }
+            else
+            {
+                TempData["Message"] = "Không tìm thấy nhân viên";
+                RedirectToAction("/404");
+            }
             return View();
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult Update(int? id, NhanVienVM model)
+        public IActionResult Update(int id, ThongTinNVVM model)
         {
-            if (id == null)
-            {
-                TempData["Message"] = "Không tìm thấy nhân viên";
-                RedirectToAction("/404");
-            }
-
             if (ModelState.IsValid)
             {
                 var nhanVien = _context.NguoiDungs.FirstOrDefault(p => p.MaNguoiDung == id);
@@ -110,11 +135,9 @@ namespace PBLShop.Controllers
                 var emailExists = _context.NguoiDungs.Any(p => p.Email == model.Email && p.MaNguoiDung != id);
                 if (!emailExists)
                 {
-                    var gioiTinh = _context.GioiTinhs.FirstOrDefault(gt => gt.TenGioiTinh == model.GioiTinh);
                     nhanVien.Email = model.Email;
-                    nhanVien.MatKhau = model.MatKhau;
                     nhanVien.HoTen = model.HoTen;
-                    nhanVien.MaGioiTinh = gioiTinh != null ? gioiTinh.MaGioiTinh : 1;
+                    nhanVien.MaGioiTinh = model.MaGioiTinh;
                     nhanVien.NgaySinh = model.NgaySinh;
                     nhanVien.DiaChi = model.DiaChi;
                     nhanVien.SoDienThoai = model.DienThoai;
@@ -131,36 +154,51 @@ namespace PBLShop.Controllers
             return RedirectToAction("Index");
         }
 
-
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public IActionResult Delete()
-        {
-            return View();
-        }
-
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult Delete(int? id)
+        public IActionResult UnBlock(int? id)
         {
             if (id == null)
             {
                 RedirectToAction("/404");
             }
-            var khachhang = _context.NguoiDungs
-                .FirstOrDefault(p => p.MaNguoiDung == id && p.MaVaiTro == 1 && p.TrangThai == true);
-            if (khachhang == null)
+            var nhanvien = _context.NguoiDungs
+                .FirstOrDefault(p => p.MaNguoiDung == id && p.MaVaiTro != 3 && p.TrangThai == false);
+            if (nhanvien == null)
             {
-                TempData["Message"] = "Không tìm thấy khách hàng";
+                TempData["Message"] = "Không tìm thấy nhân viên";
                 RedirectToAction("/404");
             }
             else
             {
-                khachhang.TrangThai = false;
+                nhanvien.TrangThai = true;
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index", "NhanVien");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Block(int? id)
+        {
+            if (id == null)
+            {
+                RedirectToAction("/404");
+            }
+            var nhanvien = _context.NguoiDungs
+                .FirstOrDefault(p => p.MaNguoiDung == id && p.MaVaiTro != 3 && p.TrangThai == true);
+            if (nhanvien == null)
+            {
+                TempData["Message"] = "Không tìm thấy nhân viên";
+                RedirectToAction("/404");
+            }
+            else
+            {
+                nhanvien.TrangThai = false;
                 //_context.NguoiDungs.Update(khachhang);
                 _context.SaveChanges();
             }
-            return Redirect("Index");
+            return RedirectToAction("Index", "NhanVien");
         }
 
     }

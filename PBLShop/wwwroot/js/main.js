@@ -137,3 +137,52 @@ function turnSearchBar() {
 //     };
 //     xhr.send(JSON.stringify(signupData));
 // });
+
+function generateVariants() {
+    const colorsInput = document.getElementById('addColors').value.split(',').map(color => color.trim());
+    const sizesInput = document.getElementById('addSizes').value.split(',').map(size => size.trim());
+    const variantsTableContainer = document.getElementById('variantsTableContainer');
+    variantsTableContainer.innerHTML = '';
+
+    const table = document.createElement('table');
+    const thead = document.createElement('thead');
+    const tbody = document.createElement('tbody');
+
+    const colorsCount = colorsInput.length;
+    const sizesCount = sizesInput.length;
+
+    // Tạo hàng tiêu đề
+    const headerRow = document.createElement('tr');
+    const headerCells = ['Màu sắc', 'Kích cỡ', 'Số lượng', 'Ảnh'].map(headerText => {
+        const th = document.createElement('th');
+        th.textContent = headerText;
+        return th;
+    });
+    headerCells.forEach(cell => headerRow.appendChild(cell));
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Tạo các dòng dữ liệu
+    for (let i = 0; i < colorsCount; i++) {
+        for (let j = 0; j < sizesCount; j++) {
+            const row = document.createElement('tr');
+            const cells = [
+                document.createElement('td'),
+                document.createElement('td'),
+                document.createElement('td'),
+                document.createElement('td')
+            ];
+
+            cells[0].textContent = colorsInput[i];
+            cells[1].textContent = sizesInput[j];
+            cells[2].innerHTML = '<input type="number" name="quantities[]" min="0" value="0">';
+            cells[3].innerHTML = '<input type="file" name="images[]" accept="image/*">';
+
+            cells.forEach(cell => row.appendChild(cell));
+            tbody.appendChild(row);
+        }
+    }
+
+    table.appendChild(tbody);
+    variantsTableContainer.appendChild(table);
+}

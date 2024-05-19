@@ -1,0 +1,63 @@
+﻿@model IEnumerable<PBLShop.ViewModels.DonHangVM>
+
+@{
+    Layout = "_LayoutAdmin";
+}
+<main class="px-3">
+    <h3 class="my-3">Đơn hàng mới</h3>
+    <table class="table table-striped container-fluid mt-3" id="receiving_order">
+        <thead>
+            <tr>
+                <th scope="col">Mã đơn hàng</th>
+                <th scope="col">Mã khách hàng</th>
+                <th scope="col">Tên khách hàng</th>
+                <th scope="col">Tên người nhận</th>
+                <th scope="col">Tổng tiền</th>
+                <th scope="col">Xem chi tiết</th>
+                <th scope="col">Tiếp nhận</th>
+                <th scope="col">Hủy đơn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.MaDh</th>
+                    <td>@item.MaKh</td>
+                    <td>@item.TenKh</td>
+                    <td>@item.TenNguoiNhan</td>
+                    <td>@item.TongTien đ</td>
+                    <td>
+                        <button type="button" class="dropdown-toggle btn btn-info" data-bs-toggle="dropdown" aria-expanded="false">
+                            Xem chi tiết
+                        </button>
+                        @await Html.PartialAsync("Detail", item)
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-success" data-bs-toggle="dropdown" aria-expanded="false">Tiếp nhận</button>
+                        <div class="dropdown-menu p-2">
+                            <div class="col justify-content-center d-flex flex-column">
+                                <h3>Bạn xác nhận tiếp nhận đơn hàng này chứ?</h3>
+                                <form asp-action="Update" asp-controller="DonHangAdmin" asp-route-id="@item.MaDh" asp-route-maTrangThai="2">
+                                    <button type="submit" class="btn btn-success mt-5 mx-auto">Tiếp nhận</button>
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="dropdown" aria-expanded="false">Hủy</button>
+                        <div class="dropdown-menu p-2">
+                            <div class="col justify-content-center d-flex flex-column">
+                                <h3>Bạn xác nhận Hủy đơn hàng này chứ?</h3>
+                                <form asp-action="Update" asp-controller="DonHangAdmin" asp-route-id="@item.MaDh" asp-route-maTrangThai="5">
+                                    <button type="submit" class="btn btn-success mt-5 mx-auto">Hủy</button>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>   

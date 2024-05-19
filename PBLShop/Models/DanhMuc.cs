@@ -12,6 +12,7 @@ public partial class DanhMuc
     public string? MoTa { get; set; }
 
     public int? MaDmcha { get; set; }
+    public bool TrangThai { get; set; }
 
     public virtual ICollection<DanhMuc> InverseMaDmchaNavigation { get; set; } = new List<DanhMuc>();
 

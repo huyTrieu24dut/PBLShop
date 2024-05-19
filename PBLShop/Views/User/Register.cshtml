@@ -38,16 +38,14 @@
             </div>
 
             <div class="form-group">
-                <div class="form-group">
-                    <label for="gender">Giới tính:</label>
-                    <select asp-for="@Model.GioiTinh" id="gender" name="gender" required>
-                        <option value="">Chọn giới tính</option>
-                        <option value="Nam">Nam</option>
-                        <option value="Nữ">Nữ</option>
-                        <option value="Khác">Khác</option>
-                    </select>
-                </div>
-                <span asp-validation-for="GioiTinh" class="text-danger"></span>
+                <label for="gender">Giới tính:</label>
+                <select asp-for="MaGioiTinh" class="form-control" required>
+                    <option value="">Chọn giới tính</option>
+                    <option value="1">Nam</option>
+                    <option value="2">Nữ</option>
+                    <option value="3">Khác</option>
+                </select>
+                <span asp-validation-for="MaGioiTinh" class="text-danger"></span>
             </div>
 
             <div class="form-group">

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<PBLShop.ViewModels.DonHangVM>
+
+@{
+    Layout = "_LayoutAdmin";
+}
+<main class="px-3">
+    <h3 class="my-3">Lịch sử bán hàng</h3>
+
+    <table class="table table-striped container-fluid mt-3" id="receiving_order">
+        <thead>
+            <tr>
+                <th scope="col">Mã đơn hàng</th>
+                <th scope="col">Mã khách hàng</th>
+                <th scope="col">Tên khách hàng</th>
+                <th scope="col">Tên người nhận</th>
+                <th scope="col">Tổng tiền</th>
+                <th scope="col">Xem chi tiết</th>
+                <th scope="col">Xem hóa đơn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.MaDh</th>
+                    <td>@item.MaKh</td>
+                    <td>@item.TenKh</td>
+                    <td>@item.TenNguoiNhan</td>
+                    <td>@item.TongTien đ</td>
+                    <td>
+                        <button type="button" class="dropdown-toggle btn btn-info" data-bs-toggle="dropdown" aria-expanded="false">
+                            Xem chi tiết
+                        </button>
+                        @await Html.PartialAsync("Detail", item)
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary">Xem hóa đơn</button>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</main>

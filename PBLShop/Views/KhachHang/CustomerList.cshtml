@@ -1,0 +1,75 @@
+﻿@model IEnumerable<PBLShop.ViewModels.NguoiDungVM>
+
+
+<div class="row">
+    <form asp-action="Search" asp-controller="KhachHang" class="row g-3 align-items-center justify-content-center">
+        <div class="col-10">
+            <input type="text" class="form-control" id="btn-update-category" placeholder="Tìm kiếm theo tên" name="name">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Tìm</button>
+        </div>
+    </form>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped container-fluid mt-3">
+        <thead>
+            <tr>
+                <th scope="col">Mã khách hàng</th>
+                <th scope="col">Tên nhân viên</th>
+                <th scope="col">Email</th>
+                <th scope="col">Giới tính</th>
+                <th scope="col">Ngày sinh</th>
+                <th scope="col">Số điện thoại</th>
+                <th scope="col">Địa chỉ</th>
+                <th scope="col">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- foreach -->
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.ID</th>
+                    <td>@item.HoTen</td>
+                    <td>@item.Email</td>
+                    <td>@item.GioiTinh</td>
+                    @{
+                        DateTime ns = (DateTime)item.NgaySinh;
+                        <td>@ns.ToString("dd/MM/yyyy")</td>
+                    }
+                    <td>@item.SoDienThoai</td>
+                    <td>@item.DiaChi</td>
+                    <td>
+                        @if (item.trangThai)
+                        {
+                            <button type="button" class="btn btn-danger mx-1 my-1" data-bs-toggle="dropdown" aria-expanded="false">Chặn</button>
+                            <div class="dropdown-menu p-2 bg-light">
+                                <div class="col justify-content-center d-flex flex-column">
+                                    <h3>Bạn xác nhận chặn khách hàng này chứ?</h3>
+                                    <form asp-action="Block" asp-controller="KhachHang" asp-route-id="@item.ID">
+                                        <button type="submit" class="btn btn-danger mt-5 mx-auto">Chặn</button>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-success mx-1 my-1" data-bs-toggle="dropdown" aria-expanded="false">Mở chặn</button>
+                            <div class="dropdown-menu p-2 bg-light">
+                                <div class="col justify-content-center d-flex flex-column">
+                                    <h3>Bạn xác nhận mở chặn khách hàng này chứ?</h3>
+                                    <form asp-action="UnBlock" asp-controller="KhachHang" asp-route-id="@item.ID">
+                                        <button type="submit" class="btn btn-danger mt-5 mx-auto">Mở chặn</button>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

@@ -1,0 +1,32 @@
+﻿@model PBLShop.ViewModels.DonHangVM
+
+<div class="dropdown-menu p-2 order_detail">
+    <h3> Thông tin chi tiết đơn hàng</h3>
+    <p>Tên người nhận: @Model.TenNguoiNhan</p>
+    <p>Địa chỉ: @Model.DiaChi</p>
+    <p>Số điện thoại người nhận: @Model.SoDienThoai</p>
+    <p>Phương thức thanh toán: @Model.PhuongThuc</p>
+    @{
+        DateTime ns = (DateTime)Model.NgayDat;
+        <p>Ngày đặt hàng: @ns.ToString("dd/MM/yyyy")</p>
+    }
+    <p>Trạng thái: @Model.TrangThai</p>
+    <div class="d-flex flex-column">
+        @foreach (var item in Model.chiTietDhVMs)
+        {
+            <div class="card d-flex flex-row">
+                <div class="card-body flex-grow-1flex-grow-1">
+                    <img class="order-product-img" src="https://product.hstatic.net/200000690725/product/fstp013-5_53657408609_o_a6d428af703341789acf7cca4a8a54a0_master.jpg" alt="Ảnh SP">
+                </div>
+                <div class="card-body flex-grow-1">
+                    <p>@item.TenSp-@item.MauSp-@item.SoLuong</p>
+                    <p>Số lượng: @item.SoLuong</p>
+                    <p class="text-danger">Đơn giá: @item.DonGia</p>
+                </div>
+            </div>
+        }
+        <div class="d-flex">
+            <h5 class="text-danger col justify-content-end d-flex"> Tổng tiền: @Model.TongTien</h5>
+        </div>
+    </div>
+</div>

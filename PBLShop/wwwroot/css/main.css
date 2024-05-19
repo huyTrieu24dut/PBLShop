@@ -1,3 +1,22 @@
+#placeholdersm {
+    height: 76px
+}
+
+#placeholder {
+    height: 56px;
+}
+
+#admin-logosm {
+    height: 60px;
+}
+
+#admin-logo {
+    height: 40px;
+}
+
+
+
+
 .header {
     width: 100%;
     height: 150px;
@@ -504,7 +523,7 @@ body {
 
 
 #staff-addproduct {
-    width: 80%; /* Adjust width as needed */
+    /* width: 80%;  */
     margin: 0 auto; /* Center the form */
     padding: 20px;
     border: 1px solid #ddd;
@@ -555,6 +574,7 @@ body {
         display: block;
         margin-bottom: 5px;
         font-weight: bold;
+        width: auto;
     }
 
     #staff-addproduct input[type="text"],
@@ -594,7 +614,20 @@ body {
 }
 
 
+#staff-addproduct table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
 
+#staff-addproduct table, th, td {
+    border: 1px solid black;
+}
+
+#staff-addproduct th, td {
+    padding: 10px;
+    text-align: center;
+}
 
 
 
@@ -1800,10 +1833,10 @@ body {
 
 
 
-/*CSS ADMIN-EDITINFORCUSTOMER */
+/*CSS ADMIN-ADDSTAFF */
 
-#admin-editinforcustomers {
-    width: 60%;
+.admin-add-update-staff {
+    width: 90%;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -1811,56 +1844,66 @@ body {
     margin-bottom: 60px;
 }
 
-    #admin-editinforcustomers h2 {
+    .admin-add-update-staff h2 {
         text-align: left;
         margin-bottom: 20px;
     }
 
-    #admin-editinforcustomers h1 {
+    .admin-add-update-staff h1 {
         text-align: center;
         margin-bottom: 20px;
     }
 
-    #admin-editinforcustomers .form-details {
+    .admin-add-update-staff .form-details {
         display: flex;
         flex-wrap: wrap;
         margin-bottom: 20px;
         flex-direction: column;
     }
 
-    #admin-editinforcustomers .form-group {
+    .admin-add-update-staff .form-group {
         margin-bottom: 15px;
     }
 
-    #admin-editinforcustomers label {
+    .admin-add-update-staff label {
         display: block;
         margin-bottom: 5px;
     }
 
-    #admin-editinforcustomers input,
-    textarea {
+    .admin-add-update-staff input,
+    .admin-add-update-staff textarea {
         width: 100%;
         padding: 8px;
         border: 1px solid #ccc;
     }
 
-    #admin-editinforcustomers button {
-        padding: 8px 15px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        cursor: pointer;
+
+
+    .admin-add-update-staff button:hover {
+        background-color: #0056b3;
     }
 
-        #admin-editinforcustomers button:hover {
-            background-color: #0056b3;
+    .admin-add-update-staff .form-group select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        appearance: none; /* Remove default dropdown arrow */
+        background-color: white; /* Background color for the dropdown */
+        cursor: pointer; /* Indicate clickable element */
+    }
+
+        .admin-add-update-staff .form-group select:focus {
+            outline: none; /* Remove focus outline */
+            border: 1px solid #4CAF50; /* Add a blue border on focus */
         }
 
-    #admin-editinforcustomers .form-actions {
-        text-align: center;
+        .admin-add-update-staff .form-group select option {
+            padding: 5px 10px; /* Adjust option padding */
+        }
+
+    .admin-add-update-staff label {
+        width: max-content;
     }
-
-
 
 
 
@@ -2310,3 +2353,33 @@ body {
     padding: 3px;
 }
 /* end order history css */
+
+
+
+
+/* css receiving_order tiếp nhận đơn */
+#receiving_order .order_detail p {
+    font-size: larger;
+}
+
+#receiving_order .order-product-img {
+    height: 200px;
+    width: 150px;
+    object-fit: cover;
+    object-position: center;
+}
+
+#receiving_order .order_detail {
+    border: 1px solid #000;
+    border-radius: 10px;
+    background-color: #e7e2e2;
+}
+
+
+
+
+/* CSS ADMIN-UPDATE-PRODUCT */
+.admin-update-product .form-group label {
+    display: inline;
+    padding: 15px;
+}

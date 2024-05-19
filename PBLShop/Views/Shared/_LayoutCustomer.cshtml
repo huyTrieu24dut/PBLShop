@@ -33,8 +33,12 @@
                     <a asp-action="Index" asp-controller="DonHang">Lịch sử mua hàng</a>
                     @if (User.IsInRole("KhachHang"))
                     {
-                         <a asp-action="Logout" asp-controller="User">Đăng xuất</a>
+                        <a asp-action="Logout" asp-controller="User">Đăng xuất</a>
                     }
+                    else if (User.IsInRole("Admin") || User.IsInRole("NhanVien"))
+                    {
+                        <a asp-action="Index" asp-controller="NhanVien">Trang quản lí</a>
+                    }    
                     else{
                         <a asp-action="Login" asp-controller="User">Đăng nhập</a>
                         <a asp-action="Register" asp-controller="User">Đăng kí</a>

@@ -1,0 +1,72 @@
+﻿@model PBLShop.ViewModels.ThongTinNVVM
+
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<body>
+    <div class="admin-add-update-staff">
+        <h1>Cập nhật thông tin</h1>
+        <h2>Thông tin chi tiết</h2>
+
+        <form asp-action="Update" asp-controller="NhanVien" asp-route-id="@Model.ID">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-details">
+                <div class="form-group">
+                    <label asp-for="Email">Email:</label>
+                    <input asp-for="Email" type="email" value="@Model.Email" class="form-control" required>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="HoTen">Họ Tên:</label>
+                    <input asp-for="HoTen" value="@Model.HoTen" class="form-control" type="text" required>
+                    <span asp-validation-for="HoTen" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Giới tính:</label>
+                    <select asp-for="MaGioiTinh" class="form-control" required>
+                        <option value="">Chọn giới tính</option>
+                        <option value="1" checked=@((Model.MaGioiTinh == 1)?"Checked":"")>Nam</option>
+                        <option value="2" checked=@((Model.MaGioiTinh == 2)?"Checked":"")>Nữ</option>
+                        <option value="3" checked=@((Model.MaGioiTinh == 3)?"Checked":"")>Khác</option>
+                    </select>
+                    <span asp-validation-for="MaGioiTinh" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DiaChi">Địa Chỉ:</label>
+                    <input asp-for="DiaChi" value="@Model.DiaChi" class="form-control" type="text" required>
+                    <span asp-validation-for="DiaChi" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DienThoai">Điện Thoại:</label>
+                    <input asp-for="DienThoai" value="@Model.DienThoai" class="form-control" type="text" required>
+                    <span asp-validation-for="DienThoai" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NgaySinh">Ngày Sinh:</label>
+                    <input asp-for="NgaySinh" class="form-control" type="date" required>
+                    <span asp-validation-for="NgaySinh" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Vai Trò:</label>
+                    <select asp-for="MaVaiTro" class="form-control" required>
+                        <option value="">Chọn Vai Trò</option>
+                        <option value="1" checked=@((Model.MaVaiTro == 1)?"Checked":"")>Nhân viên</option>
+                        <option value="2" checked=@((Model.MaVaiTro == 2)?"Checked":"")>Admin</option>
+                    </select>
+                    <span asp-validation-for="MaVaiTro" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex flex-column mt-3">
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>

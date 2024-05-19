@@ -1,0 +1,74 @@
+﻿@model PBLShop.ViewModels.SanPhamUpdateVM
+@{
+    Layout = "_LayoutAdmin";
+}
+<main>
+
+    <div class="container admin-update-product py-3">
+        <h3 class="my-3">Cập nhật thông tin sản phẩm: @Model.MaSp</h3>
+        <form asp-action="Update" asp-controller="SanPhamAdmin" asp-route-id="@Model.MaSp">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-sm-12 py-2">
+                    <div class="form-group">
+                        <label for="tensp">Tên sản phẩm:</label>
+                        <input asp-for="TenSp" value ="@Model.TenSp" type="text" class="form-control" id="tensp" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 py-2">
+                    <div class="form-group">
+                        <label for="gia">Đơn giá:</label>
+                        <input asp-for=DonGia value="@Model.DonGia" type="number" class="form-control" id="gia" min="1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 py-2">
+                    <div class="form-group">
+                        <label for="mota">Mô tả:</label>
+                        <textarea asp-for=MoTa class="form-control" id="mota" name="mota" rows="10" cols="50"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 py-2">
+                    <div class="form-group">
+                        <label for="loai">Danh mục:</label>
+                        <select asp-for=MaDanhMuc class="form-control" id="loai" name="MaDanhMuc" required>
+                            <option value="" selected disabled hidden>Chọn danh mục</option>
+                            @foreach (var item in Model.DanhMucs)
+                            {
+                                <option value="@item.MaDm">@item.TenDm</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 py-2">
+                    <div class="form-group">
+                        <label for="hinhanh">Hình ảnh:</label>
+                        <input asp-for=HinhAnh type="file" class="form-control-file" id="hinhanh" name="hinhanh" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 py-2">
+                    <div class="form-group">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 py-2">
+                    <div class="form-group d-flex align-items-center">
+                        <button type="submit" class="btn btn-primary mx-auto" href="123">Cập nhật</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</main>

@@ -53,16 +53,15 @@ namespace PBLShop.Controllers
         {
             if (ModelState.IsValid){
                 var emailExists = _context.NguoiDungs
-                    .Any(p => p.Email == p.Email);
+                    .Any(p => p.Email == model.Email);
                 if (!emailExists)
                 {
-                    var gioiTinh = _context.GioiTinhs.FirstOrDefault(gt => gt.TenGioiTinh == model.GioiTinh);
                     NguoiDung user = new()
                     {
                         Email = model.Email,
                         MatKhau = model.MatKhau,
                         HoTen = model.HoTen,
-                        MaGioiTinh = gioiTinh != null ? gioiTinh.MaGioiTinh : 1,
+                        MaGioiTinh = model.MaGioiTinh,
                         NgaySinh = model.NgaySinh,
                         DiaChi = model.DiaChi,
                         SoDienThoai = model.DienThoai,
@@ -102,7 +101,7 @@ namespace PBLShop.Controllers
                     ModelState.AddModelError("loi", "Sai Thông tin đăng nhập");
                     return View(model);
                 }
-                else
+                else if(user.TrangThai)
                 {
                     if (user.MatKhau != model.MatKhau)
                     {
@@ -143,9 +142,17 @@ namespace PBLShop.Controllers
                         else
                         {
                             TempData["SuccessMessage"] = "Đăng nhập thành công!";
-                            return RedirectToAction("Index", "Home");
+                            if (user.MaVaiTro == 3)
+                                return RedirectToAction("Index", "Home");
+                            else
+                                return RedirectToAction("Index", "NhanVien");
                         }
                     }
+                }
+                else
+                {
+                    ModelState.AddModelError("loi", "Tài khoản đã bị xóa hoặc bị chặn");
+                    return View(model);
                 }
             }
             return View(model);
@@ -179,12 +186,13 @@ namespace PBLShop.Controllers
             };
             return View(khachhangvm);
         }
+        [Route("/AccessDenied")]
         public IActionResult AccessDenied()
         {
             return View();
         }
         [Authorize]
-        public IActionResult Modify()
+        public IActionResult Update()
         {
             return Redirect("Profile");
         }

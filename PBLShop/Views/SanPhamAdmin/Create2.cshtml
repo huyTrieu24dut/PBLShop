@@ -1,0 +1,46 @@
+﻿@model PBLShop.ViewModels.QuanLySoLuongVM
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<main class="my-5">
+    <h3 class="mb-3">Thêm số lượng cho sản phẩm: @Model.SoLuong</h3>
+    <form asp-action="Create2" asp-controller="SanPhamAdmin" asp-route-MaSp="@Model.MaSp" enctype="multipart/form-data">
+        @for (int i = 0; i < Model.MauSacs.Count; i++)
+        {
+            <input type="hidden" name="MauSacs[@i]" value="@Model.MauSacs[i]" />
+        }
+        @for (int j = 0; j < Model.Sizes.Count; j++)
+        {
+            <input type="hidden" name="Sizes[@j]" value="@Model.Sizes[j]" />
+        }
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th>Màu</th>
+                    <th>Kích cỡ</th>
+                    <th>Số lượng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.MauSacs.Count; i++)
+                {
+                    for (int j = 0; j < Model.Sizes.Count; j++)
+                    {
+                        <tr>
+                            <td>@Model.MauSacs[i]</td>
+                            <td>@Model.Sizes[j]</td>
+                            <td>
+                                <input type="number" name="SoLuong[@i][@j]" min="0" value="0" class="form-control" />
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        <div class="d-flex flex-column mt-3">
+            <button type="submit" class="btn btn-primary">Hoàn thành</button>
+        </div>
+    </form>
+</main>

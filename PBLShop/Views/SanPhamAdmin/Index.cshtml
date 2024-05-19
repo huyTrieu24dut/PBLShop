@@ -1,0 +1,39 @@
+﻿@model IEnumerable<PBLShop.ViewModels.SanPhamVM>
+@{
+    Layout = "_LayoutAdmin";
+}
+<main class="px-3">
+    <h3 class="my-3">Danh sách sản phẩm</h3>
+
+    <table class="table table-striped container-fluid mt-3" id="receiving_order">
+        <thead>
+            <tr>
+                <th scope="col">Mã sản phẩm</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col">Tùy chọn</th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+        <tbody>
+            <th scope="row">@item.MaSp</th>
+            <td>@item.TenSp</td>
+            <td>@item.DonGia</td>
+            <td>
+                <a asp-action="Update" asp-controller="SanPhamAdmin" asp-route-id="@item.MaSp" class="btn btn-warning mx-1 my-1">Chỉnh sửa</a>
+                <button type="button" class="btn btn-danger mx-1 my-1" data-bs-toggle="dropdown" aria-expanded="false">Xóa</button>
+                <div class="dropdown-menu p-2 bg-light">
+                    <div class="col justify-content-center d-flex flex-column">
+                        <h3>Xóa sản phẩm này?</h3>
+                        <form asp-action="Delete" asp-controller="SanPhamAdmin" asp-route-id="@item.MaSp">
+                            <button type="submit" class="btn btn-danger mt-5 mx-auto">Xóa</button>
+                        </form>
+                    </div>
+                </div>
+            </td>
+
+        </tbody>
+        }
+    </table>
+</main>    

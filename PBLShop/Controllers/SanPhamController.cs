@@ -18,9 +18,13 @@ namespace PBLShop.Controllers
         //Hien thi theo danh muc
         public IActionResult Index(int? DM)
         {
+            var chitietsp = _context.QuanLySanPhams
+                .Include(p => p.MaMauNavigation)
+                .Select(p => p.MaMauNavigation.MaSp).Distinct().ToList();
             var sanphams = _context.SanPhams.AsQueryable();
+            sanphams = sanphams.Where(p => chitietsp.Contains(p.MaSp) && p.TrangThai);
 
-            if(DM != null)
+            if (DM != null)
             {
                 var danhMucCon = _context.DanhMucs.Where(dm => dm.MaDmcha == DM).Select(dm => dm.MaDm).ToList();
                 sanphams = sanphams.Where(p => p.MaDm == DM || danhMucCon.Contains(p.MaDm));
@@ -107,84 +111,5 @@ namespace PBLShop.Controllers
             return View(result);
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Admin, NhanVien")]
-        public IActionResult List()
-        {
-            var data = _context.QuanLySanPhams
-                .Include(p => p.MaMauNavigation)
-                .Include(p => p.MaMauNavigation.MaSpNavigation)
-                .Include(p => p.MaMauNavigation.MaSpNavigation.MaDmNavigation)
-                .Include(p => p.MaKichThuocNavigation)
-                .ToList();
-            if (data.Count == 0)
-            {
-                TempData["Message"] = "Không tìm thấy sản phẩm";
-                return Redirect("/404");
-            }
-            var result = new List<ChiTietSanPhamVM>();
-            var sanPhamIds = _context.SanPhams.Select(sp => sp.MaSp).ToList();
-            foreach (var id in sanPhamIds)
-            {
-                var sp = new ChiTietSanPhamVM
-                {
-                    MaSp = id,
-                    MauSac = new List<string>(),
-                    KichThuoc = new List<string>(),
-                    SoLuong = 0
-                };
-                sp.MaSp = 0;
-                sp.MauSac = new List<string>();
-                sp.KichThuoc = new List<string>();
-                foreach (var detail in data)
-                {
-                    if (sp.MaSp == 0)
-                    {
-                        sp.MaSp = id;
-                        sp.TenSp = detail.MaMauNavigation.MaSpNavigation.TenSp;
-                        sp.DonGia = detail.MaMauNavigation.MaSpNavigation.DonGia;
-                        sp.MoTa = detail.MaMauNavigation.MaSpNavigation.MoTa ?? string.Empty;
-                        sp.DanhMuc = detail.MaMauNavigation.MaSpNavigation.MaDmNavigation.TenDanhMuc;
-                    }
-
-                    if (detail.MaMauNavigation != null && detail.MaMauNavigation.TenMau != null && detail.MaMauNavigation.MaSp == id)
-                    {
-                        if (!sp.MauSac.Contains(detail.MaMauNavigation.TenMau))
-                        {
-                            sp.MauSac.Add(detail.MaMauNavigation.TenMau);
-                        }
-                    }
-
-                    if (detail.MaKichThuocNavigation != null && detail.MaMauNavigation.MaSp == id)
-                    {
-                        if (!sp.KichThuoc.Contains(detail.MaKichThuocNavigation.Size))
-                        {
-                            sp.KichThuoc.Add(detail.MaKichThuocNavigation.Size);
-                        }
-                    }
-
-                    sp.SoLuong += detail.SoLuong;
-                }
-                result.Add(sp);
-            }
-            
-            return View(result);
-        }
-
-        public IActionResult Create(SanPhamMoi model)
-        {
-            if (ModelState.IsValid)
-            {
-                var sanpham = new SanPham
-                {
-                    TenSp = model.TenSp,
-                    DonGia = model.DonGia,
-                    MoTa = model.MoTa,
-                    AnhSp = model.HinhAnh,
-                    MaDm = model.MaDm,
-                };
-            }
-            return View(model);
-        }
     }
 }

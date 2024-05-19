@@ -9,7 +9,7 @@ public partial class QuanLySanPham
 
     public int MaKichThuoc { get; set; }
 
-    public int SoLuong { get; set; }
+    public int? SoLuong { get; set; }
 
     public virtual KichThuoc MaKichThuocNavigation { get; set; } = null!;
 

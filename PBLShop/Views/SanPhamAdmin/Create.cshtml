@@ -1,0 +1,55 @@
+﻿@model PBLShop.ViewModels.NewSanPham
+
+@{
+    Layout = "_LayoutAdmin";
+}
+<main id="staff-addproduct" class="container">
+    <h1>Thêm sản phẩm</h1>
+
+    <form asp-action="Create" asp-controller="SanPhamAdmin">
+        <fieldset>
+            <div class="form-group">
+                <label for="tensp">Tên sản phẩm:</label>
+                <input asp-for=TenSp type="text" id="tensp" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gia">Giá thành:</label>
+                <input asp-for=DonGia type="number" id="gia" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="mota">Mô tả:</label>
+                <textarea asp-for=MoTa type="text" id="mota" rows="10" cols="50"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="loai">Loại sản phẩm:</label>
+                <select asp-for="MaDm" id="loai" required>
+                    <option value="" selected disabled hidden>Chọn loại sản phẩm</option>
+                    @foreach (var item in Model.danhMucs)
+                    {
+                        <option value="@item.MaDm">@item.TenDm</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="hinhanh">Hình ảnh:</label>
+                <input asp-for="AnhSp" type="file" id="hinhanh">
+            </div>
+            <div class="form-group">
+                <fieldset>
+                    <label for="addColors">Nhập màu sắc (mỗi màu trên một dòng, cách nhau bằng dấu phẩy):</label>
+                    <input asp-for=MauSac type="text" id="addColors" placeholder="Ví dụ: đỏ,xanh,vàng">
+                </fieldset>
+            </div>
+            <div class="form-group">
+                <fieldset>
+                    <label for="addSizes">Nhập kích cỡ (mỗi kích cỡ trên một dòng, cách nhau bằng dấu phẩy):</label>
+                    <input asp-for=Size type="text" id="addSizes" placeholder="Ví dụ: S,M,L">
+                </fieldset>
+            </div>
+        </fieldset>
+
+        <button type="submit">Thêm</button>
+    </form>
+</main>
