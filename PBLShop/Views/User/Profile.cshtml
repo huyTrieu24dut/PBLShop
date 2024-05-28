@@ -1,6 +1,10 @@
 ﻿@model PBLShop.ViewModels.NguoiDungVM
 
 @{
+    if (Model.vaiTro != "Khách Hàng")
+    {
+        Layout = "_LayoutAdmin";
+    }
     ViewData["title"] = "Thông tin tài khoản";
 }
 <div id="inforcustomers">
@@ -28,9 +32,15 @@
                 DateTime NgaySinh = (DateTime)@Model.NgaySinh;
                 var ns = NgaySinh.ToString("dd/MM/yyyy");
                 <span id="ngaySinhSpan">@ns</span>
+                if (Model.vaiTro != "Khách Hàng")
+                {
+                    <label>Vai trò:</label>
+                    <span id="">@Model.vaiTro</span>
+                }
             }
         </section>
-    <form asp-action="Modify" asp-controller="User">
-        <button type="submit" id="btnChinhSua">Chỉnh sửa</button>
-    </form>
+    <div class="mt-4">
+        <a asp-action="Update" asp-controller="User" asp-route-id="@Model.ID" class="btn btn-primary">Chỉnh sửa</a>
+    </div>
+
 </div>

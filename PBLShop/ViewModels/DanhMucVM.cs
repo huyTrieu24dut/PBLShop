@@ -6,6 +6,7 @@
         public string? TenDM { get; set; }
         public int SoLuong { get; set; }
         public int? MaDMCha { get; set; }
+        public string? TenDMCha { get; set; } 
         public List<DanhMucVM> DanhMucCon {  get; set; }
     }
     public class DanhMucList

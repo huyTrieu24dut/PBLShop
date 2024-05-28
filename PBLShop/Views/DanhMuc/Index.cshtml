@@ -5,47 +5,96 @@
 <main class="px-3">
     <h3 class="my-3">Đơn hàng đang tiến hành</h3>
 
+    <div class="dropdown mb-3">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="addCategoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Thêm danh mục
+        </button>
+        <form asp-action="Create" asp-controller="DanhMuc">
+            <div class="dropdown-menu p-3">
+                <div class="col justify-content-center d-flex flex-column">
+                    <h5>Thêm danh mục mới:</h5>
+                    <div class="mb-3">
+                        <label for="newCategoryName" class="form-label">Tên danh mục:</label>
+                        <input name="TenDM" type="text" class="form-control" id="newCategoryName" placeholder="Nhập tên danh mục...">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newCategoryParent" class="form-label">Danh mục cha:</label>
+                        <select name="MaDMCha" class="form-select" id="newCategoryParent">
+                            <option selected disabled>Chọn danh mục cha</option>
+                            @foreach (var dmcha in Model)
+                            {
+                                if (dmcha.MaDMCha == null)
+                                {
+                                    <option value="@dmcha.MaDM">@dmcha.TenDM</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-dark mt-3 mx-auto">Thêm danh mục</button>
+                </div>
+            </div>
+        </form>
+        
+    </div>
+
     <table class="table table-striped container-fluid mt-3" id="receiving_order">
         <thead>
             <tr>
                 <th scope="col">Mã danh mục</th>
                 <th scope="col">Tên danh mục</th>
-                <th scope="col">Số sản phẩm</th>
                 <th scope="col">Danh mục cha</th>
                 <th scope="col">Cập nhật</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Áo Polo</td>
-                <td>30</td>
-                <td>Áo</td>
-                <td>
-                    <button type="button" class="btn btn-dark" data-bs-toggle="dropdown" aria-expanded="false">Cập nhật</button>
-                    <div class="dropdown-menu p-2">
-                        <div class="col justify-content-center d-flex flex-column">
-                            <h5>Cập nhật danh mục:</h5>
-                            <div class="mb-3">
-                                <label for="btn-update-category" class="form-label">Nhập tên mới cho danh mục:</label>
-                                <input type="text" class="form-control" id="btn-update-category" placeholder="Nhập tên mới...">
+        @foreach(var item in Model)
+        {
+            <tbody>
+                <tr>
+                    <th scope="row">@item.MaDM</th>
+                    <td>@item.TenDM</td>
+                    @if(item.MaDMCha != null)
+                    {
+                        <td>@item.TenDMCha</td>
+                    }
+                    else
+                    {
+                        <td>Không</td>
+                    }
+                    <td>
+                        <button type="button" class="btn btn-dark" data-bs-toggle="dropdown" aria-expanded="false">Cập nhật</button>
+                        <form asp-action="Update" asp-controller="DanhMuc">
+                            <input hidden name="id" value="@item.MaDM"/>
+                            <div class="dropdown-menu p-2">
+                                <div class="col justify-content-center d-flex flex-column">
+                                    <h5>Cập nhật danh mục:</h5>
+                                    <div class="mb-3">
+                                        <label for="btn-update-category" class="form-label">Nhập tên mới cho danh mục:</label>
+                                        <input name="TenDM" type="text" class="form-control" id="btn-update-category" placeholder="Nhập tên mới...">
+                                    </div>
+                                    <!-- nếu không có danh mục con nào thì hiện ô cập nhật danh mục cha -->
+                                    @if (item.MaDMCha != null)
+                                    {
+                                        <div class="mb-3">
+                                            <label for="newstatus" class="form-label">Danh mục cha:</label>
+                                            <select name="MaDMCha" class="form-select" id="newstatus">
+                                                <option selected disabled>Chọn danh mục cha</option>
+                                                @foreach (var dmcha in Model)
+                                                {
+                                                    if (dmcha.MaDMCha == null)
+                                                    {
+                                                        <option value="@dmcha.MaDM">@dmcha.TenDM</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    }
+                                    <button type="submit" class="btn btn-dark mt-3 mx-auto">Cập nhật</button>
+                                </div>
                             </div>
-                            <!-- nếu không có danh mục con nào thì hiện ô cập nhật danh mục cha -->
-                            <div class="mb-3">
-                                <label for="newstatus" class="form-label">Danh mục cha:</label>
-                                <select class="form-select" id="newstatus">
-                                    <option selected disabled>Chọn danh mục cha</option>
-                                    <option value="1">Áo</option>
-                                    <option value="2">Quần</option>
-                                    <option value="3">Giày</option>
-                                </select>
-                            </div>
-                            <a href="#" class="btn btn-dark mt-3 mx-auto">Cập nhật</a>
-                        </div>
-                    </div>
-
-                </td>
-            </tr>
-        </tbody>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        }
     </table>
 </main>  

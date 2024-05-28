@@ -167,22 +167,24 @@ namespace PBLShop.Controllers
         [Authorize]
         public IActionResult Profile()
         {
-            var khachhang = _context.NguoiDungs
+            var nguoiDung = _context.NguoiDungs
                 .Include(p => p.MaGioiTinhNavigation)
+                .Include(p => p.MaVaiTroNavigation)
                 .FirstOrDefault(p => p.MaNguoiDung.ToString() == HttpContext.User.FindFirstValue("MaNguoiDung"));
-            if (khachhang == null)
+            if (nguoiDung == null)
             {
                 return Redirect("/404");
             }
             var khachhangvm = new NguoiDungVM
             {
-                ID = khachhang.MaNguoiDung,
-                HoTen = khachhang.HoTen,
-                Email = khachhang.Email,
-                GioiTinh = khachhang.MaGioiTinhNavigation.TenGioiTinh,
-                NgaySinh = khachhang.NgaySinh,
-                SoDienThoai = khachhang.SoDienThoai,
-                DiaChi = khachhang.DiaChi
+                ID = nguoiDung.MaNguoiDung,
+                HoTen = nguoiDung.HoTen,
+                Email = nguoiDung.Email,
+                GioiTinh = nguoiDung.MaGioiTinhNavigation.TenGioiTinh,
+                NgaySinh = nguoiDung.NgaySinh,
+                SoDienThoai = nguoiDung.SoDienThoai,
+                DiaChi = nguoiDung.DiaChi,
+                vaiTro = nguoiDung.MaVaiTroNavigation.TenVaiTro,
             };
             return View(khachhangvm);
         }
@@ -191,10 +193,68 @@ namespace PBLShop.Controllers
         {
             return View();
         }
+
+
+        [HttpGet]
         [Authorize]
-        public IActionResult Update()
+        public IActionResult Update(int id)
         {
-            return Redirect("Profile");
+            var user = _context.NguoiDungs.FirstOrDefault(p => p.MaNguoiDung == id);
+            if (user != null)
+            {
+                var nd = new ThongTinNguoiDung
+                {
+                    ID = user.MaNguoiDung,
+                    Email = user.Email,
+                    HoTen = user.HoTen,
+                    MaGioiTinh = (int)user.MaGioiTinh,
+                    NgaySinh = user.NgaySinh,
+                    DiaChi = user.DiaChi,
+                    DienThoai = user.SoDienThoai,
+                    MaVaiTro = user.MaVaiTro,
+                };
+                return View(nd);
+            }
+            else
+            {
+                TempData["Message"] = "Không tìm thấy nhân viên";
+                RedirectToAction("/404");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Update(int id, ThongTinNguoiDung model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _context.NguoiDungs.FirstOrDefault(p => p.MaNguoiDung == id);
+                if (user == null)
+                {
+                    TempData["Message"] = "Không tìm thấy nhân viên";
+                    RedirectToAction("/404");
+                }
+
+                var emailExists = _context.NguoiDungs.Any(p => p.Email == model.Email && p.MaNguoiDung != id);
+                if (!emailExists)
+                {
+                    user.Email = model.Email;
+                    user.HoTen = model.HoTen;
+                    user.MaGioiTinh = model.MaGioiTinh;
+                    user.NgaySinh = model.NgaySinh;
+                    user.DiaChi = model.DiaChi;
+                    user.SoDienThoai = model.DienThoai;
+
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    ModelState.AddModelError("loi", "Email đã tồn tại");
+                    return View(model);
+                }
+            }
+            return RedirectToAction("Profile", "User");
         }
     }
 }
