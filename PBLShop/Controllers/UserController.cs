@@ -145,7 +145,7 @@ namespace PBLShop.Controllers
                             if (user.MaVaiTro == 3)
                                 return RedirectToAction("Index", "Home");
                             else
-                                return RedirectToAction("Index", "NhanVien");
+                                return RedirectToAction("Statistic", "DonHangAdmin");
                         }
                     }
                 }

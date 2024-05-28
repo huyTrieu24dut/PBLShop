@@ -28,10 +28,6 @@ namespace PBLShop.Controllers
         {
             return View();
         }
-        public IActionResult Statistic()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

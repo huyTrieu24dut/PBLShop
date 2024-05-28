@@ -85,7 +85,6 @@ namespace PBLShop.Controllers
                     Redirect("/404");
                 }
                 donhang.MaTrangThai = maTrangThai;
-                //_context.Update(donhang);
                 _context.SaveChanges();
 
                 var trangthai = new QuanLyDh
@@ -96,6 +95,16 @@ namespace PBLShop.Controllers
                     MaNv = Convert.ToInt32(HttpContext.User.FindFirstValue("MaNguoiDung")),
                 };
                 _context.Add(trangthai);
+
+                if (maTrangThai == 4)
+                {
+                    var hoadon = new HoaDon
+                    {
+                        MaDh = donhang.MaDh,
+                        NgayHoanThanh = DateTime.Now,
+                    };
+                    _context.Add(hoadon);
+                }
                 _context.SaveChanges();
             }
             if (maTrangThai > 1 && maTrangThai < 4)
@@ -243,6 +252,96 @@ namespace PBLShop.Controllers
                 result.Add(donhang);
             }
             return View(result);
+        }
+
+        [Authorize(Roles = "Admin, NhanVien")]
+        public IActionResult Statistic(int type)
+        { 
+            var chitietDHs = _context.ChiTietDhs
+                .Include(p => p.MaDhNavigation)
+                .Include(p => p.MaDhNavigation.HoaDon)
+                .Include(p => p.MaMauNavigation)
+                .Include(p => p.MaMauNavigation.MaSpNavigation)
+                .Include(p => p.MaMauNavigation.MaSpNavigation.MaDmNavigation)
+                .ToList()
+                .AsEnumerable();
+            switch (type)
+            {
+                case 1: 
+                    chitietDHs = chitietDHs.Where(p => p.MaDhNavigation.HoaDon.NgayHoanThanh.Date == DateTime.Today);
+                    break;
+                case 2: 
+                    chitietDHs = chitietDHs.Where(p => p.MaDhNavigation.HoaDon.NgayHoanThanh.Month == DateTime.Today.Month 
+                        && p.MaDhNavigation.HoaDon.NgayHoanThanh.Year == DateTime.Today.Year);
+                    break;
+                case 3: 
+                    chitietDHs = chitietDHs.Where(p => p.MaDhNavigation.HoaDon.NgayHoanThanh.Year == DateTime.Today.Year);
+                    break;
+            }
+            var chitiets = new List<ChiTietDh>();
+
+            var danhMucs = _context.DanhMucs.Where(p => p.MaDmcha != null).ToList();
+            var sanPhams = _context.SanPhams.Where(p => p.TrangThai == true).ToList();
+            // Dữ liệu mẫu
+            var productsData = new List<ProductData>();
+            var turnoverData = new List<TurnoverData>();
+            //var growthData = new List<GrowthData>();
+            
+            foreach(var danhMuc in danhMucs)
+            {
+                int soluong = 0;
+                foreach (var chitietDH in chitietDHs)
+                {
+                    
+                    if (chitietDH.MaMauNavigation.MaSpNavigation.MaDm == danhMuc.MaDm && chitietDH.MaMauNavigation.MaSpNavigation.TrangThai ==true)
+                    {
+                        soluong += chitietDH.SoLuong ?? 0;
+                    }
+                }
+                if (soluong > 0)
+                {
+                    productsData.Add(new ProductData
+                    {
+                        Name = danhMuc.TenDanhMuc,
+                        Quantity = soluong,
+                    });
+                }
+            }
+            foreach (var sanPham in sanPhams)
+            {
+                int doanhthu = 0;
+                foreach (var chitietDH in chitietDHs)
+                {
+                    if (chitietDH.MaMauNavigation.MaSp == sanPham.MaSp)
+                    {
+                        doanhthu += (sanPham.DonGia * chitietDH.SoLuong) ?? 0;
+                    }
+                }
+                if (doanhthu > 0)
+                {
+                    turnoverData.Add(new TurnoverData
+                    {
+                        Product = sanPham.TenSp,
+                        Revenue = doanhthu,
+                    });
+                }
+            }
+
+            var growthData = new List<GrowthData>
+            {
+                new GrowthData { Month = "Tháng 1", TotalProducts = 100, TotalRevenue = 20000000 },
+                new GrowthData { Month = "Tháng 2", TotalProducts = 110, TotalRevenue = 2000000 },
+                // Thêm dữ liệu khác tương tự...
+            };
+
+            var viewModel = new ChartDataVM
+            {
+                ProductsData = productsData,
+                TurnoverData = turnoverData,
+                GrowthData = growthData
+            };
+
+            return View(viewModel);
         }
     }
 }

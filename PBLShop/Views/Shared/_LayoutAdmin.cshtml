@@ -41,7 +41,7 @@
 
                     <div class="offcanvas offcanvas-start text-bg-dark" id="offcanvasDarkNavbar">
                         <div class="offcanvas-header">
-                            <img class="offcanvas-title" src="image/logo-white.png" alt="LOGO" height="80px" />
+                            <img class="offcanvas-title" src="~/image/logo-white.png" alt="LOGO" height="80px" />
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
 
@@ -97,4 +97,14 @@
         @RenderBody()
 </body>
     <script src="~/js/main.js"></script>
+    @if (ViewBag.LoadCharts != null && ViewBag.LoadCharts)
+    {
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script>
+            var productsData = @Html.Raw(Json.Serialize(ViewBag.ProductsData));
+            var turnoverData = @Html.Raw(Json.Serialize(ViewBag.TurnoverData));
+            var growthData = @Html.Raw(Json.Serialize(ViewBag.GrowthData));
+        </script>
+        <script src="~/js/chart.js"></script>
+    }
 </html>

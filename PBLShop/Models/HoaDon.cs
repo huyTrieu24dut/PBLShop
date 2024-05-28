@@ -9,7 +9,7 @@ public partial class HoaDon
 
     public int MaDh { get; set; }
 
-    public DateTime? NgayHoanThanh { get; set; }
+    public DateTime NgayHoanThanh { get; set; }
 
     public string? FileHoaDon { get; set; }
 
