@@ -19,12 +19,14 @@
         <h1>Đăng nhập</h1>
 
         <form asp-action="Login" asp-route-url="@ViewBag.ReturnUrl" id="LoginForm">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
             <div class="form-group">
                 <label asp-for="@Model.Email"></label>
                 <input asp-for="@Model.Email" class="form-control" type="text" required>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
                 <label asp-for="@Model.MatKhau"></label>
                 <input asp-for="@Model.MatKhau" class="form-control" type="password" required>
@@ -34,7 +36,7 @@
                 <button class="btn" type="submit">Đăng nhập</button>
             </div>
         </form>
-        <a href="#">Quên mật khẩu?</a>
+        <!--<a href="#">Quên mật khẩu?</a>-->
 
         <p><a asp-action="Register" asp-controller="KhachHang">Đăng ký tài khoản mới</a></p>
 

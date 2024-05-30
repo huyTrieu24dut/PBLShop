@@ -81,9 +81,10 @@ namespace PBLShop.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Login(string? url)
+        [HttpGet]
+        public IActionResult Login(string? ReturnUrl)
         {
-            ViewBag.ReturnUrl = url;
+            ViewBag.ReturnUrl = ReturnUrl;
             return View();
         }
 
@@ -145,7 +146,7 @@ namespace PBLShop.Controllers
                             if (user.MaVaiTro == 3)
                                 return RedirectToAction("Index", "Home");
                             else
-                                return RedirectToAction("Statistic", "DonHangAdmin");
+                                return RedirectToAction("Statistic", "DonHangAdmin", new {type = 1});
                         }
                     }
                 }

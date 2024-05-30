@@ -263,25 +263,29 @@ namespace PBLShop.Controllers
                 .Include(p => p.MaMauNavigation)
                 .Include(p => p.MaMauNavigation.MaSpNavigation)
                 .Include(p => p.MaMauNavigation.MaSpNavigation.MaDmNavigation)
+                .Where(p => p.MaDhNavigation.HoaDon != null)
                 .ToList()
                 .AsEnumerable();
             switch (type)
             {
                 case 1: 
                     chitietDHs = chitietDHs.Where(p => p.MaDhNavigation.HoaDon.NgayHoanThanh.Date == DateTime.Today);
+                    TempData["Message"] = "Ngày " + DateTime.Today.ToString("dd/MM/yyyy");
                     break;
                 case 2: 
                     chitietDHs = chitietDHs.Where(p => p.MaDhNavigation.HoaDon.NgayHoanThanh.Month == DateTime.Today.Month 
                         && p.MaDhNavigation.HoaDon.NgayHoanThanh.Year == DateTime.Today.Year);
+                    TempData["Message"] = "Tháng " + DateTime.Today.ToString("MM/yyyy");
                     break;
                 case 3: 
                     chitietDHs = chitietDHs.Where(p => p.MaDhNavigation.HoaDon.NgayHoanThanh.Year == DateTime.Today.Year);
+                    TempData["Message"] = "Năm " + DateTime.Today.Year;
                     break;
             }
             var chitiets = new List<ChiTietDh>();
 
             var danhMucs = _context.DanhMucs.Where(p => p.MaDmcha != null).ToList();
-            var sanPhams = _context.SanPhams.Where(p => p.TrangThai == true).ToList();
+            var sanPhams = _context.SanPhams.Select(p => p).ToList();
             // Dữ liệu mẫu
             var productsData = new List<ProductData>();
             var turnoverData = new List<TurnoverData>();
@@ -293,7 +297,7 @@ namespace PBLShop.Controllers
                 foreach (var chitietDH in chitietDHs)
                 {
                     
-                    if (chitietDH.MaMauNavigation.MaSpNavigation.MaDm == danhMuc.MaDm && chitietDH.MaMauNavigation.MaSpNavigation.TrangThai ==true)
+                    if (chitietDH.MaMauNavigation.MaSpNavigation.MaDm == danhMuc.MaDm)
                     {
                         soluong += chitietDH.SoLuong ?? 0;
                     }

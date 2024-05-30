@@ -39,8 +39,20 @@
                 }
             }
         </section>
-    <div class="mt-4">
-        <a asp-action="Update" asp-controller="User" asp-route-id="@Model.ID" class="btn btn-primary">Chỉnh sửa</a>
-    </div>
+    @if (Model.vaiTro == "Khách Hàng")
+    {
+        <form asp-action="Update" asp-controller="User" asp-route-id="@Model.ID" method="get">
+            <div class="form-group-login">
+                <button class="btn" type="submit">Chỉnh sửa</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="mt-4">
+            <a asp-action="Update" asp-controller="User" asp-route-id="@Model.ID" class="btn btn-primary">Chỉnh sửa</a>
+        </div>
+    }
+
 
 </div>

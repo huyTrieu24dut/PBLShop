@@ -53,13 +53,16 @@
                                     <p id="OrderHistory-orders-exitBy">Hủy bởi: Người mua</p>
                                 }
                                 <!-- nếu đơn hàng bị hủy -->
+                                <!-- nếu đơn hàng đang chờ xác nhận -->
+                                else if(item.TrangThai == "Đã hoàn thành")
+                                {
+                                    <button class="OrderHistory-orders-product-btn">Xem hóa đơn</button>
+                                }
+                                else
+                                {
                                 <form asp-action="Cancel" asp-controller="DonHang" asp-route-id="@item.MaDh">
                                     <button type="submit" class="OrderHistory-orders-product-btn">Hủy đơn hàng</button>
                                 </form>
-                                <!-- nếu đơn hàng đang chờ xác nhận -->
-                                @if(item.TrangThai == "Đã hoàn thành")
-                                {
-                                    <button class="OrderHistory-orders-product-btn">Xem hóa đơn</button>
                                 }
                                 <!--nếu đơn hàng thành công -->
                             </div>

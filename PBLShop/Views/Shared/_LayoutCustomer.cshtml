@@ -30,9 +30,10 @@
                 <span class="header__logo--icon"><i class="fa-solid fa-circle-user"></i></span>
                 <div class="dropdown-user-content">
                     <a asp-action="Profile" asp-controller="User">Thông tin cá nhân</a>
-                    <a asp-action="Index" asp-controller="DonHang">Lịch sử mua hàng</a>
                     @if (User.IsInRole("KhachHang"))
                     {
+                        <a asp-action="Profile" asp-controller="User">Thông tin cá nhân</a>
+                        <a asp-action="Index" asp-controller="DonHang">Lịch sử mua hàng</a>
                         <a asp-action="Logout" asp-controller="User">Đăng xuất</a>
                     }
                     else if (User.IsInRole("Admin") || User.IsInRole("NhanVien"))

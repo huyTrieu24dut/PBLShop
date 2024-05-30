@@ -186,3 +186,17 @@ function generateVariants() {
     table.appendChild(tbody);
     variantsTableContainer.appendChild(table);
 }
+function getParameterByName(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const type = getParameterByName('type');
+    if (type) {
+        const radioButton = document.querySelector(`input[name="btnradio"][value="${type}"]`);
+        if (radioButton) {
+            radioButton.checked = true;
+        }
+    }
+});
