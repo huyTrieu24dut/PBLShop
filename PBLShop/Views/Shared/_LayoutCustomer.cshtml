@@ -29,7 +29,6 @@
             <div class="header__logo-mininavitem" id = "dropdown-user">
                 <span class="header__logo--icon"><i class="fa-solid fa-circle-user"></i></span>
                 <div class="dropdown-user-content">
-                    <a asp-action="Profile" asp-controller="User">Thông tin cá nhân</a>
                     @if (User.IsInRole("KhachHang"))
                     {
                         <a asp-action="Profile" asp-controller="User">Thông tin cá nhân</a>
@@ -38,7 +37,8 @@
                     }
                     else if (User.IsInRole("Admin") || User.IsInRole("NhanVien"))
                     {
-                        <a asp-action="Index" asp-controller="NhanVien">Trang quản lí</a>
+                        <a asp-action="Statistic" asp-controller="DonHangAdmin">Trang quản lí</a>
+                        <a asp-action="Logout" asp-controller="User">Đăng xuất</a>
                     }    
                     else{
                         <a asp-action="Login" asp-controller="User">Đăng nhập</a>

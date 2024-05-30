@@ -13,15 +13,17 @@
         <h1>Thống kê</h1>
         <h3>@TempData["Message"]</h3>
         <div class="row py-3">
-            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="1" class="btn btn-outline-primary">Ngày</a>
+            <div class="row py-3">
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="1" autocomplete="off">
+                    <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="1" class="btn btn-outline-primary">Ngày</a>
 
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="2" class="btn btn-outline-primary">Tháng</a>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="2" autocomplete="off">
+                    <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="2" class="btn btn-outline-primary">Tháng</a>
 
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="3" class="btn btn-outline-primary">Năm</a>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" value="3" autocomplete="off">
+                    <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="3" class="btn btn-outline-primary">Năm</a>
+                </div>
             </div>
         </div>
         <div class="row gx-5">
@@ -35,7 +37,7 @@
                             <h5>Doanh thu</h5>
                         </div>
                         <div class="card-subtitle">
-                            <P>5.000.000Đ</P>
+                            <P>@Model.TotalRevenue</P>
                         </div>
                     </div>
                 </div>
@@ -50,7 +52,7 @@
                             <h5>Sản phẩm</h5>
                         </div>
                         <div class="card-subtitle">
-                            <P>500</P>
+                            <P>@Model.TotalProduct</P>
                         </div>
                     </div>
                 </div>
@@ -65,7 +67,7 @@
                             <h5>Hóa đơn</h5>
                         </div>
                         <div class="card-subtitle">
-                            <P>300</P>
+                            <P>@Model.TotalInvoice</P>
                         </div>
                     </div>
                 </div>
@@ -86,11 +88,11 @@
                 <div id="donutchartOfTurnover" class="max-width"></div>
             </div>
         </div>
-        <div class="row">
+        <!--<div class="row">
             <div class="col-12 d-sm-flex flex-column align-items-center" style="overflow: auto;">
                 <div id="growthchart" style="width: 750px; height: 800px;"></div>
             </div>
-        </div>
+        </div>-->
     </div>
 </main>
 

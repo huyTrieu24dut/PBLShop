@@ -18,7 +18,7 @@
         <h1>Đăng ký</h1>
 
         <form asp-action="Register" asp-route-url="@ViewBag.ReturnUrl">
-            <div asp-validation-summary="All" class="text-danger"></div>
+            <div asp-validation-summary="All" class="error-message"></div>
             <div class="form-group">
                 <label asp-for="@Model.Email" for="email">Email:</label>
                 <input asp-for="@Model.Email" type="email" id="email" name="email" required>

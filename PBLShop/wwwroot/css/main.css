@@ -1,3 +1,11 @@
+/*error*/
+.error-message {
+    text-align: center;
+    color: red; 
+    font-size: 0.875rem; 
+}
+
+
 #placeholdersm {
     height: 76px
 }

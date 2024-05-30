@@ -8,7 +8,7 @@ google.charts.load('current', { 'packages': ['corechart'] });
 // Draw the pie chart and bar chart when Charts is loaded.
 google.charts.setOnLoadCallback(drawProductChart);
 google.charts.setOnLoadCallback(drawTurnoverChart);
-google.charts.setOnLoadCallback(drawLineChart);
+//google.charts.setOnLoadCallback(drawLineChart);
 
 // Biểu đồ cơ cấu sản phẩm
 function drawProductChart() {

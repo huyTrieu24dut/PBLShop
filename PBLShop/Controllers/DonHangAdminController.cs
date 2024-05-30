@@ -266,18 +266,23 @@ namespace PBLShop.Controllers
                 .Where(p => p.MaDhNavigation.HoaDon != null)
                 .ToList()
                 .AsEnumerable();
+            int hoaDons = 0;
             switch (type)
             {
-                case 1: 
+                case 1:
+                    hoaDons = _context.HoaDons.Where(p => p.NgayHoanThanh.Date == DateTime.Today).ToList().Count();
                     chitietDHs = chitietDHs.Where(p => p.MaDhNavigation.HoaDon.NgayHoanThanh.Date == DateTime.Today);
                     TempData["Message"] = "Ngày " + DateTime.Today.ToString("dd/MM/yyyy");
                     break;
-                case 2: 
+                case 2:
+                    hoaDons = _context.HoaDons.Where(p => p.NgayHoanThanh.Month == DateTime.Today.Month
+                        && p.NgayHoanThanh.Year == DateTime.Today.Year).ToList().Count();
                     chitietDHs = chitietDHs.Where(p => p.MaDhNavigation.HoaDon.NgayHoanThanh.Month == DateTime.Today.Month 
                         && p.MaDhNavigation.HoaDon.NgayHoanThanh.Year == DateTime.Today.Year);
                     TempData["Message"] = "Tháng " + DateTime.Today.ToString("MM/yyyy");
                     break;
-                case 3: 
+                case 3:
+                    hoaDons = _context.HoaDons.Where(p => p.NgayHoanThanh.Year == DateTime.Today.Year).ToList().Count();
                     chitietDHs = chitietDHs.Where(p => p.MaDhNavigation.HoaDon.NgayHoanThanh.Year == DateTime.Today.Year);
                     TempData["Message"] = "Năm " + DateTime.Today.Year;
                     break;
@@ -286,12 +291,14 @@ namespace PBLShop.Controllers
 
             var danhMucs = _context.DanhMucs.Where(p => p.MaDmcha != null).ToList();
             var sanPhams = _context.SanPhams.Select(p => p).ToList();
-            // Dữ liệu mẫu
+            
             var productsData = new List<ProductData>();
             var turnoverData = new List<TurnoverData>();
-            //var growthData = new List<GrowthData>();
-            
-            foreach(var danhMuc in danhMucs)
+            var growthData = new List<GrowthData>();
+            var viewModel = new ChartDataVM();
+
+            viewModel.TotalInvoice = hoaDons;
+            foreach (var danhMuc in danhMucs)
             {
                 int soluong = 0;
                 foreach (var chitietDH in chitietDHs)
@@ -309,6 +316,7 @@ namespace PBLShop.Controllers
                         Name = danhMuc.TenDanhMuc,
                         Quantity = soluong,
                     });
+                    viewModel.TotalProduct += soluong;
                 }
             }
             foreach (var sanPham in sanPhams)
@@ -328,22 +336,18 @@ namespace PBLShop.Controllers
                         Product = sanPham.TenSp,
                         Revenue = doanhthu,
                     });
+                    viewModel.TotalRevenue += doanhthu;
                 }
             }
 
-            var growthData = new List<GrowthData>
-            {
-                new GrowthData { Month = "Tháng 1", TotalProducts = 100, TotalRevenue = 20000000 },
-                new GrowthData { Month = "Tháng 2", TotalProducts = 110, TotalRevenue = 2000000 },
-                // Thêm dữ liệu khác tương tự...
-            };
+            //for (int i = 1; i <= 12; i++)
+            //{
 
-            var viewModel = new ChartDataVM
-            {
-                ProductsData = productsData,
-                TurnoverData = turnoverData,
-                GrowthData = growthData
-            };
+            //}
+
+            viewModel.ProductsData = productsData;
+            viewModel.TurnoverData = turnoverData;
+            viewModel.GrowthData = growthData;
 
             return View(viewModel);
         }

@@ -2,6 +2,9 @@
 {
     public class ChartDataVM
     {
+        public int TotalRevenue { get; set; } = 0;
+        public int TotalProduct { get; set; } = 0;
+        public int TotalInvoice { get; set; } = 0;
         public List<ProductData>? ProductsData { get; set; }
         public List<TurnoverData>? TurnoverData { get; set; }
         public List<GrowthData>? GrowthData { get; set; }

@@ -19,7 +19,7 @@
         <h1>Đăng nhập</h1>
 
         <form asp-action="Login" asp-route-url="@ViewBag.ReturnUrl" id="LoginForm">
-            <div asp-validation-summary="All" class="text-danger"></div>
+            <div asp-validation-summary="All" class="error-message"></div>
             
             <div class="form-group">
                 <label asp-for="@Model.Email"></label>
