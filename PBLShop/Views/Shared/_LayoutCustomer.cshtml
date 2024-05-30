@@ -29,15 +29,15 @@
             <div class="header__logo-mininavitem" id = "dropdown-user">
                 <span class="header__logo--icon"><i class="fa-solid fa-circle-user"></i></span>
                 <div class="dropdown-user-content">
-                    @if (User.IsInRole("KhachHang"))
+                    @if (User.IsInRole("Admin") || User.IsInRole("NhanVien"))
+                    {
+                        <a asp-action="Statistic" asp-controller="DonHangAdmin">Trang quản lí</a>
+                        <a asp-action="Logout" asp-controller="User">Đăng xuất</a>
+                    }
+                    else if (User.IsInRole("KhachHang"))
                     {
                         <a asp-action="Profile" asp-controller="User">Thông tin cá nhân</a>
                         <a asp-action="Index" asp-controller="DonHang">Lịch sử mua hàng</a>
-                        <a asp-action="Logout" asp-controller="User">Đăng xuất</a>
-                    }
-                    else if (User.IsInRole("Admin") || User.IsInRole("NhanVien"))
-                    {
-                        <a asp-action="Statistic" asp-controller="DonHangAdmin">Trang quản lí</a>
                         <a asp-action="Logout" asp-controller="User">Đăng xuất</a>
                     }    
                     else{

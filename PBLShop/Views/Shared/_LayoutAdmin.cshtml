@@ -29,7 +29,7 @@
                         </a>
                     </div>
                     <div class="col-sm-4 col-3 d-flex align-items-center justify-content-end">
-                        <span class="d-sm-flex d-none pe-3 text-white">Nguyễn Chế Định</span>
+                        <span class="d-sm-flex d-none pe-3 text-white">@User.Identity.Name</span>
                         <span data-bs-toggle="dropdown">
                             <i class="fa-regular fa-user fa-xl" style="color: #ffffff;"></i>
                         </span>
@@ -48,7 +48,7 @@
                         <div class="offcanvas-body">
                             <ul class="navbar-nav flex-grow-1 pe-3">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Tổng quan</a>
+                                    <a class="nav-link active" aria-current="page" asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="1">Tổng quan</a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -70,25 +70,28 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Quản lý nhân viên
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-dark">
-                                        <li><a class="dropdown-item" asp-action="Create" asp-controller="NhanVien">Thêm nhân viên</a></li>
-                                        <li><a class="dropdown-item" asp-action="Index" asp-controller="NhanVien">Xem danh sách nhân viên</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown">
                                     <a class="nav-link" asp-action="Index" asp-controller="KhachHang" asp-route-trangThai="true" aria-expanded="false">
                                         Danh sách khách hàng
                                     </a>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link" asp-action="Index" asp-controller="DanhMuc" aria-expanded="false">
-                                        Quản lý danh mục
-                                    </a>
-                                </li>
-                            </ul>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Quản lý nhân viên
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-dark">
+                                            <li><a class="dropdown-item" asp-action="Create" asp-controller="NhanVien">Thêm nhân viên</a></li>
+                                            <li><a class="dropdown-item" asp-action="Index" asp-controller="NhanVien">Xem danh sách nhân viên</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link" asp-action="Index" asp-controller="DanhMuc" aria-expanded="false">
+                                            Quản lý danh mục
+                                        </a>
+                                    </li>
+                                }
+                        </ul>
                         </div>
                     </div>
                 </div>

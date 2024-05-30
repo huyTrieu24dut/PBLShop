@@ -150,9 +150,9 @@ namespace PBLShop.Controllers
             if (ModelState.IsValid)
             {
                 List<string> MauSacs = new List<string>();
-                MauSacs.AddRange(model.MauSac.Split(","));
+                MauSacs.AddRange(model.MauSac.Split(",").Select(s => s.Trim()));
                 List<string> Sizes = new List<string>();
-                Sizes.AddRange(model.Size.Split(","));
+                Sizes.AddRange(model.Size.Split(",").Select(s => s.Trim()));
                 var sanpham = new SanPham
                 {
                     TenSp = model.TenSp,
