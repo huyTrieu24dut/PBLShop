@@ -32,19 +32,45 @@ namespace PBLShop.Controllers
             {
                 nhanviens = nhanviens.Where(p => p.TrangThai == true).ToList();
             }
-            foreach (var kh in nhanviens)
+            foreach (var nv in nhanviens)
             {
                 result.Add(new NguoiDungVM
                 {
-                    ID = kh.MaNguoiDung,
-                    HoTen = kh.HoTen,
-                    Email = kh.Email,
-                    GioiTinh = kh.MaGioiTinhNavigation.TenGioiTinh,
-                    NgaySinh = kh.NgaySinh,
-                    SoDienThoai = kh.SoDienThoai,
-                    DiaChi = kh.DiaChi,
-                    trangThai = kh.TrangThai,
-                    vaiTro = kh.MaVaiTroNavigation.TenVaiTro 
+                    ID = nv.MaNguoiDung,
+                    HoTen = nv.HoTen,
+                    Email = nv.Email,
+                    GioiTinh = nv.MaGioiTinhNavigation.TenGioiTinh,
+                    NgaySinh = nv.NgaySinh,
+                    SoDienThoai = nv.SoDienThoai,
+                    DiaChi = nv.DiaChi,
+                    trangThai = nv.TrangThai,
+                    vaiTro = nv.MaVaiTroNavigation.TenVaiTro 
+                });
+            }
+            return View(result);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult Search(string name)
+        {
+            var nhanviens = _context.NguoiDungs
+                .Include(p => p.MaGioiTinhNavigation)
+                .Include(p => p.MaVaiTroNavigation)
+                .Where(p => p.MaVaiTro != 3 && p.HoTen.Contains(name)).ToList();
+            List<NguoiDungVM> result = new List<NguoiDungVM>();
+            foreach (var nv in nhanviens)
+            {
+                result.Add(new NguoiDungVM
+                {
+                    ID = nv.MaNguoiDung,
+                    HoTen = nv.HoTen,
+                    Email = nv.Email,
+                    GioiTinh = nv.MaGioiTinhNavigation.TenGioiTinh,
+                    NgaySinh = nv.NgaySinh,
+                    SoDienThoai = nv.SoDienThoai,
+                    DiaChi = nv.DiaChi,
+                    trangThai = nv.TrangThai,
+                    vaiTro = nv.MaVaiTroNavigation.TenVaiTro
                 });
             }
             return View(result);

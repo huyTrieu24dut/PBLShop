@@ -2,10 +2,9 @@
 @{
     Layout = "_LayoutAdmin";
 }
-
 <main class="my-5">
-    <h3 class="mb-3">Thêm số lượng cho sản phẩm</h3>
-    <form asp-action="Create2" asp-controller="SanPhamAdmin" asp-route-MaSp="@Model.MaSp" enctype="multipart/form-data">
+    <h3 class="mb-3">Chỉnh sửa số luọng cho sản phẩm</h3>
+    <form asp-action="UpdateQuantity" asp-controller="SanPhamAdmin" asp-route-MaSp="@Model.MaSp" enctype="multipart/form-data">
         @for (int i = 0; i < Model.MauSacs.Count; i++)
         {
             <input type="hidden" name="MauSacs[@i]" value="@Model.MauSacs[i]" />
@@ -31,7 +30,7 @@
                             <td>@Model.MauSacs[i]</td>
                             <td>@Model.Sizes[j]</td>
                             <td>
-                                <input type="number" asp-for="SoLuong[i][j]" min="0" class="form-control" />
+                                <input type="number" asp-for="SoLuong[i][j]" min="0" value="@Model.SoLuong[i][j]" class="form-control" />
                             </td>
                         </tr>
                     }

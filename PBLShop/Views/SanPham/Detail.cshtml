@@ -4,7 +4,7 @@
     ViewData["title"] = "Chi tiet san pham";
 }
 <div id="detailproduct">
-    <img src="~/image/product.jpg" alt="Áo Polo Nam CALUCI MPS464S">
+    <img src="~/image/product.jpg" alt="@Model.TenSp">
     <div class="product-info">
         <div>
             <h2>@Model.TenSp</h2>
@@ -37,6 +37,7 @@
                 <label for="quantity">Số lượng:</label>
                 <input type="number" id="quantity" value="1" min="1" max="10" name="soluong">
             </div>
+            <div asp-validation-summary="All" class="error-message"></div>
             <div>
                 <button type="submit" class="btn-buy-now">Mua ngay</button>
             </div>

@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using PBLShop.Models;
 using PBLShop.ViewModels;
 using System.Drawing;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Security.Policy;
 
 namespace PBLShop.Controllers
 {
@@ -233,6 +235,82 @@ namespace PBLShop.Controllers
                             MaKichThuoc = _context.KichThuocs.Where(p => p.Size == Sizes[j]).Select(p => p.MaKt).FirstOrDefault(),
                         };
                         _context.Add(qlsp);
+                    }
+                }
+                _context.SaveChanges();
+                return RedirectToAction("Index", "SanPhamAdmin");
+            }
+
+            return RedirectToAction("Index", "SanPhamAdmin");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, NhanVien")]
+        public IActionResult UpdateQuantity(int id)
+        {
+            QuanLySoLuongVM ql = new QuanLySoLuongVM();
+            ql.MaSp = id;
+            var data = _context.QuanLySanPhams
+                .Include(p => p.MaMauNavigation)
+                .Include(p => p.MaMauNavigation.MaSpNavigation)
+                .Include(p => p.MaMauNavigation.MaSpNavigation.MaDmNavigation)
+                .Include(p => p.MaKichThuocNavigation)
+                .Where(p => p.MaMauNavigation.MaSp == id).ToList();
+            if (data != null)
+            {
+                foreach (var detail in data)
+                {
+                    if (detail.MaMauNavigation != null && detail.MaMauNavigation.TenMau != null)
+                    {
+                        if (!ql.MauSacs.Contains(detail.MaMauNavigation.TenMau))
+                        {
+                            ql.MauSacs.Add(detail.MaMauNavigation.TenMau);
+                        }
+                    }
+
+                    if (detail.MaKichThuocNavigation != null)
+                    {
+                        if (!ql.Sizes.Contains(detail.MaKichThuocNavigation.Size))
+                        {
+                            ql.Sizes.Add(detail.MaKichThuocNavigation.Size);
+                        }
+                    }
+                }
+
+                int i = 0;
+                foreach (var mauSac in ql.MauSacs)
+                {
+                    int j = 0;
+                    foreach (var size in ql.Sizes)
+                    {
+                        var chitiet = data.Where(p => p.MaMauNavigation.TenMau == mauSac && p.MaKichThuocNavigation.Size == size).FirstOrDefault();
+                        if (chitiet != null)
+                        {
+                            ql.SoLuong[i][j] = chitiet.SoLuong ?? 0;
+                        }
+                        j++;
+                    }
+                    i++;
+                }
+            }
+            return View(ql);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin, NhanVien")]
+        public IActionResult UpdateQuantity(int MaSp, List<string> MauSacs, List<string> Sizes, List<List<int>> SoLuong)
+        {
+            if (ModelState.IsValid)
+            {
+                for (int i = 0; i < MauSacs.Count; i++)
+                {
+                    for (int j = 0; j < Sizes.Count; j++)
+                    {
+                        var chitiet = _context.QuanLySanPhams.Where(p => p.MaMauNavigation.TenMau == MauSacs[i] && p.MaKichThuocNavigation.Size == Sizes[j] && p.MaMauNavigation.MaSp == MaSp).FirstOrDefault();
+                        if (chitiet != null)
+                        {
+                            chitiet.SoLuong = SoLuong[i][j];
+                        }
                     }
                 }
                 _context.SaveChanges();

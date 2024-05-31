@@ -52,6 +52,11 @@ namespace PBLShop.Controllers
                 .FirstOrDefault(p => p.MaMauNavigation.TenMau == mausac && p.MaKichThuocNavigation.Size == size);
             if (chitietsp != null)
             {
+                if (chitietsp.SoLuong < soluong || chitietsp.SoLuong == 0)
+                {
+                    ModelState.AddModelError("loi", "Sản phẩm không đủ số lượng");
+                    return RedirectToAction("Detail", "SanPham");
+                }
                 var existingCartItem = _context.ChiTietGhs.FirstOrDefault(p => p.MaMau == chitietsp.MaMau && p.MaKt == chitietsp.MaKichThuoc && p.MaKh.ToString() == HttpContext.User.FindFirstValue("MaNguoiDung"));
                 if (existingCartItem != null)
                 {

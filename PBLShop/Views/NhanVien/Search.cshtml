@@ -6,5 +6,6 @@
 }
 <main class="px-3">
     <h3 class="my-3">Danh sách nhân viên</h3>
+    <h3 class="my-3">Có @Model.Count() kết quả</h3>
     @await Html.PartialAsync("StaffList", Model)
 </main>
