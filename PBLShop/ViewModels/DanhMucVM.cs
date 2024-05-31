@@ -7,7 +7,10 @@
         public int SoLuong { get; set; }
         public int? MaDMCha { get; set; }
         public string? TenDMCha { get; set; } 
-        public List<DanhMucVM> DanhMucCon {  get; set; }
+        public List<DanhMucVM>? DanhMucCon { get; set; }
+        public int SoDmCon {  get; set; }
+        public bool CoTheXoa { get; set; } = false;
+        public bool TrangThai { get; set; }
     }
     public class DanhMucList
     {

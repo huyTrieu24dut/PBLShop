@@ -16,13 +16,15 @@ namespace PBLShop.ViewComponents
         public IViewComponentResult Invoke()
         {
             var data = _context.DanhMucs
-                .Where(dm => dm.MaDmcha == null)
+                .Where(dm => dm.MaDmcha == null && dm.TrangThai == true)
                 .Select(dm => new DanhMucVM
                 {
                     MaDM = dm.MaDm,
                     TenDM = dm.TenDanhMuc,
                     SoLuong = dm.SanPhams.Count,
-                    DanhMucCon = dm.InverseMaDmchaNavigation.Select(con => new DanhMucVM
+                    DanhMucCon = dm.InverseMaDmchaNavigation
+                    .Where(con => con.TrangThai == true)
+                    .Select(con => new DanhMucVM
                     {
                         MaDM = con.MaDm,
                         TenDM = con.TenDanhMuc,

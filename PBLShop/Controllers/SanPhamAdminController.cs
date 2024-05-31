@@ -83,7 +83,7 @@ namespace PBLShop.Controllers
                     MaDanhMuc = sp.MaDm,
                     HinhAnh = sp.AnhSp,
                     DanhMucs = danhmucs
-                        .Where(p => p.MaDmcha != null)
+                        .Where(p => p.MaDmcha != null && p.TrangThai == true)
                         .Select(p => new DanhMucList
                         {
                             MaDm = p.MaDm,
@@ -134,7 +134,7 @@ namespace PBLShop.Controllers
             var sanpham = new NewSanPham
             {
                 danhMucs = danhmucs
-                    .Where(p => p.MaDmcha != null)
+                    .Where(p => p.MaDmcha != null && p.TrangThai == true)
                     .Select(p => new DanhMucList
                     {
                         MaDm = p.MaDm,

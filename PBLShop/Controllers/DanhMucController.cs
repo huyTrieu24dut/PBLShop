@@ -20,21 +20,32 @@ namespace PBLShop.Controllers
             var data = _context.DanhMucs
                 .Include(p => p.MaDmchaNavigation)
                 .Include(p => p.InverseMaDmchaNavigation)
+                .Where(p => p .TrangThai == true)
                 .Select(dm => new DanhMucVM
                 {
                     MaDM = dm.MaDm,
                     TenDM = dm.TenDanhMuc,
-                    SoLuong = dm.SanPhams.Count,
+                    SoLuong = dm.SanPhams.Where(p => p.TrangThai == true && p.MaDm == dm.MaDm).ToList().Count,
+                    TrangThai = dm.TrangThai,
                     TenDMCha = dm.MaDmchaNavigation.TenDanhMuc ?? "",
                     MaDMCha = dm.MaDmcha ?? null,
-                    DanhMucCon = dm.InverseMaDmchaNavigation.Select(con => new DanhMucVM
-                    {
-                        MaDM = con.MaDm,
-                        TenDM = con.TenDanhMuc,
-                        SoLuong = con.SanPhams.Count,
-                    }).ToList()
+                    SoDmCon = dm.InverseMaDmchaNavigation.Count,
                 })
                 .ToList();
+            if (data.Count > 0)
+            {
+                foreach (var danhMuc in data)
+                {
+                    if (danhMuc.MaDMCha == null && danhMuc.SoDmCon == 0)
+                    {
+                        danhMuc.CoTheXoa = true;
+                    }
+                    else if (danhMuc.MaDMCha != null && danhMuc.SoLuong == 0)
+                    {
+                        danhMuc.CoTheXoa = true;
+                    }
+                }
+            }
 
             return View(data);
         }
@@ -57,6 +68,7 @@ namespace PBLShop.Controllers
                 if (MaDMCha != null)
                 {
                     dm.MaDmcha = MaDMCha;
+                    dm.TrangThai = true;
                 }
                 _context.Add(dm);
                 _context.SaveChanges();
@@ -109,20 +121,20 @@ namespace PBLShop.Controllers
             return RedirectToAction("Index", "DanhMuc");
         }
 
-        //[Authorize(Roles = "Admin, NhanVien")]
-        //public IActionResult Delete(int id)
-        //{
-        //    var danhMuc = _context.DanhMucs.FirstOrDefault(p => p.MaDm == id);
-        //    if (danhMuc == null)
-        //    {
-        //        Redirect("/404");
-        //    }
-        //    else
-        //    {
-        //        _context.Remove(danhMuc);
-        //        _context.SaveChanges();
-        //    }
-        //    return RedirectToAction("Index");
-        //}
+        [Authorize(Roles = "Admin, NhanVien")]
+        public IActionResult Delete(int id)
+        {
+            var danhMuc = _context.DanhMucs.FirstOrDefault(p => p.MaDm == id);
+            if (danhMuc == null)
+            {
+                Redirect("/404");
+            }
+            else
+            {
+                danhMuc.TrangThai = false;
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
