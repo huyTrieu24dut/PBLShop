@@ -5,10 +5,10 @@
         public QuanLySoLuongVM() 
         {
             SoLuong = new List<List<int>>();
-            for (int i = 0; i < 10; i++)
-            {
-                SoLuong.Add(new List<int>(new int[10]));
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    SoLuong.Add(new List<int>(new int[10]));
+            //}
             MauSacs = new List<string>();
             Sizes = new List<string>();
         }

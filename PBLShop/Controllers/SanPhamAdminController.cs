@@ -276,7 +276,10 @@ namespace PBLShop.Controllers
                         }
                     }
                 }
-
+                for (int m = 0; m < ql.MauSacs.Count; m++)
+                {
+                    ql.SoLuong.Add(new List<int>(new int[ql.Sizes.Count]));
+                }
                 int i = 0;
                 foreach (var mauSac in ql.MauSacs)
                 {

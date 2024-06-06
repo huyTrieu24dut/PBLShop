@@ -10,12 +10,12 @@
         <section class="tong-tien">
             <p>Tổng tiền:</p>
             @{
-                int? total = 0;
+                int total = 0;
                 foreach (var item in Model)
                 {
-                    total += item.SoLuong * item.DonGia;
+                    total += item.SoLuong * item.DonGia ?? 0;
                 }
-                <span class="gia">@total ₫</span>
+                <span class="gia">@total.ToString("N0") ₫</span>
             }
         </section>
         <section class="nut-bam">

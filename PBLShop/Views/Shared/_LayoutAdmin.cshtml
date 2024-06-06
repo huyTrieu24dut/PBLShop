@@ -48,7 +48,7 @@
                         <div class="offcanvas-body">
                             <ul class="navbar-nav flex-grow-1 pe-3">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="1">Tổng quan</a>
+                                    <a class="nav-link active" aria-current="page" asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="2">Tổng quan</a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -103,6 +103,7 @@
     @if (ViewBag.LoadCharts != null && ViewBag.LoadCharts)
     {
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
         <script>
             var productsData = @Html.Raw(Json.Serialize(ViewBag.ProductsData));
             var turnoverData = @Html.Raw(Json.Serialize(ViewBag.TurnoverData));

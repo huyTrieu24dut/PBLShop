@@ -52,9 +52,10 @@ namespace PBLShop.Controllers
                         var chiTietDhVM = new ChiTietDhVM();
                         chiTietDhVM.TenSp = item1.MaMauNavigation.MaSpNavigation.TenSp;
                         chiTietDhVM.MauSp = item1.MaMauNavigation.TenMau;
-                        chiTietDhVM.size = item1.MaKtNavigation?.Size; // null conditional operator
+                        chiTietDhVM.size = item1.MaKtNavigation.Size;
                         chiTietDhVM.DonGia = item1.MaMauNavigation.MaSpNavigation.DonGia;
-                        chiTietDhVM.SoLuong = (int)item1.SoLuong;
+                        chiTietDhVM.SoLuong = item1.SoLuong ?? 0;
+                        chiTietDhVM.HinhAnh = item1.MaMauNavigation.MaSpNavigation.AnhSp ?? "";
                         donhang.chiTietDhVMs.Add(chiTietDhVM);
                     }
                 }
@@ -67,7 +68,28 @@ namespace PBLShop.Controllers
         [HttpGet]
         public IActionResult Checkout()
         {
-            return View();
+            string customerId = HttpContext.User.FindFirstValue("MaNguoiDung");
+            if (customerId != null)
+            {
+                var customer = _context.NguoiDungs.Where(p => p.MaNguoiDung == Convert.ToInt32(customerId)).FirstOrDefault();
+                if (customer != null)
+                {
+                    var defaultInfo = new CheckoutVM
+                    {
+                        TenNguoiNhan = customer.HoTen,
+                        DienThoai = customer.SoDienThoai,
+                        DiaChi = customer.DiaChi,
+                    };
+                    return View(defaultInfo);
+                }
+                else
+                {
+                    TempData["Message"] = "Không tìm thấy khách hàng";
+                    return RedirectToAction("/404");
+                }
+            }
+            TempData["Message"] = "Không tìm thấy khách hàng";
+            return RedirectToAction("/404");
         }
 
         [Authorize(Roles ="KhachHang")]
@@ -87,7 +109,7 @@ namespace PBLShop.Controllers
                 int Total = 0;
                 foreach (var item in cartItems)
                 {
-                    Total += (int)(item.SoLuong * item.MaMauNavigation.MaSpNavigation.DonGia);
+                    Total += (item.SoLuong * item.MaMauNavigation.MaSpNavigation.DonGia) ?? 0;
                 }
 
                 var donhang = new DonHang
@@ -117,7 +139,7 @@ namespace PBLShop.Controllers
                     var sanpham = _context.QuanLySanPhams.FirstOrDefault(p => p.MaMau == item.MaMau && p.MaKichThuoc == item.MaKt);
                     if (sanpham != null)
                     {
-                        sanpham.SoLuong -= (int)item.SoLuong;
+                        sanpham.SoLuong -= item.SoLuong;
                         _context.Update(item.MaMauNavigation.MaSpNavigation);
                     }
                     _context.Update(item.MaMauNavigation.MaSpNavigation);

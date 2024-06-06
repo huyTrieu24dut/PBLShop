@@ -4,17 +4,18 @@
     ViewData["title"] = "Chi tiet san pham";
 }
 <div id="detailproduct">
-    <img src="~/image/product.jpg" alt="@Model.TenSp">
+    <img src="~/image/@Model.HinhAnh" alt="@Model.TenSp">
     <div class="product-info">
         <div>
             <h2>@Model.TenSp</h2>
-            <p>@Model.DonGia ₫</p>
+            <p>@Model.DonGia.ToString("N0") ₫</p>
             <p>Tình trạng: Còn hàng</p>
         </div>
     </div>
 
     <div class="product-options">
-        <form asp-action="Add" asp-controller="ChitietGh">
+        <form asp-action="Add" asp-controller="ChitietGh" asp-route-id="@Model.MaSp" >
+            <input type="text" value="@Model.MaSp" name="id" id="inputAddressDetailCus" hidden>
             <div>
                 <label for="color">Màu sắc:</label>
                 <select id="color" name="mausac">
@@ -42,7 +43,12 @@
                 <button type="submit" class="btn-buy-now">Mua ngay</button>
             </div>
         </form>
-        
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <script type="text/javascript">
+                swal("Lỗi", "@Html.Raw(System.Text.Encodings.Web.JavaScriptEncoder.Default.Encode(@TempData["ErrorMessage"].ToString()))", "loi");
+            </script>
+        }
     </div>
 </div>
 <div class="product-description">

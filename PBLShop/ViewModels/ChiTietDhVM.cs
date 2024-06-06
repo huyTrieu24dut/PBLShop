@@ -9,5 +9,6 @@ namespace PBLShop.ViewModels
         public string size { get; set; }
         public int DonGia { get; set; }
         public int SoLuong { get; set; }
+        public string HinhAnh { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace PBLShop.ViewModels
         public int MaDh { get; set; }
         public int MaKh { get; set; }
         public string? TenKh { get; set; }
+        public string? TenNv { get; set; }
 
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Vui lòng nhập tên người nhận")]
@@ -29,6 +30,7 @@ namespace PBLShop.ViewModels
         [Display(Name = "Ngày đặt")]
         [DataType(DataType.Date)]
         public DateTime? NgayDat { get; set; }
+        public DateTime? NgayHoanThanh { get; set; }
         public List<ChiTietDhVM> chiTietDhVMs { get; set; }
     }
 

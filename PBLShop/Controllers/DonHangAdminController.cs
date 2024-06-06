@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PBLShop.Models;
+using PBLShop.Services;
 using PBLShop.ViewModels;
 using System.Security.Claims;
 
@@ -59,7 +60,8 @@ namespace PBLShop.Controllers
                         chiTietDhVM.MauSp = item1.MaMauNavigation.TenMau;
                         chiTietDhVM.size = item1.MaKtNavigation.Size; // null conditional operator
                         chiTietDhVM.DonGia = item1.MaMauNavigation.MaSpNavigation.DonGia;
-                        chiTietDhVM.SoLuong = (int)item1.SoLuong;
+                        chiTietDhVM.SoLuong = item1.SoLuong ?? 0;
+                        chiTietDhVM.HinhAnh = item1.MaMauNavigation.MaSpNavigation.AnhSp ?? "";
                         donhang.chiTietDhVMs.Add(chiTietDhVM);
                     }
                 }
@@ -104,6 +106,8 @@ namespace PBLShop.Controllers
                         NgayHoanThanh = DateTime.Now,
                     };
                     _context.Add(hoadon);
+                    GenerateInvoice(hoadon.MaHd);
+
                 }
                 _context.SaveChanges();
             }
@@ -116,6 +120,54 @@ namespace PBLShop.Controllers
                 return RedirectToAction("Index", "DonHangAdmin");
             }
             return RedirectToAction("ReceiveList", "DonHangAdmin");
+        }
+
+        public void GenerateInvoice(int MaHd)
+        {
+            var hoaDon = _context.HoaDons
+                .Include(p => p.MaDhNavigation)
+                .ThenInclude(p => p.MaPtttNavigation)
+                .Where(p => p.MaHd == MaHd).FirstOrDefault();
+            if (hoaDon != null)
+            {
+                var donHang = new DonHangVM
+                {
+                    MaDh = hoaDon.MaDh,
+                    TenKh = hoaDon.MaDhNavigation.TenNguoiNhan,
+                    SoDienThoai = hoaDon.MaDhNavigation.SdtnguoiNhan,
+                    DiaChi = hoaDon.MaDhNavigation.DiaChi,
+                    TongTien = hoaDon.MaDhNavigation.TongTien,
+                    PhuongThuc = hoaDon.MaDhNavigation.MaPtttNavigation.TenPt,
+                    NgayDat = hoaDon.MaDhNavigation.NgayDatHang,
+                    NgayHoanThanh = hoaDon.NgayHoanThanh
+                };
+                var tenNV = _context.QuanLyDhs
+                    .Include(p => p.MaNvNavigation)
+                    .Where(p => p.MaDh == donHang.MaDh && p.MaTrangThai == 4).Select(p => p.MaNvNavigation.HoTen).FirstOrDefault();
+                donHang.TenNv = tenNV;
+                var chitietdhs = _context.ChiTietDhs
+                    .Include(p => p.MaMauNavigation)
+                    .Include(p => p.MaKtNavigation)
+                    .Include(p => p.MaMauNavigation.MaSpNavigation)
+                    .Where(p => p.MaDh == donHang.MaDh)
+                    .ToList();
+                foreach (var item1 in chitietdhs)
+                {
+                    if (item1.MaMauNavigation != null && item1.MaMauNavigation.MaSpNavigation != null)
+                    {
+                        var chiTietDhVM = new ChiTietDhVM();
+                        chiTietDhVM.TenSp = item1.MaMauNavigation.MaSpNavigation.TenSp;
+                        chiTietDhVM.MauSp = item1.MaMauNavigation.TenMau;
+                        chiTietDhVM.size = item1.MaKtNavigation.Size; // null conditional operator
+                        chiTietDhVM.DonGia = item1.MaMauNavigation.MaSpNavigation.DonGia;
+                        chiTietDhVM.SoLuong = item1.SoLuong ?? 0;
+                        chiTietDhVM.HinhAnh = item1.MaMauNavigation.MaSpNavigation.AnhSp ?? "";
+                        donHang.chiTietDhVMs.Add(chiTietDhVM);
+                    }
+                }
+                InvoiceGenerator generator = new InvoiceGenerator();
+                generator.GenerateInvoicePdf(donHang);
+            }
         }
 
         [Authorize(Roles = "Admin, NhanVien")]
@@ -195,7 +247,8 @@ namespace PBLShop.Controllers
                         chiTietDhVM.MauSp = item1.MaMauNavigation.TenMau;
                         chiTietDhVM.size = item1.MaKtNavigation.Size; // null conditional operator
                         chiTietDhVM.DonGia = item1.MaMauNavigation.MaSpNavigation.DonGia;
-                        chiTietDhVM.SoLuong = (int)item1.SoLuong;
+                        chiTietDhVM.SoLuong = item1.SoLuong ?? 0;
+                        chiTietDhVM.HinhAnh = item1.MaMauNavigation.MaSpNavigation.AnhSp ?? "";
                         donhang.chiTietDhVMs.Add(chiTietDhVM);
                     }
                 }
@@ -245,7 +298,8 @@ namespace PBLShop.Controllers
                         chiTietDhVM.MauSp = item1.MaMauNavigation.TenMau;
                         chiTietDhVM.size = item1.MaKtNavigation.Size; // null conditional operator
                         chiTietDhVM.DonGia = item1.MaMauNavigation.MaSpNavigation.DonGia;
-                        chiTietDhVM.SoLuong = (int)item1.SoLuong;
+                        chiTietDhVM.SoLuong = item1.SoLuong ?? 0;
+                        chiTietDhVM.HinhAnh = item1.MaMauNavigation.MaSpNavigation.AnhSp ?? "";
                         donhang.chiTietDhVMs.Add(chiTietDhVM);
                     }
                 }

@@ -16,17 +16,17 @@
         {
             <div class="card d-flex flex-row">
                 <div class="card-body flex-grow-1flex-grow-1">
-                    <img class="order-product-img" src="https://product.hstatic.net/200000690725/product/fstp013-5_53657408609_o_a6d428af703341789acf7cca4a8a54a0_master.jpg" alt="Ảnh SP">
+                    <img class="order-product-img" src="~/image/@item.HinhAnh" alt="Ảnh SP">
                 </div>
                 <div class="card-body flex-grow-1">
                     <p>@item.TenSp-@item.MauSp-@item.SoLuong</p>
                     <p>Số lượng: @item.SoLuong</p>
-                    <p class="text-danger">Đơn giá: @item.DonGia</p>
+                    <p class="text-danger">Đơn giá: @item.DonGia.ToString("N0") đ</p>
                 </div>
             </div>
         }
         <div class="d-flex">
-            <h5 class="text-danger col justify-content-end d-flex"> Tổng tiền: @Model.TongTien</h5>
+            <h5 class="text-danger col justify-content-end d-flex"> Tổng tiền: @Model.TongTien.ToString("N0") đ</h5>
         </div>
     </div>
 </div>

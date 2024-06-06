@@ -7,7 +7,11 @@
     <p>Chân thành cảm ơn quý khách đã tin tưởng lựa chọn sản phẩm của chúng tôi.</p>
     <p>Chúng tôi sẽ sớm kiểm tra xác nhận đơn. Vui lòng kiếm tra lịch sử mua hàng để biết trạng thái đơn hàng!</p></p>
     <div>
-        <button>Tiếp tục mua hàng</butto>
-        <button>Đến lịch sử mua hàng</button>
+        <form asp-action="Index" asp-controller="SanPham" method="get">
+            <button type="submit">Tiếp tục mua hàng</button>
+        </form>
+        <form asp-action="Index" asp-controller="DonHang" method="get">
+            <button type="submit">Đến lịch sử mua hàng</button>
+        </form>
     </div>
 </div>

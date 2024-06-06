@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="~/css/main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 </head>
 <body>
   <header class = "header">
@@ -31,7 +34,7 @@
                 <div class="dropdown-user-content">
                     @if (User.IsInRole("Admin") || User.IsInRole("NhanVien"))
                     {
-                        <a asp-action="Statistic" asp-controller="DonHangAdmin">Trang quản lí</a>
+                        <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="2">Trang quản lí</a>
                         <a asp-action="Logout" asp-controller="User">Đăng xuất</a>
                     }
                     else if (User.IsInRole("KhachHang"))

@@ -20,7 +20,7 @@
         <tbody>
             <th scope="row">@item.MaSp</th>
             <td>@item.TenSp</td>
-            <td>@item.DonGia</td>
+            <td>@item.DonGia.ToString("N0") đ</td>
             <td>
                 <a asp-action="UpdateQuantity" asp-controller="SanPhamAdmin" asp-route-id="@item.MaSp" class="btn btn-warning mx-1 my-1">Chi tiết</a>
             </td>

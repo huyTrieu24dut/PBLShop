@@ -8,15 +8,15 @@
         <form asp-action="Checkout" asp-controller="DonHang">
             <div>
                 <label for="inputNameCus">Họ và Tên:</label>
-                <input asp-for="@Model.TenNguoiNhan" type="text" id="inputNameCus"placeholder="Tên khách hàng..." required>
+                <input asp-for="@Model.TenNguoiNhan" type="text" value="@Model.TenNguoiNhan" id="inputNameCus" required>
             </div>
             <div>
                 <label for="inputTelCus">Số điện thoại:</label>
-                <input asp-for="@Model.DienThoai" type="tel" id="inputTelCus" placeholder="Số điện thoại..." required>
+                <input asp-for="@Model.DienThoai" type="tel" value="@Model.DienThoai" id="inputTelCus" required>
             </div>
             <div>
                 <label for="inputAddressDetailCus">Địa chỉ cụ thể:</label>
-                <input asp-for="@Model.DiaChi" type="text" id="inputAddressDetailCus" placeholder="Địa chỉ..." required>
+                <input asp-for="@Model.DiaChi" type="text" value="@Model.DiaChi" id="inputAddressDetailCus" required>
             </div>
             <div>
                 <label for="PaymentMethod">Phương thức thanh toán</label>

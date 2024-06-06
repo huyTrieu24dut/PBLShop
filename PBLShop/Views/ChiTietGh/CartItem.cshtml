@@ -8,17 +8,17 @@
     {
         <div class="san-pham">
             <div class="hinh-anh">
-                <img src="~/image/product.jpg" alt="Hình ảnh sản phẩm">
+                <img src="~/image/@item.HinhAnh" alt="Hình ảnh sản phẩm">
             </div>
             <div class="thong-tin">
                 <h2>@item.TenSp</h2>
                 <p class="gia">Số Lượng: @item.SoLuong</p>
                 <p class="gia">Màu: @item.MauSp</p>
                 <p class="gia">Size: @item.size</p>
-                <p class="gia">Đơn Giá: @item.DonGia đ</p>
+                <p class="gia">Đơn Giá: @item.DonGia.ToString("N0") đ</p>
                 <a asp-action="Detail" asp-controller="SanPham" asp-route-id="@item.MaSp" class="chi-tiet">Chi tiết</a>
             </div>
-            <form asp-controller="ChiTietGh" asp-action="Remove" asp-route-mausac="@item.MauSp" asp-route-size="@item.size">
+            <form asp-controller="ChiTietGh" asp-action="Remove" asp-route-id="@item.MaSp" asp-route-mausac="@item.MauSp" asp-route-size="@item.size">
                 <button><i class="fa fa-trash">Xóa</i></button>
             </form>
         </div>

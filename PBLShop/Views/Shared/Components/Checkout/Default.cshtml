@@ -6,27 +6,27 @@
 
         <div class="buy-content__order-san-pham">
             <div class="buy-content__order-hinh-anh">
-                <img src="~/image/product.jpg" alt="Hình ảnh sản phẩm">
+                <img src="~/image/@item.HinhAnh" alt="Hình ảnh sản phẩm">
             </div>
             <div class="buy-content__order-thong-tin">
                 <h2>@item.TenSp</h2>
                 <p class="buy-content__order-gia">Màu: @item.MauSp ₫</p>
                 <p class="buy-content__order-gia">Size @item.size ₫</p>
-                <p class="buy-content__order-gia">@item.DonGia ₫</p>
+                <p class="buy-content__order-gia">@item.DonGia.ToString("N0") ₫</p>
                 <a href="#" class="buy-content__order-chi-tiet">Chi tiết</a>
             </div>
         </div>
     }
 </div>
 @{
-    int? total = 0;
+    int total = 0;
     foreach (var item in Model)
     {
-        total += item.SoLuong * item.DonGia;
+        total += item.SoLuong * item.DonGia ?? 0;
     }
     <div>
         <p>Tạm tính</p>
-        <p>@total đ</p>
+        <p>@total.ToString("N0") đ</p>
     </div>
     <div>
         <p>Phí vận chuyển</p>
@@ -34,6 +34,6 @@
     </div>
     <div>
         <p>Tổng cộng</p>
-        <p>@total đ</p>
+        <p>@total.ToString("N0") đ</p>
     </div>
 }

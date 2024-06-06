@@ -15,7 +15,6 @@
                 <th scope="col">Tên người nhận</th>
                 <th scope="col">Tổng tiền</th>
                 <th scope="col">Xem chi tiết</th>
-                <th scope="col">Xem hóa đơn</th>
             </tr>
         </thead>
         <tbody>
@@ -26,15 +25,12 @@
                     <td>@item.MaKh</td>
                     <td>@item.TenKh</td>
                     <td>@item.TenNguoiNhan</td>
-                    <td>@item.TongTien đ</td>
+                    <td>@item.TongTien.ToString("N0") đ</td>
                     <td>
                         <button type="button" class="dropdown-toggle btn btn-info" data-bs-toggle="dropdown" aria-expanded="false">
                             Xem chi tiết
                         </button>
                         @await Html.PartialAsync("Detail", item)
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-primary">Xem hóa đơn</button>
                     </td>
                 </tr>
             }

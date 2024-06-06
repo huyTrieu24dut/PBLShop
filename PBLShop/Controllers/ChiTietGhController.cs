@@ -37,25 +37,25 @@ namespace PBLShop.Controllers
                 size = p.MaKtNavigation.Size,
                 DonGia = p.MaMauNavigation.MaSpNavigation.DonGia,
                 SoLuong = p.SoLuong,
-                HinhAnh = p.MaMauNavigation.AnhSp,
+                HinhAnh = p.MaMauNavigation.MaSpNavigation.AnhSp,
                 DanhMuc = p.MaMauNavigation.MaSpNavigation.MaDmNavigation.TenDanhMuc,
             });
             return View(result);
         }
 
         [Authorize(Roles = "KhachHang")]
-        public IActionResult Add(string? mausac, string? size, int? soluong)
+        public IActionResult Add(int id, string? mausac, string? size, int? soluong)
         {
             var chitietsp = _context.QuanLySanPhams
                 .Include(p => p.MaMauNavigation)
                 .Include(p => p.MaKichThuocNavigation)
-                .FirstOrDefault(p => p.MaMauNavigation.TenMau == mausac && p.MaKichThuocNavigation.Size == size);
+                .FirstOrDefault(p => p.MaMauNavigation.TenMau == mausac && p.MaKichThuocNavigation.Size == size && p.MaMauNavigation.MaSp == id);
             if (chitietsp != null)
             {
                 if (chitietsp.SoLuong < soluong || chitietsp.SoLuong == 0)
                 {
-                    ModelState.AddModelError("loi", "Sản phẩm không đủ số lượng");
-                    return RedirectToAction("Detail", "SanPham");
+                    TempData["ErrorMessage"] = "Không đủ số lượng";
+                    return RedirectToAction("Detail", "SanPham", new { id = chitietsp.MaMauNavigation.MaSp });
                 }
                 var existingCartItem = _context.ChiTietGhs.FirstOrDefault(p => p.MaMau == chitietsp.MaMau && p.MaKt == chitietsp.MaKichThuoc && p.MaKh.ToString() == HttpContext.User.FindFirstValue("MaNguoiDung"));
                 if (existingCartItem != null)
@@ -98,7 +98,7 @@ namespace PBLShop.Controllers
                     MauSp = p.MaMauNavigation.TenMau,
                     size = p.MaKtNavigation.Size,
                     SoLuong = p.SoLuong,
-                    HinhAnh = p.MaMauNavigation.AnhSp,
+                    HinhAnh = p.MaMauNavigation.MaSpNavigation.AnhSp,
                     DanhMuc = p.MaMauNavigation.MaSpNavigation.MaDmNavigation.TenDanhMuc
                 })
                 .ToList();
@@ -107,9 +107,10 @@ namespace PBLShop.Controllers
         }
 
         [Authorize(Roles = "KhachHang")]
-        public IActionResult Remove(string mausac, string size)
+        public IActionResult Remove(int id, string mausac, string size)
         {
-            var cartItem = _context.ChiTietGhs.FirstOrDefault(item => item.MaMauNavigation.TenMau == mausac && item.MaKtNavigation.Size == size && item.MaKh.ToString() == HttpContext.User.FindFirstValue("MaNguoiDung"));
+            var cartItem = _context.ChiTietGhs
+                .FirstOrDefault(item => item.MaMauNavigation.MaSp == id && item.MaMauNavigation.TenMau == mausac && item.MaKtNavigation.Size == size && item.MaKh.ToString() == HttpContext.User.FindFirstValue("MaNguoiDung"));
 
             if (cartItem != null)
             {
@@ -137,7 +138,7 @@ namespace PBLShop.Controllers
                     MauSp = p.MaMauNavigation.TenMau,
                     size = p.MaKtNavigation.Size,
                     SoLuong = p.SoLuong,
-                    HinhAnh = p.MaMauNavigation.AnhSp,
+                    HinhAnh = p.MaMauNavigation.MaSpNavigation.AnhSp,
                     DanhMuc = p.MaMauNavigation.MaSpNavigation.MaDmNavigation.TenDanhMuc
                 })
                 .ToList();

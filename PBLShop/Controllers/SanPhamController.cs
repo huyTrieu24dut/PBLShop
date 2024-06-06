@@ -79,6 +79,7 @@ namespace PBLShop.Controllers
             result.MaSp = 0;
             result.MauSac = new List<string>();
             result.KichThuoc = new List<string>();
+            result.SoLuong = 0;
             foreach (var detail in data)
             {
                 if (result.MaSp == 0)
@@ -86,6 +87,7 @@ namespace PBLShop.Controllers
                     result.MaSp = detail.MaMauNavigation.MaSp;
                     result.TenSp = detail.MaMauNavigation.MaSpNavigation.TenSp;
                     result.DonGia = detail.MaMauNavigation.MaSpNavigation.DonGia;
+                    result.HinhAnh = detail.MaMauNavigation.MaSpNavigation.AnhSp;
                     result.MoTa = detail.MaMauNavigation.MaSpNavigation.MoTa ?? string.Empty;
                     result.DanhMuc = detail.MaMauNavigation.MaSpNavigation.MaDmNavigation.TenDanhMuc;
                 }
@@ -105,7 +107,6 @@ namespace PBLShop.Controllers
                         result.KichThuoc.Add(detail.MaKichThuocNavigation.Size);
                     }
                 }
-
                 result.SoLuong += detail.SoLuong;
             }
             return View(result);
