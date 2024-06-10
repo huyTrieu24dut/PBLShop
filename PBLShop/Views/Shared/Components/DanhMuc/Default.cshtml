@@ -13,9 +13,12 @@
                             <input type="checkbox" id="@item.MaDM" class="category-toggle">
                             <label class="category-name" for="@item.MaDM">@item.TenDM</label>
                             <ul class="sub-category">
-                                @foreach (var childitem in item.DanhMucCon)
+                                @if(item.DanhMucCon != null)
                                 {
-                                    <li><a class="sub-category" asp-controller="SanPham" asp-action="Index" asp-route-dm="@childitem.MaDM">@childitem.TenDM</a></li>
+                                    @foreach (var childitem in item.DanhMucCon)
+                                    {
+                                        <li><a class="sub-category" asp-controller="SanPham" asp-action="Index" asp-route-dm="@childitem.MaDM">@childitem.TenDM</a></li>
+                                    }
                                 }
                             </ul>
                         </div>
@@ -23,23 +26,5 @@
                 }
             </ul>
         </li>
-        <div class="kich-thuoc">
-            <label for="kich-thuoc">Kích thước:</label>
-            <select id="kich-thuoc">
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
-                <option value="XXL">XXL</option>
-            </select>
-        </div>
-        <div>
-            <h3>Khoảng giá</h3>
-            <label for="priceFilter">Giá bắt đầu:</label>
-            <input type="text" id="priceFilterStart" name="priceFilter" required>
-            <label for="priceFilter">Giá bắt đầu:</label>
-            <input type="text" id="priceFilterEnd" name="pricefilter" required>
-        </div>
     </ul>
-    <button type="submit">Tìm kiếm</button>
 </aside>

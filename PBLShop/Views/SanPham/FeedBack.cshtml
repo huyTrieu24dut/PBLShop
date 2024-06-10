@@ -1,0 +1,57 @@
+﻿@model IEnumerable<PBLShop.ViewModels.DanhGiaVM>
+<div id="feedback">
+    @{
+        var SoSaos = Model.Select(p => p.SoSao).ToList();
+        var tong = SoSaos.Sum();
+        var trungBinh = (double)tong / SoSaos.Count();
+    }
+    <div class="product-review">
+        <h1>Đánh giá sản phẩm (@Model.Count() đánh giá)</h1>
+        <div class="average-rating">
+            <span class="rating-number">Số sao trung bình @trungBinh</span>
+            <span class="stars">
+                @for (int i = 1; i <= 5; i++)
+                {
+                    if (i <= trungBinh)
+                    {
+                        <i class="fas fa-star"></i>
+                    }
+                    else if ((i - trungBinh) > 0 && (i - trungBinh) < 1)
+                    {
+                        <i class="fas fa-star-half-alt"></i>
+                    }
+                    else
+                    {
+                        <i class="far fa-star"></i>
+                    }
+                }
+            </span>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="review-item featured">
+                <div class="review-info">
+                    <span class="rating">@item.SoSao</span>
+                    <span class="stars">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            if (i <= item.SoSao)
+                            {
+                                <i class="fas fa-star"></i>
+                            }
+                            else
+                            {
+                                <i class="far fa-star"></i>
+                            }
+                        }
+                    </span>
+                    <span class="reviewer">@item.TenKh</span>
+                </div>
+                <blockquote class="review-content">
+                    @item.NoiDung
+                </blockquote>
+            </div>
+        }
+    </div>
+
+</div>

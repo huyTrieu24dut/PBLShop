@@ -33,6 +33,7 @@
         public List<string>? MauSac { get; set; }
         public List<string>? KichThuoc { get; set; }
         public List<List<int>>? SoLuongs { get; set; }
+        public List<DanhGiaVM>? DanhGia { get; set; }
         public string DanhMuc { get; set; } = null!;
     }
 

@@ -73,3 +73,34 @@
     </p>
     <p><b>Lưu ý:</b> Vui lòng giặt tay hoặc giặt khô để giữ form áo được bền đẹp.</p>
 </div>
+<div id="feedbackuser">
+    <div class="container">
+        <h2>Đánh giá sản phẩm</h2>
+
+
+        <div class="review-form">
+            <h3>Đánh giá của bạn</h3>
+            <form asp-action="Create" asp-controller="DanhGia">
+                <input name ="id" hidden value="@Model.MaSp" />
+                <label for="rating">Đánh giá (1-5 sao):</label>
+                <select name="soSao" id="rating">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+
+                <label for="review">Bình luận:</label>
+                <textarea id="review" name="noiDung" rows="5"></textarea>
+
+                <button type="submit">Gửi đánh giá</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+@if (Model.DanhGia != null)
+{
+    @await Html.PartialAsync("FeedBack", Model.DanhGia)
+}

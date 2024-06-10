@@ -109,6 +109,26 @@ namespace PBLShop.Controllers
                 }
                 result.SoLuong += detail.SoLuong;
             }
+            
+            var danhGias = _context.DanhGia
+                .Include(p => p.MaNguoiDungNavigation)
+                .Include(p => p.MaSpNavigation)
+                .Where(p => p.MaSp == id)
+                .ToList();
+            if (danhGias != null)
+            {
+                result.DanhGia = new List<DanhGiaVM>();
+                foreach (var danhGia in danhGias)
+                {
+                    result.DanhGia.Add(new DanhGiaVM
+                    {
+                        MaDanhGia = danhGia.MaDg,
+                        TenKh = danhGia.MaNguoiDungNavigation.HoTen,
+                        SoSao = danhGia.SoSao ?? 0,
+                        NoiDung = danhGia.NoiDung,
+                    });
+                }
+            }
             return View(result);
         }
 
