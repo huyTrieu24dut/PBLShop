@@ -23,6 +23,7 @@ namespace PBLShop.Controllers
             var donhangs = _context.DonHangs
                 .Include(p => p.MaNguoiDungNavigation)
                 .Include(p => p.MaTrangThaiNavigation)
+                .Include(p => p.HoaDon)
                 .Where(p => p.MaNguoiDung.ToString() == HttpContext.User.FindFirstValue("MaNguoiDung"))
                 .ToList();
             if (matrangthai != null)
@@ -32,12 +33,14 @@ namespace PBLShop.Controllers
 
             List<DonHangVM> result = new List<DonHangVM>();
             foreach (var item in donhangs){
+                var file = _context.HoaDons.Where(p => p.MaDh == item.MaDh).Select(p => p.FileHoaDon).FirstOrDefault();
                 var donhang = new DonHangVM
                 {
                     MaDh = item.MaDh,
                     TenKh = item.MaNguoiDungNavigation.HoTen,
                     TongTien = item.TongTien,
-                    TrangThai = item.MaTrangThaiNavigation.TenTrangThai
+                    TrangThai = item.MaTrangThaiNavigation.TenTrangThai,
+                    FileHoaDon = file,
                 };
                 var chitietdhs = _context.ChiTietDhs
                     .Include(p => p.MaMauNavigation)

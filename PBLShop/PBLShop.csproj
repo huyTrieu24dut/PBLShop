@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Views\Shared\InvoiceHtml\Invoice_Template.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlToPdfMaster" Version="1.0.0.3" />
     <PackageReference Include="itext7" Version="7.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.18" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.18" />
@@ -15,6 +20,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.12" />
+    <PackageReference Include="RazorLight" Version="2.3.1" />
+    <PackageReference Include="Scriban" Version="5.10.0" />
   </ItemGroup>
 
   <ItemGroup>

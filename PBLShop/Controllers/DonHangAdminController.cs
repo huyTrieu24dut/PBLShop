@@ -104,9 +104,9 @@ namespace PBLShop.Controllers
                     {
                         MaDh = donhang.MaDh,
                         NgayHoanThanh = DateTime.Now,
+                        FileHoaDon = $"Invoice_{donhang.MaDh}.pdf",
                     };
                     _context.Add(hoadon);
-                    GenerateInvoice(hoadon.MaHd);
 
                 }
                 _context.SaveChanges();
@@ -115,9 +115,9 @@ namespace PBLShop.Controllers
             {
                 return RedirectToAction("ProgressingList", "DonHangAdmin");
             }
-            else if (maTrangThai == 4)
+            else if (maTrangThai == 4 && donhang != null)
             {
-                return RedirectToAction("Index", "DonHangAdmin");
+                return RedirectToAction("GenerateInvoicePdf", "HoaDon", new {id = donhang.MaDh});
             }
             return RedirectToAction("ReceiveList", "DonHangAdmin");
         }

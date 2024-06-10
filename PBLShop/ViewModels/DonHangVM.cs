@@ -14,7 +14,7 @@ namespace PBLShop.ViewModels
         public string? TenKh { get; set; }
         public string? TenNv { get; set; }
 
-        [Display(Name = "Email")]
+        [Display(Name = "Tên người nhận")]
         [Required(ErrorMessage = "Vui lòng nhập tên người nhận")]
         public string? TenNguoiNhan { get; set; }
 
@@ -22,6 +22,11 @@ namespace PBLShop.ViewModels
         [Required(ErrorMessage = "Vui lòng nhập số điện thoại")]
         [MaxLength(10, ErrorMessage = "Tối đa 10 kí tự")]
         public string? SoDienThoai { get; set; }
+
+        public string? SdtNguoiDung { get; set; }
+
+        public string? Email { get; set; }
+
         public string? DiaChi { get; set; }
         public string? TrangThai { get; set; }
         public int TongTien { get; set; }
@@ -31,6 +36,7 @@ namespace PBLShop.ViewModels
         [DataType(DataType.Date)]
         public DateTime? NgayDat { get; set; }
         public DateTime? NgayHoanThanh { get; set; }
+        public string? FileHoaDon { get; set; }
         public List<ChiTietDhVM> chiTietDhVMs { get; set; }
     }
 

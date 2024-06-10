@@ -3,6 +3,9 @@
 @{
     Layout = "_LayoutAdmin";
 }
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 <main class="px-3">
     <h3 class="my-3">Lịch sử bán hàng</h3>
 
@@ -15,6 +18,7 @@
                 <th scope="col">Tên người nhận</th>
                 <th scope="col">Tổng tiền</th>
                 <th scope="col">Xem chi tiết</th>
+                <th scope="col">Xem hóa đơn</th>
             </tr>
         </thead>
         <tbody>
@@ -32,9 +36,21 @@
                         </button>
                         @await Html.PartialAsync("Detail", item)
                     </td>
+                    <td>
+                        <input type="hidden" id="invoiceId" value="@item.MaDh" />
+                        <button id="generatePdfButton">Xem hóa đơn</button>
+                    </td>
                 </tr>
             }
-
         </tbody>
+        <script>
+            $(document).ready(function () {
+                $("#generatePdfButton").click(function () {
+                    var id = $("#invoiceId").val();
+                    var url = '@Url.Action("GenerateInvoicePdf", "HoaDon")' + '/' + id;
+                    window.location.href = url;
+                });
+            });
+        </script>
     </table>
 </main>
