@@ -19,11 +19,13 @@
                     <th>Màu</th>
                     <th>Kích cỡ</th>
                     <th>Số lượng</th>
+                    <th>Hình ảnh</th>
                 </tr>
             </thead>
             <tbody>
                 @for (int i = 0; i < Model.MauSacs.Count; i++)
                 {
+                    bool isFirstRowForColor = true;
                     for (int j = 0; j < Model.Sizes.Count; j++)
                     {
                         <tr>
@@ -32,6 +34,25 @@
                             <td>
                                 <input type="number" asp-for="SoLuong[i][j]" min="0" value="@Model.SoLuong[i][j]" class="form-control" />
                             </td>
+                            @if (isFirstRowForColor)
+                            {
+                                <td rowspan="@Model.Sizes.Count">
+                                    <input type="file" name="NewHinhAnhs" />
+                                    @if (!string.IsNullOrEmpty(Model.HinhAnhs[i]))
+                                    {
+                                        <div>
+                                            <img src="~/image/@Model.HinhAnhs[i]" alt="Current Image" style="width: 100px; height: auto; margin-top: 10px;" />
+                                            <input type="hidden" name="HinhAnhs[@i]" value="@Model.HinhAnhs[i]" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <input type="hidden" name="HinhAnhs[@i]" value="" />
+                                    }
+
+                                    @{isFirstRowForColor = false;}
+                                </td>
+                            }
                         </tr>
                     }
                 }

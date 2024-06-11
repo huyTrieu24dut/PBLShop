@@ -50,12 +50,12 @@
                 <div class="col-sm-12 py-2">
                     <div class="form-group">
                         <label for="hinhanh">Hình ảnh:</label>
-                        <input asp-for="HinhAnh" type="file" class="form-control-file" id="hinhanh" name="hinhanh" required>
+                        <input asp-for="HinhAnh" type="file" class="form-control-file" id="hinhanh" name="hinhanh">
                         @if (!string.IsNullOrEmpty(Model.HinhAnh))
                         {
                             <div>
                                 <p>Hình đã chọn: @Model.HinhAnh</p>
-                                <input type="hidden" name="existingFileName" value="@Model.HinhAnh" />
+                                <input type="hidden" name="existingFileName" value="@Model.HinhAnh" required/>
                             </div>
                         }
                     </div>

@@ -7,6 +7,7 @@ using PBLShop.ViewModels;
 using System.Drawing;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Security.Policy;
+using Microsoft.IdentityModel.Tokens;
 
 namespace PBLShop.Controllers
 {
@@ -119,7 +120,8 @@ namespace PBLShop.Controllers
                     sanpham.DonGia = model.DonGia;
                     sanpham.MoTa = model.MoTa;
                     sanpham.MaDm = model.MaDanhMuc;
-                    sanpham.AnhSp = model.HinhAnh;
+                    if (!model.HinhAnh.IsNullOrEmpty())
+                        sanpham.AnhSp = model.HinhAnh;
                     _context.SaveChanges();
                 }
             }
@@ -191,41 +193,23 @@ namespace PBLShop.Controllers
             ql.MaSp = id;
             ql.MauSacs.AddRange(mauSac.Split(","));
             ql.Sizes.AddRange(size.Split(","));
+            for (int m = 0; m < ql.MauSacs.Count; m++)
+            {
+                ql.SoLuong.Add(new List<int>(new int[ql.Sizes.Count]));
+            }
+            ql.NewHinhAnhs = new List<IFormFile>(new IFormFile[ql.MauSacs.Count]);
             return View(ql);
         }
 
-        //[HttpPost]
-        //[Authorize(Roles = "Admin, NhanVien")]
-        //public IActionResult Create2(QuanLySoLuongVM model)
-        //{
-        //    if(ModelState.IsValid)
-        //    {
-        //        foreach (var mau in model.MauSacs)
-        //        {
-        //            foreach (var size in model.Sizes)
-        //            {
-        //                var qlsp = new QuanLySanPham
-        //                {
-        //                    SoLuong = model.SoLuong,
-        //                    MaMau = _context.MauSacs.Where(p => p.MaSp == model.MaSp && p.TenMau == mau).Select(p => p.MaMau).FirstOrDefault(),
-        //                    MaKichThuoc = _context.KichThuocs.Where(p => p.Size == size).Select(p => p.MaKt).FirstOrDefault(),
-        //                };
-        //                _context.Add(qlsp);
-        //            }
-        //        }
-        //        _context.SaveChanges();
-        //    }
-        //    return RedirectToAction("Index", "SanPhamAdmin");
-        //}
-
         [HttpPost]
         [Authorize(Roles = "Admin, NhanVien")]
-        public IActionResult Create2(int MaSp, List<string> MauSacs, List<string> Sizes, List<List<int>> SoLuong)
+        public IActionResult Create2(int MaSp, List<string> MauSacs, List<string> Sizes, List<List<int>> SoLuong, List<IFormFile> HinhAnhs)
         {
             if (ModelState.IsValid)
             {
                 for (int i = 0; i < MauSacs.Count; i++)
                 {
+                    bool first = true;
                     for (int j = 0; j < Sizes.Count; j++)
                     {
                         var qlsp = new QuanLySanPham
@@ -235,6 +219,18 @@ namespace PBLShop.Controllers
                             MaKichThuoc = _context.KichThuocs.Where(p => p.Size == Sizes[j]).Select(p => p.MaKt).FirstOrDefault(),
                         };
                         _context.Add(qlsp);
+                        if (first)
+                        {
+                            var mau = _context.MauSacs.Where(p => p.MaMau == qlsp.MaMau).FirstOrDefault();
+                            if (mau != null && i < HinhAnhs.Count)
+                            {
+                                if (HinhAnhs != null && HinhAnhs[i] != null && HinhAnhs[i].Length > 0)
+                                {
+                                    mau.AnhSp = HinhAnhs[i].FileName;
+                                }
+                            }
+                            first = false;
+                        }
                     }
                 }
                 _context.SaveChanges();
@@ -265,6 +261,7 @@ namespace PBLShop.Controllers
                         if (!ql.MauSacs.Contains(detail.MaMauNavigation.TenMau))
                         {
                             ql.MauSacs.Add(detail.MaMauNavigation.TenMau);
+                            ql.HinhAnhs.Add(detail.MaMauNavigation.AnhSp ?? "");
                         }
                     }
 
@@ -280,6 +277,7 @@ namespace PBLShop.Controllers
                 {
                     ql.SoLuong.Add(new List<int>(new int[ql.Sizes.Count]));
                 }
+                ql.NewHinhAnhs = new List<IFormFile>(new IFormFile[ql.MauSacs.Count]);
                 int i = 0;
                 foreach (var mauSac in ql.MauSacs)
                 {
@@ -301,18 +299,36 @@ namespace PBLShop.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin, NhanVien")]
-        public IActionResult UpdateQuantity(int MaSp, List<string> MauSacs, List<string> Sizes, List<List<int>> SoLuong)
+        public IActionResult UpdateQuantity(QuanLySoLuongVM model)
         {
             if (ModelState.IsValid)
             {
-                for (int i = 0; i < MauSacs.Count; i++)
+                for (int i = 0; i < model.MauSacs.Count; i++)
                 {
-                    for (int j = 0; j < Sizes.Count; j++)
+                    bool first = true;
+                    for (int j = 0; j < model.Sizes.Count; j++)
                     {
-                        var chitiet = _context.QuanLySanPhams.Where(p => p.MaMauNavigation.TenMau == MauSacs[i] && p.MaKichThuocNavigation.Size == Sizes[j] && p.MaMauNavigation.MaSp == MaSp).FirstOrDefault();
+                        var chitiet = _context.QuanLySanPhams
+                            .Include(p => p.MaMauNavigation)
+                            .Where(p => p.MaMauNavigation.TenMau == model.MauSacs[i] && p.MaKichThuocNavigation.Size == model.Sizes[j] && p.MaMauNavigation.MaSp == model.MaSp)
+                            .FirstOrDefault();
                         if (chitiet != null)
                         {
-                            chitiet.SoLuong = SoLuong[i][j];
+                            var maMau = chitiet.MaMau;
+                            chitiet.SoLuong = model.SoLuong[i][j];
+
+                            if (first)
+                            {
+                                var mau = _context.MauSacs.Where(p => p.MaMau == maMau).FirstOrDefault();
+                                if(mau != null && i < model.NewHinhAnhs.Count)
+                                {
+                                    if (model.NewHinhAnhs != null && model.NewHinhAnhs[i] != null && model.NewHinhAnhs[i].Length > 0 )
+                                    {
+                                        mau.AnhSp = model.NewHinhAnhs[i].FileName;
+                                    }
+                                }
+                                first = false;
+                            }
                         }
                     }
                 }
