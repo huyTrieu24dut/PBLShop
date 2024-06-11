@@ -37,20 +37,12 @@
                         @await Html.PartialAsync("Detail", item)
                     </td>
                     <td>
-                        <input type="hidden" id="invoiceId" value="@item.MaDh" />
-                        <button id="generatePdfButton">Xem hóa đơn</button>
+                        <form asp-action="GetInvoice" asp-controller="HoaDon" asp-route-id="@item.MaDh" method="get">
+                            <button type="submit" class="btn btn-primary">Xem hóa đơn</button>
+                        </form>
                     </td>
                 </tr>
             }
         </tbody>
-        <script>
-            $(document).ready(function () {
-                $("#generatePdfButton").click(function () {
-                    var id = $("#invoiceId").val();
-                    var url = '@Url.Action("GenerateInvoicePdf", "HoaDon")' + '/' + id;
-                    window.location.href = url;
-                });
-            });
-        </script>
     </table>
 </main>

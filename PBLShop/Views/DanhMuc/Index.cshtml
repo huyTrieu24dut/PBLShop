@@ -21,6 +21,7 @@
                         <label for="newCategoryParent" class="form-label">Danh mục cha:</label>
                         <select name="MaDMCha" class="form-select" id="newCategoryParent">
                             <option selected disabled>Chọn danh mục cha</option>
+                            <option value="0">Không</option>
                             @foreach (var dmcha in Model)
                             {
                                 if (dmcha.MaDMCha == null)

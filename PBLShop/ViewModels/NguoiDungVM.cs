@@ -12,6 +12,7 @@ namespace PBLShop.ViewModels
         public string? SoDienThoai { get; set; }
         public string? DiaChi { get; set; }
         public string? vaiTro {  get; set; }
+        public int MaVaiTro { get; set; }
         public bool trangThai { get; set; } = true;
     }
     public class ThongTinNguoiDung

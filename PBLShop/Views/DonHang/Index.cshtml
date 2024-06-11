@@ -51,7 +51,10 @@
                                 @{
                                     if (item.TrangThai == "Đã hoàn thành")
                                     {
-                                        <a class="OrderHistory-orders-product-btn" asp-action="GetInvoice" asp-controller="HoaDon" asp-route-id="@item.MaDh" class="download-btn">Tải File</a>
+                                        <form asp-action="GetInvoice" asp-controller="HoaDon" asp-route-id="@item.MaDh" method="get">
+                                            <button type="submit" class="OrderHistory-orders-product-btn download-btn">Xem hóa đơn</button>
+                                        </form>
+                                        
                                     }
                                     if (item.TrangThai == "Đã hủy")
                                     {

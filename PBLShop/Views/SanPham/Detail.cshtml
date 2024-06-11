@@ -9,7 +9,18 @@
         <div>
             <h2>@Model.TenSp</h2>
             <p>@Model.DonGia.ToString("N0") ₫</p>
-            <p>Tình trạng: Còn hàng</p>
+            @{
+                string status = "";
+                if (Model.SoLuong == 0)
+                {
+                    status = "Hết hàng";
+                }
+                else
+                {
+                    status = "Còn hàng";
+                }
+            }
+            <p>Tình trạng: @status</p>
         </div>
     </div>
 
@@ -100,7 +111,7 @@
 
     </div>
 </div>
-@if (Model.DanhGia != null)
+@if (Model.DanhGia.Count() != 0)
 {
     @await Html.PartialAsync("FeedBack", Model.DanhGia)
 }

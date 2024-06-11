@@ -186,6 +186,7 @@ namespace PBLShop.Controllers
                 SoDienThoai = nguoiDung.SoDienThoai,
                 DiaChi = nguoiDung.DiaChi,
                 vaiTro = nguoiDung.MaVaiTroNavigation.TenVaiTro,
+                MaVaiTro = nguoiDung.MaVaiTro,
             };
             return View(khachhangvm);
         }

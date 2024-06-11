@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Scriban;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace PBLShop.Controllers
@@ -106,6 +107,7 @@ namespace PBLShop.Controllers
             }
         }
 
+        [Authorize]
         public IActionResult GetInvoice(int id)
         {
             var pdfPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Invoices", $"Invoice_{id}.pdf");
@@ -115,7 +117,14 @@ namespace PBLShop.Controllers
                 FileName = pdfPath,
                 UseShellExecute = true
             });
-            return RedirectToAction("Index", "DonHang");
+            if (User.IsInRole("Admin") || User.IsInRole("NhanVien"))
+            {
+                return RedirectToAction("Index", "DonHangAdmin");
+            }
+            else
+            {
+                return RedirectToAction("Index", "DonHang");
+            }
         }
     }
 }

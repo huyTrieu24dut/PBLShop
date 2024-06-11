@@ -67,7 +67,7 @@ namespace PBLShop.Controllers
                 dm.TenDanhMuc = TenDM;
                 if (MaDMCha != null)
                 {
-                    dm.MaDmcha = MaDMCha;
+                    dm.MaDmcha = (MaDMCha == 0) ? null : MaDMCha;
                     dm.TrangThai = true;
                 }
                 _context.Add(dm);
