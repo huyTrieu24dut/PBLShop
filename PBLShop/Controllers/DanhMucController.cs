@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using iText.Barcodes.Dmcode;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PBLShop.Models;
@@ -70,8 +71,11 @@ namespace PBLShop.Controllers
                     dm.MaDmcha = (MaDMCha == 0) ? null : MaDMCha;
                     dm.TrangThai = true;
                 }
-                _context.Add(dm);
-                _context.SaveChanges();
+                if (dm.TrangThai)
+                {
+                    _context.Add(dm);
+                    _context.SaveChanges();
+                }
             }
             else
             {

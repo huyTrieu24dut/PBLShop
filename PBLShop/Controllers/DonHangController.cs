@@ -40,6 +40,7 @@ namespace PBLShop.Controllers
                     TenKh = item.MaNguoiDungNavigation.HoTen,
                     TongTien = item.TongTien,
                     TrangThai = item.MaTrangThaiNavigation.TenTrangThai,
+                    MaTrangThai = item.MaTrangThai ?? 0,
                     FileHoaDon = file,
                 };
                 var chitietdhs = _context.ChiTietDhs

@@ -28,6 +28,7 @@ namespace PBLShop.ViewModels
         public string? Email { get; set; }
 
         public string? DiaChi { get; set; }
+        public int MaTrangThai { get; set; }
         public string? TrangThai { get; set; }
         public int TongTien { get; set; }
         public string? PhuongThuc { get; set; }

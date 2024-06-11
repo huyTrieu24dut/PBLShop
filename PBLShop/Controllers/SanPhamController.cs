@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PBLShop.Models;
 using PBLShop.ViewModels;
+using System.Security.Claims;
 
 namespace PBLShop.Controllers
 {
@@ -109,7 +110,6 @@ namespace PBLShop.Controllers
                 }
                 result.SoLuong += detail.SoLuong;
             }
-            
             var danhGias = _context.DanhGia
                 .Include(p => p.MaNguoiDungNavigation)
                 .Include(p => p.MaSpNavigation)
@@ -117,6 +117,11 @@ namespace PBLShop.Controllers
                 .ToList();
             if (danhGias != null)
             {
+                var user = danhGias.Where(p => p.MaNguoiDung == Convert.ToInt32(HttpContext.User.FindFirstValue("MaNguoiDung"))).FirstOrDefault();
+                if (user != null)
+                {
+                    result.DaDanhGia = true;
+                }
                 result.DanhGia = new List<DanhGiaVM>();
                 foreach (var danhGia in danhGias)
                 {

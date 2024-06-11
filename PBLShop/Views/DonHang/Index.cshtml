@@ -49,14 +49,14 @@
                             <p class="OrderHistory-orders-product-total">Thành tiền: @item.TongTien.ToString("N0") đ</p>
                             <div>
                                 @{
-                                    if (item.TrangThai == "Đã hoàn thành")
+                                    if (item.MaTrangThai == 4)
                                     {
                                         <form asp-action="GetInvoice" asp-controller="HoaDon" asp-route-id="@item.MaDh" method="get">
                                             <button type="submit" class="OrderHistory-orders-product-btn download-btn">Xem hóa đơn</button>
                                         </form>
                                         
                                     }
-                                    if (item.TrangThai == "Đã hủy")
+                                    if (item.MaTrangThai == 1)
                                     {
                                     <form asp-action="Cancel" asp-controller="DonHang" asp-route-id="@item.MaDh">
                                         <button type="submit" class="OrderHistory-orders-product-btn">Hủy đơn hàng</button>

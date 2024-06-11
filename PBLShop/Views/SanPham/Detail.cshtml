@@ -65,52 +65,48 @@
 <div class="product-description">
     <h2>Mô tả sản phẩm</h2>
     <p>
-        Áo Polo Nam CALUCI MPS464S là sự lựa chọn hoàn hảo cho những chàng trai yêu thích phong cách lịch lãm, sang trọng.
-        Được làm từ chất liệu vải Cotton cao cấp, mềm mại, thoáng mát, thấm hút mồ hôi tốt, mang lại cảm giác thoải mái cho người mặc.
-        Thiết kế form Slimfit ôm vừa vặn theo dáng người, tôn lên vóc dáng khỏe khoắn.
-        Cổ áo polo bẻ gập gọn gàng, mang lại nét thanh lịch, trẻ trung.
-        Logo thương hiệu CALUCI được thêu tinh tế trên ngực áo, tạo điểm nhấn sang trọng.
+        @Model.MoTa
     </p>
-    <ul class="product-features">
-        <li>Chất liệu: Cotton cao cấp</li>
-        <li>Form dáng: Slimfit</li>
-        <li>Cổ áo: Polo bẻ gập</li>
-        <li>Logo thương hiệu: Thêu tinh tế</li>
-        <li>Tình trạng: Còn hàng (Số lượng có hạn)</li>
-    </ul>
-    <p>
-        Áo Polo Nam CALUCI MPS464S phù hợp với nhiều hoàn cảnh, có thể mặc đi chơi, đi làm, đi học hay tham gia các sự kiện quan trọng.
-        Áo dễ dàng phối hợp với nhiều trang phục khác nhau như quần âu, quần jean, chinos,... tạo nên set đồ hoàn chỉnh, lịch lãm.
-    </p>
-    <p><b>Lưu ý:</b> Vui lòng giặt tay hoặc giặt khô để giữ form áo được bền đẹp.</p>
 </div>
-<div id="feedbackuser">
-    <div class="container">
-        <h2>Đánh giá sản phẩm</h2>
+@if (!Model.DaDanhGia)
+{
+    <div id="feedbackuser">
+        <div class="container">
+            <h2>Đánh giá sản phẩm</h2>
 
 
-        <div class="review-form">
-            <h3>Đánh giá của bạn</h3>
-            <form asp-action="Create" asp-controller="DanhGia">
-                <input name ="id" hidden value="@Model.MaSp" />
-                <label for="rating">Đánh giá (1-5 sao):</label>
-                <select name="soSao" id="rating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
+            <div class="review-form">
+                <h3>Đánh giá của bạn</h3>
+                <form asp-action="Create" asp-controller="DanhGia">
+                    <input name="id" hidden value="@Model.MaSp" />
+                    <label for="rating">Đánh giá (1-5 sao):</label>
+                    <select name="soSao" id="rating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
 
-                <label for="review">Bình luận:</label>
-                <textarea id="review" name="noiDung" rows="5"></textarea>
+                    <label for="review">Bình luận:</label>
+                    <textarea id="review" name="noiDung" rows="5"></textarea>
 
-                <button type="submit">Gửi đánh giá</button>
-            </form>
+                    <button type="submit">Gửi đánh giá</button>
+                </form>
+            </div>
+
         </div>
-
     </div>
-</div>
+}
+else
+{
+    <div id="feedbackuser">
+        <div class="container">
+            <h2>Đã đánh giá</h2>
+        </div>
+    </div>
+}
+
 @if (Model.DanhGia.Count() != 0)
 {
     @await Html.PartialAsync("FeedBack", Model.DanhGia)

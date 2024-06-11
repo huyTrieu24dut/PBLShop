@@ -34,6 +34,7 @@
         public List<string>? KichThuoc { get; set; }
         public List<List<int>>? SoLuongs { get; set; }
         public List<DanhGiaVM>? DanhGia { get; set; }
+        public bool DaDanhGia { get; set; } = false;
         public string DanhMuc { get; set; } = null!;
     }
 
