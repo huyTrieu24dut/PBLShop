@@ -2,7 +2,7 @@
 <div class="danh-muc-san-pham">
     @foreach (var item in Model)
     {
-        <a class="san-pham" asp-action="Detail" asp-controller="SanPham" asp-route-id="@item.MaSp">
+        <a class="san-pham" asp-action="Detail" asp-controller="SanPham" asp-route-id="@item.MaSp" style="text-decoration: none;">
             <img src="~/image/@item.HinhAnh" alt=@item.TenSp>
             <h3>@item.TenSp</h3>
             <p>Giá: @item.DonGia.ToString("N0") đ</p>

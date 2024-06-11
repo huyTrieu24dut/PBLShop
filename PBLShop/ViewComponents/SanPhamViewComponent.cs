@@ -14,7 +14,7 @@ namespace PBLShop.ViewComponents
         }
         public IViewComponentResult Invoke()
         {
-            var sanPhams = _context.SanPhams.ToList();
+            var sanPhams = _context.SanPhams.Where(p => p.TrangThai == true).ToList();
             int i = 1;
             var result = new List<SanPhamVM>();
             foreach (var sanPham in sanPhams)

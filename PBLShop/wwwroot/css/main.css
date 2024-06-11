@@ -1445,16 +1445,10 @@ body {
         }
 
 
-    #inforproduct img {
-        width: 300px; /* Chiều rộng cố định 100px */
+    #inforproduct .san-pham img {
+        width: 150px;
         height: 200px;
-        max-width: 50%;
-        max-height: 300px;
-        object-fit: contain;
-        display: block;
-        margin: 0 auto;
-        border: 2px solid #ccc;
-        border-radius: 5px;
+        object-fit: cover;
     }
 
     #inforproduct .price-range {
@@ -1686,7 +1680,7 @@ body {
 }
 
     #detailproduct .detail-picture {
-        width: 330px;
+        width: 400px;
         height: 520px;
         object-fit: cover;
     }
@@ -2340,7 +2334,7 @@ body {
     align-items: center;
     flex-direction: column;
     width: 100%;
-    margin: 0 auto;
+    margin-top: 30px;
 }
 
     #sucess-order .fa-check {
@@ -2368,6 +2362,10 @@ body {
         margin: 10px 20px;
         background-color: #ff0000;
         padding: 10px;
+    }
+    #sucess-order .twobtn {
+        display: inline-flex;
+        gap: 10px;
     }
 
 /*end sucess order CSS */

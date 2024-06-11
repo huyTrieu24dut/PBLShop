@@ -17,7 +17,7 @@
                                 {
                                     @foreach (var childitem in item.DanhMucCon)
                                     {
-                                        <li><a class="sub-category" asp-controller="SanPham" asp-action="Index" asp-route-dm="@childitem.MaDM">@childitem.TenDM</a></li>
+                                        <li><a class="sub-category-name" asp-controller="SanPham" asp-action="Index" asp-route-dm="@childitem.MaDM">@childitem.TenDM</a></li>
                                     }
                                 }
                             </ul>
