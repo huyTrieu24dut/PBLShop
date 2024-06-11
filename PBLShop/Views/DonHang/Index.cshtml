@@ -24,6 +24,7 @@
                 <nav class="OrderHistory-orders-nav">
                     <a class="OrderHistory-orders-option" asp-action="Index" asp-controller="DonHang">Tất cả</a> |
                     <a class="OrderHistory-orders-option" asp-action="Index" asp-controller="DonHang" asp-route-matrangthai="1">Chờ xác nhận</a> |
+                    <!--<a class="OrderHistory-orders-option" asp-action="Index" asp-controller="DonHang" asp-route-matrangthai="2">Đang chuẩn bị</a> |-->
                     <a class="OrderHistory-orders-option" asp-action="Index" asp-controller="DonHang" asp-route-matrangthai="3">Đang giao</a> |
                     <a class="OrderHistory-orders-option" asp-action="Index" asp-controller="DonHang" asp-route-matrangthai="4">Thành công</a> |
                     <a class="OrderHistory-orders-option" asp-action="Index" asp-controller="DonHang" asp-route-matrangthai="5">Đã hủy</a> |
@@ -51,15 +52,18 @@
                                 @{
                                     if (item.MaTrangThai == 4)
                                     {
-                                        <form asp-action="GetInvoice" asp-controller="HoaDon" asp-route-id="@item.MaDh" method="get">
-                                            <button type="submit" class="OrderHistory-orders-product-btn download-btn">Xem hóa đơn</button>
-                                        </form>
+                                        if (item.MaHoaDon != 0)
+                                        {
+                                            <form asp-action="GetInvoice" asp-controller="HoaDon" asp-route-id="@item.MaHoaDon" method="get">
+                                                <button type="submit" class="OrderHistory-orders-product-btn download-btn">Xem hóa đơn</button>
+                                            </form>
+                                        }
                                     }
                                     if (item.MaTrangThai == 1)
                                     {
-                                    <form asp-action="Cancel" asp-controller="DonHang" asp-route-id="@item.MaDh">
-                                        <button type="submit" class="OrderHistory-orders-product-btn">Hủy đơn hàng</button>
-                                    </form>
+                                        <form asp-action="Cancel" asp-controller="DonHang" asp-route-id="@item.MaDh">
+                                            <button type="submit" class="OrderHistory-orders-product-btn">Hủy đơn hàng</button>
+                                        </form>
                                     }
                                 }
                                 <!--nếu đơn hàng thành công -->

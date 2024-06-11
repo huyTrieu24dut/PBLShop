@@ -22,7 +22,7 @@ namespace PBLShop.Controllers
             var nhanviens = _context.NguoiDungs
                 .Include(p => p.MaGioiTinhNavigation)
                 .Include(p => p.MaVaiTroNavigation)
-                .Where(p => p.MaVaiTro != 3).ToList();
+                .Where(p => p.MaVaiTro == 1).ToList();
             List<NguoiDungVM> result = new List<NguoiDungVM>();
             if (trangThai != null)
             {
@@ -64,7 +64,7 @@ namespace PBLShop.Controllers
             var nhanviens = _context.NguoiDungs
                 .Include(p => p.MaGioiTinhNavigation)
                 .Include(p => p.MaVaiTroNavigation)
-                .Where(p => p.MaVaiTro != 3 && p.HoTen.Contains(name)).ToList();
+                .Where(p => p.MaVaiTro == 1 && p.HoTen.Contains(name)).ToList();
             List<NguoiDungVM> result = new List<NguoiDungVM>();
             foreach (var nv in nhanviens)
             {

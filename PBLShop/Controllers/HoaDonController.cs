@@ -20,10 +20,11 @@ namespace PBLShop.Controllers
             _context = context;
         }
 
-        public dynamic RenderData(DonHang donHang, List<ChiTietDh> chiTietDhs)
+        public dynamic RenderData(int id, DonHang donHang, List<ChiTietDh> chiTietDhs)
         {
             var data = new
             {
+                mahd = id,
                 madh = donHang.MaDh,
                 makh = donHang.MaNguoiDung,
                 tenkh = donHang.MaNguoiDungNavigation.HoTen,
@@ -68,42 +69,51 @@ namespace PBLShop.Controllers
 
         public IActionResult GenerateInvoicePdf(int id)
         {
-            var donHang = _context.DonHangs
-                .Include(p => p.MaNguoiDungNavigation)
-                .Include(p => p.MaPtttNavigation)
-                .Include(p => p.MaTrangThaiNavigation)
-                .Include(p => p.HoaDon)
-                .Where(p => p.MaDh == id).FirstOrDefault();
-            if (donHang == null)
+            var hoaDon = _context.HoaDons.Where(p => p.MaHd == id).FirstOrDefault();
+            if (hoaDon == null)
             {
-                TempData["Message"] = "Không tìm thấy đơn hàng";
+                TempData["Message"] = "Không tìm thấy hóa đơn";
                 return View("/404");
             }
             else
             {
-                var chitietdhs = _context.ChiTietDhs
-                    .Include(p => p.MaMauNavigation)
-                    .Include(p => p.MaKtNavigation)
-                    .Include(p => p.MaMauNavigation.MaSpNavigation)
-                    .Where(p => p.MaDh == donHang.MaDh)
-                    .ToList();
-
-                var model = RenderData(donHang, chitietdhs);
-                var templateContent = System.IO.File.ReadAllText(@"Views\Shared\InvoiceHtml\Invoice_Template.html");
-                var template = Template.Parse(templateContent);
-
-                var pageContent = template.Render(model);
-                System.IO.File.WriteAllText(@$"Views\Shared\InvoiceHtml\Invoice_{model.madh}.html", pageContent);
-
-                var pdfPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Invoices", $"Invoice_{model.madh}.pdf");
-                GeneratePdfFromHtml(@$"Views\Shared\InvoiceHtml\Invoice_{model.madh}.html", pdfPath);
-
-                Process.Start(new ProcessStartInfo
+                var donHang = _context.DonHangs
+                .Include(p => p.MaNguoiDungNavigation)
+                .Include(p => p.MaPtttNavigation)
+                .Include(p => p.MaTrangThaiNavigation)
+                .Include(p => p.HoaDon)
+                .Where(p => p.MaDh == hoaDon.MaDh).FirstOrDefault();
+                if (donHang == null)
                 {
-                    FileName = pdfPath,
-                    UseShellExecute = true
-                });
-                return RedirectToAction("Index", "DonHangAdmin");
+                    TempData["Message"] = "Không tìm thấy đơn hàng";
+                    return View("/404");
+                }
+                else
+                {
+                    var chitietdhs = _context.ChiTietDhs
+                        .Include(p => p.MaMauNavigation)
+                        .Include(p => p.MaKtNavigation)
+                        .Include(p => p.MaMauNavigation.MaSpNavigation)
+                        .Where(p => p.MaDh == donHang.MaDh)
+                        .ToList();
+
+                    var model = RenderData(hoaDon.MaHd, donHang, chitietdhs);
+                    var templateContent = System.IO.File.ReadAllText(@"Views\Shared\InvoiceHtml\Invoice_Template.html");
+                    var template = Template.Parse(templateContent);
+
+                    var pageContent = template.Render(model);
+                    System.IO.File.WriteAllText(@$"Views\Shared\InvoiceHtml\Invoice.html", pageContent);
+
+                    var pdfPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Invoices", $"Invoice_{model.mahd}.pdf");
+                    GeneratePdfFromHtml(@$"Views\Shared\InvoiceHtml\Invoice.html", pdfPath);
+
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = pdfPath,
+                        UseShellExecute = true
+                    });
+                    return RedirectToAction("Index", "DonHangAdmin");
+                }
             }
         }
 

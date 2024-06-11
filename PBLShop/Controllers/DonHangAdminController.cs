@@ -65,6 +65,15 @@ namespace PBLShop.Controllers
                         donhang.chiTietDhVMs.Add(chiTietDhVM);
                     }
                 }
+                var hoaDon = _context.HoaDons.Where(p => p.MaDh == donhang.MaDh).FirstOrDefault();
+                if (hoaDon != null)
+                {
+                    donhang.MaHoaDon = hoaDon.MaHd;
+                }
+                else
+                {
+                    donhang.MaHoaDon = 0;
+                }
                 result.Add(donhang);
             }
             return View(result);
@@ -73,6 +82,8 @@ namespace PBLShop.Controllers
         [Authorize(Roles = "Admin, NhanVien")]
         public IActionResult Update(int id, int maTrangThai)
         {
+            int maTrangThaiBanDau = 0;
+            HoaDon hd = new HoaDon();
             var donhang = _context.DonHangs.Where(p => p.MaDh == id).FirstOrDefault();
             if (donhang == null)
             {
@@ -81,6 +92,7 @@ namespace PBLShop.Controllers
             }
             else
             {
+                maTrangThaiBanDau = donhang.MaTrangThai ?? 0;
                 if (donhang.MaTrangThai == 5)
                 {
                     TempData["Message"] = "Đơn hàng đã bị hủy";
@@ -107,17 +119,18 @@ namespace PBLShop.Controllers
                         FileHoaDon = $"Invoice_{donhang.MaDh}.pdf",
                     };
                     _context.Add(hoadon);
+                    hd = hoadon;
 
                 }
                 _context.SaveChanges();
             }
-            if (maTrangThai > 1 && maTrangThai < 4)
+            if (maTrangThaiBanDau > 1 && maTrangThaiBanDau < 4)
             {
                 return RedirectToAction("ProgressingList", "DonHangAdmin");
             }
             else if (maTrangThai == 4 && donhang != null)
             {
-                return RedirectToAction("GenerateInvoicePdf", "HoaDon", new {id = donhang.MaDh});
+                return RedirectToAction("GenerateInvoicePdf", "HoaDon", new {id = hd.MaHd});
             }
             return RedirectToAction("ReceiveList", "DonHangAdmin");
         }

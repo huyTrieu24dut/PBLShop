@@ -37,9 +37,12 @@
                         @await Html.PartialAsync("Detail", item)
                     </td>
                     <td>
-                        <form asp-action="GetInvoice" asp-controller="HoaDon" asp-route-id="@item.MaDh" method="get">
-                            <button type="submit" class="btn btn-primary">Xem hóa đơn</button>
-                        </form>
+                        @if(item.MaHoaDon != 0)
+                        {
+                            <form asp-action="GetInvoice" asp-controller="HoaDon" asp-route-id="@item.MaHoaDon" method="get">
+                                <button type="submit" class="btn btn-primary">Xem hóa đơn</button>
+                            </form>
+                        }
                     </td>
                 </tr>
             }

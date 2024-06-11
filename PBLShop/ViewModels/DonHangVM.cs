@@ -11,6 +11,7 @@ namespace PBLShop.ViewModels
         }
         public int MaDh { get; set; }
         public int MaKh { get; set; }
+        public int MaHoaDon { get; set; }
         public string? TenKh { get; set; }
         public string? TenNv { get; set; }
 

@@ -45,11 +45,15 @@ namespace PBLShop.Controllers
         //Tim san pham
         public IActionResult Search(string SpTofind)
         {
+            var chitietsp = _context.QuanLySanPhams
+                .Include(p => p.MaMauNavigation)
+                .Select(p => p.MaMauNavigation.MaSp).Distinct().ToList();
             var sanphams = _context.SanPhams.AsQueryable();
+            sanphams = sanphams.Where(p => chitietsp.Contains(p.MaSp) && p.TrangThai);
 
             if (SpTofind != null)
             {
-                sanphams = sanphams.Where(p => p.TenSp.Contains(SpTofind) && p.TrangThai == true);
+                sanphams = sanphams.Where(p => p.TenSp.Contains(SpTofind));
             }
 
             var result = sanphams.Select(p => new SanPhamVM

@@ -63,6 +63,15 @@ namespace PBLShop.Controllers
                         donhang.chiTietDhVMs.Add(chiTietDhVM);
                     }
                 }
+                var hoaDon = _context.HoaDons.Where(p => p.MaDh == donhang.MaDh).FirstOrDefault();
+                if (hoaDon != null)
+                {
+                    donhang.MaHoaDon = hoaDon.MaHd;
+                }
+                else
+                {
+                    donhang.MaHoaDon = 0;
+                }
                 result.Add(donhang);
             }
             return View(result);
