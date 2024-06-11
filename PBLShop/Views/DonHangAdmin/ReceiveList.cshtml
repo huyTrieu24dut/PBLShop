@@ -3,19 +3,19 @@
 @{
     Layout = "_LayoutAdmin";
 }
-<main class="px-3">
+<main class="container">
     <h3 class="my-3">Đơn hàng mới</h3>
     <table class="table table-striped container-fluid mt-3" id="receiving_order">
         <thead>
             <tr>
-                <th scope="col">Mã đơn hàng</th>
-                <th scope="col">Mã khách hàng</th>
+                <th scope="col" style="width: 10%;">Mã đơn hàng</th>
+                <th scope="col" style="width: 10%;">Mã khách hàng</th>
                 <th scope="col">Tên khách hàng</th>
                 <th scope="col">Tên người nhận</th>
-                <th scope="col">Tổng tiền</th>
-                <th scope="col">Xem chi tiết</th>
-                <th scope="col">Tiếp nhận</th>
-                <th scope="col">Hủy đơn</th>
+                <th scope="col" style="width: 10%;">Tổng tiền</th>
+                <th scope="col" style="width: 10%;">Xem chi tiết</th>
+                <th scope="col" style="width: 10%;">Tiếp nhận</th>
+                <th scope="col" style="width: 10%;">Hủy đơn</th>
             </tr>
         </thead>
         <tbody>
@@ -39,7 +39,9 @@
                             <div class="col justify-content-center d-flex flex-column">
                                 <h3>Bạn xác nhận tiếp nhận đơn hàng này chứ?</h3>
                                 <form asp-action="Update" asp-controller="DonHangAdmin" asp-route-id="@item.MaDh" asp-route-maTrangThai="2">
-                                    <button type="submit" class="btn btn-success mt-5 mx-auto">Tiếp nhận</button>
+                                    <div class="col justify-content-center d-flex flex-column">
+                                        <button type="submit" class="btn btn-success mt-5 mx-auto">Tiếp nhận</button>
+                                    </div>
                                 </form>
                                 
                             </div>
@@ -51,7 +53,9 @@
                             <div class="col justify-content-center d-flex flex-column">
                                 <h3>Bạn xác nhận Hủy đơn hàng này chứ?</h3>
                                 <form asp-action="Update" asp-controller="DonHangAdmin" asp-route-id="@item.MaDh" asp-route-maTrangThai="5">
-                                    <button type="submit" class="btn btn-success mt-5 mx-auto">Hủy</button>
+                                    <div class="col justify-content-center d-flex flex-column">
+                                        <button type="submit" class="btn btn-success mt-5 mx-auto">Hủy</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>

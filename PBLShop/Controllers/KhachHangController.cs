@@ -26,6 +26,14 @@ namespace PBLShop.Controllers
             if (trangThai != null)
             {
                 khachhangs = khachhangs.Where(p => p.TrangThai == trangThai).ToList();
+                if (trangThai == true)
+                {
+                    TempData["status"] = "true";
+                }
+                else
+                {
+                    TempData["status"] = "false";
+                }
             }
             else
             {

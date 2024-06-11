@@ -49,7 +49,7 @@ namespace PBLShop.Controllers
 
             if (SpTofind != null)
             {
-                sanphams = sanphams.Where(p => p.TenSp.Contains(SpTofind));
+                sanphams = sanphams.Where(p => p.TenSp.Contains(SpTofind) && p.TrangThai == true);
             }
 
             var result = sanphams.Select(p => new SanPhamVM

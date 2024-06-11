@@ -12,17 +12,18 @@
     </form>
 </div>
 <div class="table-responsive">
-    <table class="table table-striped container-fluid mt-3">
-        <thead>
+    <table class="table table-striped container-fluid mt-3" id="list-cus">
+        <thead class="table-primary">
             <tr>
-                <th scope="col">Mã khách hàng</th>
+                <th scope="col" style="width: 4%;">Mã khách hàng</th>
                 <th scope="col">Tên nhân viên</th>
                 <th scope="col">Email</th>
-                <th scope="col">Giới tính</th>
-                <th scope="col">Ngày sinh</th>
-                <th scope="col">Số điện thoại</th>
+                <th scope="col" style="width: 4%;">Giới tính</th>
+                <th scope="col" style="width: 5%;">Ngày sinh</th>
+                <th scope="col" style="width: 5%;">Số điện thoại</th>
                 <th scope="col">Địa chỉ</th>
-                <th scope="col">Thao tác</th>
+                <th scope="col" style="width: 9%;">Chặn/Mở chặn</th>
+
             </tr>
         </thead>
         <tbody>
@@ -48,7 +49,9 @@
                                 <div class="col justify-content-center d-flex flex-column">
                                     <h3>Bạn xác nhận chặn khách hàng này chứ?</h3>
                                     <form asp-action="Block" asp-controller="KhachHang" asp-route-id="@item.ID">
-                                        <button type="submit" class="btn btn-danger mt-5 mx-auto">Chặn</button>
+                                        <div class="col justify-content-center d-flex flex-column">
+                                            <button type="submit" class="btn btn-danger mt-5 mx-auto">Chặn</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -60,7 +63,9 @@
                                 <div class="col justify-content-center d-flex flex-column">
                                     <h3>Bạn xác nhận mở chặn khách hàng này chứ?</h3>
                                     <form asp-action="UnBlock" asp-controller="KhachHang" asp-route-id="@item.ID">
-                                        <button type="submit" class="btn btn-danger mt-5 mx-auto">Mở chặn</button>
+                                        <div class="col justify-content-center d-flex flex-column">
+                                            <button type="submit" class="btn btn-success mt-5 mx-auto">Mở chặn</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

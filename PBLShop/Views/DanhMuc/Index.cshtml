@@ -2,8 +2,8 @@
 @{
     Layout = "_LayoutAdmin";
 }
-<main class="px-3">
-    <h3 class="my-3">Đơn hàng đang tiến hành</h3>
+<main class="container">
+    <h3 class="my-3">Danh mục</h3>
 
     <div class="dropdown mb-3">
         <button class="btn btn-primary dropdown-toggle" type="button" id="addCategoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -38,20 +38,21 @@
         
     </div>
 
-    <table class="table table-striped container-fluid mt-3" id="receiving_order">
-        <thead>
+    <table class="table table-striped container-fluid mt-3" id="category-manage">
+        <thead class="table-primary">
             <tr>
-                <th scope="col">Mã danh mục</th>
-                <th scope="col">Tên danh mục</th>
-                <th scope="col">Danh mục cha</th>
-                <th scope="col">Tùy chọn</th>
+                <th scope="col" class="text-center" style="width: 15%;">Mã danh mục</th>
+                <th scope="col" class="text-center">Tên danh mục</th>
+                <th scope="col" class="text-center">Danh mục cha</th>
+                <th scope="col" class="text-center" style="width: 15%;">Cập nhật</th>
+                <th scope="col" class="text-center" style="width: 15%;">Xóa</th>
             </tr>
         </thead>
         @foreach(var item in Model)
         {
             <tbody>
                 <tr>
-                    <th scope="row">@item.MaDM</th>
+                    <th class="text-center">@item.MaDM</th>
                     <td>@item.TenDM</td>
                     @if(item.MaDMCha != null)
                     {
@@ -89,11 +90,14 @@
                                             </select>
                                         </div>
                                     }
-                                    <button type="submit" class="btn btn-dark mt-3 mx-auto">Cập nhật</button>
+                                    <div class="col justify-content-center d-flex flex-column">
+                                        <button type="submit" class="btn btn-primary mt-3 mx-auto">Cập nhật</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
-
+                    </td>
+                    <td>
                         @if (item.CoTheXoa)
                         {
                             <button type="button" class="btn btn-danger mx-1 my-1" data-bs-toggle="dropdown" aria-expanded="false">Xóa</button>
@@ -101,12 +105,13 @@
                                 <div class="col justify-content-center d-flex flex-column">
                                     <h3>Xóa danh mục này?</h3>
                                     <form asp-action="Delete" asp-controller="DanhMuc" asp-route-id="@item.MaDM">
-                                        <button type="submit" class="btn btn-danger mt-5 mx-auto">Xóa</button>
+                                        <div class="col justify-content-center d-flex flex-column">
+                                            <button type="submit" class="btn btn-danger mt-5 mx-auto">Xóa</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
                         }
-
                     </td>
                 </tr>
             </tbody>

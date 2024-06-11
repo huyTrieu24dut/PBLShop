@@ -15,14 +15,45 @@
         <div class="row py-3">
             <div class="row py-3">
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="1" autocomplete="off">
-                    <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="1" class="btn btn-outline-primary">Ngày</a>
-
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="2" autocomplete="off">
-                    <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="2" class="btn btn-outline-primary">Tháng</a>
-
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" value="3" autocomplete="off">
-                    <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="3" class="btn btn-outline-primary">Năm</a>
+                    @if(TempData["status"] != null)
+                    {
+                        switch (TempData["status"])
+                        {
+                            case "Day":
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="1" autocomplete="off" checked>
+                                <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="1" class="btn btn-outline-primary">Ngày</a>
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="2" autocomplete="off">
+                                <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="2" class="btn btn-outline-primary">Tháng</a>
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" value="3" autocomplete="off">
+                                <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="3" class="btn btn-outline-primary">Năm</a>
+                                break;
+                            case "Month":
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="1" autocomplete="off">
+                                <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="1" class="btn btn-outline-primary">Ngày</a>
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="2" autocomplete="off" checked>
+                                <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="2" class="btn btn-outline-primary">Tháng</a>
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" value="3" autocomplete="off">
+                                <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="3" class="btn btn-outline-primary">Năm</a>
+                                break;
+                            case "Year":
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="1" autocomplete="off">
+                                <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="1" class="btn btn-outline-primary">Ngày</a>
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="2" autocomplete="off">
+                                <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="2" class="btn btn-outline-primary">Tháng</a>
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" value="3" autocomplete="off" checked>
+                                <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="3" class="btn btn-outline-primary">Năm</a>
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="1" autocomplete="off">
+                        <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="1" class="btn btn-outline-primary">Ngày</a>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="2" autocomplete="off" checked>
+                        <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="2" class="btn btn-outline-primary">Tháng</a>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" value="3" autocomplete="off">
+                        <a asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="3" class="btn btn-outline-primary">Năm</a>
+                    }
                 </div>
             </div>
         </div>

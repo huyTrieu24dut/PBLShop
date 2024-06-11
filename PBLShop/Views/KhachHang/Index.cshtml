@@ -4,14 +4,34 @@
     Layout = "_LayoutAdmin";
 
 }
-<main class="px-3">
+<main class="container">
     <h3 class="my-3">Danh sách khách hàng</h3>
     <div class="row my-3">
         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-            <a asp-action="Index" asp-controller="KhachHang" asp-route-trangThai="true" class="btn btn-outline-primary">Đang hoạt động</a>
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-            <a asp-action="Index" asp-controller="KhachHang" asp-route-trangThai="false" class="btn btn-outline-primary"> Đã bị chặn   </a>
+            @if (TempData["status"] != null)
+            {
+                if (TempData["status"] == "true")
+                {
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                    <a asp-action="Index" asp-controller="KhachHang" asp-route-trangThai="true" class="btn btn-outline-primary">Đang hoạt động</a>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <a asp-action="Index" asp-controller="KhachHang" asp-route-trangThai="false" class="btn btn-outline-primary"> Đã bị chặn   </a>
+                }
+                else
+                {
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                    <a asp-action="Index" asp-controller="KhachHang" asp-route-trangThai="true" class="btn btn-outline-primary">Đang hoạt động</a>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked>
+                    <a asp-action="Index" asp-controller="KhachHang" asp-route-trangThai="false" class="btn btn-outline-primary"> Đã bị chặn   </a>
+                }
+            }
+            else
+            {
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                <a asp-action="Index" asp-controller="KhachHang" asp-route-trangThai="true" class="btn btn-outline-primary">Đang hoạt động</a>
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                <a asp-action="Index" asp-controller="KhachHang" asp-route-trangThai="false" class="btn btn-outline-primary"> Đã bị chặn   </a>
+            }
         </div>
     </div>
     

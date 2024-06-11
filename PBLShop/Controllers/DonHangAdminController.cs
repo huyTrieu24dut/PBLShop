@@ -327,6 +327,7 @@ namespace PBLShop.Controllers
                     hoaDons = _context.HoaDons.Where(p => p.NgayHoanThanh.Date == DateTime.Today).ToList().Count();
                     chitietDHs = chitietDHs.Where(p => p.MaDhNavigation.HoaDon.NgayHoanThanh.Date == DateTime.Today);
                     TempData["Message"] = "Ngày " + DateTime.Today.ToString("dd/MM/yyyy");
+                    TempData["status"] = "Day";
                     break;
                 case 2:
                     hoaDons = _context.HoaDons.Where(p => p.NgayHoanThanh.Month == DateTime.Today.Month
@@ -334,11 +335,13 @@ namespace PBLShop.Controllers
                     chitietDHs = chitietDHs.Where(p => p.MaDhNavigation.HoaDon.NgayHoanThanh.Month == DateTime.Today.Month 
                         && p.MaDhNavigation.HoaDon.NgayHoanThanh.Year == DateTime.Today.Year);
                     TempData["Message"] = "Tháng " + DateTime.Today.ToString("MM/yyyy");
+                    TempData["status"] = "Month";
                     break;
                 case 3:
                     hoaDons = _context.HoaDons.Where(p => p.NgayHoanThanh.Year == DateTime.Today.Year).ToList().Count();
                     chitietDHs = chitietDHs.Where(p => p.MaDhNavigation.HoaDon.NgayHoanThanh.Year == DateTime.Today.Year);
                     TempData["Message"] = "Năm " + DateTime.Today.Year;
+                    TempData["status"] = "Year";
                     break;
             }
             var chitiets = new List<ChiTietDh>();

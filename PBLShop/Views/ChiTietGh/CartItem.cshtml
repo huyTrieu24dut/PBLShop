@@ -19,7 +19,7 @@
                 <a asp-action="Detail" asp-controller="SanPham" asp-route-id="@item.MaSp" class="chi-tiet">Chi tiết</a>
             </div>
             <form asp-controller="ChiTietGh" asp-action="Remove" asp-route-id="@item.MaSp" asp-route-mausac="@item.MauSp" asp-route-size="@item.size">
-                <button><i class="fa fa-trash">Xóa</i></button>
+                <button><i class="fa-sharp fa-trash fa-xl"></i></button>
             </form>
         </div>
     }

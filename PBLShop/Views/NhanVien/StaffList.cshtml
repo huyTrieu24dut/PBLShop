@@ -11,19 +11,19 @@
         </div>
     </form>
 </div>
-<div class="table-responsive">
+<div class="table-responsive" id="list-nv">
     <table class="table table-striped container-fluid mt-3">
-        <thead>
+        <thead class="table-primary">
             <tr>
-                <th scope="col">Mã nhân viên</th>
+                <th scope="col" style="width: 4%;">Mã nhân viên</th>
                 <th scope="col">Tên nhân viên</th>
                 <th scope="col">Email</th>
-                <th scope="col">Giới tính</th>
-                <th scope="col">Ngày sinh</th>
-                <th scope="col">Số điện thoại</th>
+                <th scope="col" style="width: 4%;">Giới tính</th>
+                <th scope="col" style="width: 5%;">Ngày sinh</th>
+                <th scope="col" style="width: 5%;">Số điện thoại</th>
                 <th scope="col">Địa chỉ</th>
-                <th scope="col">Vai trò</th>
-                <th scope="col">Thao tác</th>
+                <th scope="col" style="width: 10%;">Chỉnh sửa</th>
+                <th scope="col" style="width: 10%;">Xóa/Khôi phục</th>
             </tr>
         </thead>
         <tbody>
@@ -41,17 +41,20 @@
                     }
                     <td>@item.SoDienThoai</td>
                     <td>@item.DiaChi</td>
-                    <td>@item.vaiTro</td>
+                    <td>
+                        <a asp-action="Update" asp-controller="NhanVien" asp-route-id="@item.ID" class="btn btn-dark mx-1 my-1">Chỉnh sửa</a>
+                    </td>
                     <td>
                         @if (item.trangThai)
                         {
-                            <a asp-action="Update" asp-controller="NhanVien" asp-route-id="@item.ID" class="btn btn-warning mx-1 my-1">Chỉnh sửa</a>
                             <button type="button" class="btn btn-danger mx-1 my-1" data-bs-toggle="dropdown" aria-expanded="false">Xóa</button>
                             <div class="dropdown-menu p-2 bg-light">
                                 <div class="col justify-content-center d-flex flex-column">
                                     <h3>Bạn xóa tài khoản này chứ này chứ?</h3>
                                     <form asp-action="Block" asp-controller="NhanVien" asp-route-id="@item.ID">
-                                        <button type="submit" class="btn btn-danger mt-5 mx-auto">Xóa</button>
+                                        <div class="col justify-content-center d-flex flex-column">
+                                            <button type="submit" class="btn btn-danger mt-5 mx-auto">Xóa</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -63,7 +66,9 @@
                                 <div class="col justify-content-center d-flex flex-column">
                                     <h3>Bạn muốn khôi phục tài khoản này này chứ?</h3>
                                     <form asp-action="UnBlock" asp-controller="NhanVien" asp-route-id="@item.ID">
-                                        <button type="submit" class="btn btn-danger mt-5 mx-auto">Khôi phục</button>
+                                        <div class="col justify-content-center d-flex flex-column">
+                                            <button type="submit" class="btn btn-success mt-5 mx-auto">Khôi phục</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

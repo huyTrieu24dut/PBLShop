@@ -1,0 +1,16 @@
+﻿@model IEnumerable<PBLShop.ViewModels.SanPhamVM>
+<div class="product-list">
+    @foreach (var item in Model)
+    {
+        <div class="product">
+            <a asp-action="Detail" asp-controller="SanPham" asp-route-id="@item.MaSp">
+                <img src="~/image/@item.HinhAnh" alt="Sản phẩm 1">
+                <div class="product-info">
+                    <h3>@item.TenSp</h3>
+                    <span class="price">@item.DonGia.ToString("N0")₫</span>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+

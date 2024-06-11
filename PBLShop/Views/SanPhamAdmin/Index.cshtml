@@ -2,17 +2,19 @@
 @{
     Layout = "_LayoutAdmin";
 }
-<main class="px-3">
+<main class="container">
     <h3 class="my-3">Danh sách sản phẩm</h3>
 
-    <table class="table table-striped container-fluid mt-3" id="receiving_order">
-        <thead>
+    <table class="table table-striped mt-3" id="list-product">
+        <thead class="table-primary">
             <tr>
-                <th scope="col">Mã sản phẩm</th>
+                <th scope="col" style="width: 7%;">Mã sản phẩm</th>
                 <th scope="col">Tên sản phẩm</th>
-                <th scope="col">Đơn giá</th>
-                <th scope="col">Số lượng</th>
-                <th scope="col">Tùy chọn</th>
+                <th scope="col" style="width: 10%;">Ảnh đại diện</th>
+                <th scope="col" style="width: 10%;">Đơn giá</th>
+                <th scope="col" style="width: 10%;">Cập nhật</th>
+                <th scope="col" style="width: 13%;">Chỉnh số lượng</th>
+                <th scope="col" style="width: 5%;">Xóa</th>
             </tr>
         </thead>
         @foreach (var item in Model)
@@ -20,18 +22,26 @@
         <tbody>
             <th scope="row">@item.MaSp</th>
             <td>@item.TenSp</td>
+            <td>
+                <img class="order-product-img" src="~/image/@item.HinhAnh" alt="Ảnh SP">
+            </td>
             <td>@item.DonGia.ToString("N0") đ</td>
             <td>
-                <a asp-action="UpdateQuantity" asp-controller="SanPhamAdmin" asp-route-id="@item.MaSp" class="btn btn-warning mx-1 my-1">Chi tiết</a>
+                <a asp-action="Update" asp-controller="SanPhamAdmin" asp-route-id="@item.MaSp" class="btn btn-dark mx-1 my-1">Cập nhật</a>
+                
             </td>
             <td>
-                <a asp-action="Update" asp-controller="SanPhamAdmin" asp-route-id="@item.MaSp" class="btn btn-warning mx-1 my-1">Chỉnh sửa</a>
+                <a asp-action="UpdateQuantity" asp-controller="SanPhamAdmin" asp-route-id="@item.MaSp" class="btn btn-warning mx-1 my-1">Chỉnh số lượng</a>
+            </td>
+            <td>
                 <button type="button" class="btn btn-danger mx-1 my-1" data-bs-toggle="dropdown" aria-expanded="false">Xóa</button>
                 <div class="dropdown-menu p-2 bg-light">
                     <div class="col justify-content-center d-flex flex-column">
                         <h3>Xóa sản phẩm này?</h3>
                         <form asp-action="Delete" asp-controller="SanPhamAdmin" asp-route-id="@item.MaSp">
-                            <button type="submit" class="btn btn-danger mt-5 mx-auto">Xóa</button>
+                            <div class="col justify-content-center d-flex flex-column">
+                                <button type="submit" class="btn btn-danger mt-5 mx-auto">Xóa</button>
+                            </div>
                         </form>
                     </div>
                 </div>

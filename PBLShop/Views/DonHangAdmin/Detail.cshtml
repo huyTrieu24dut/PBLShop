@@ -1,7 +1,9 @@
 ﻿@model PBLShop.ViewModels.DonHangVM
 
 <div class="dropdown-menu p-2 order_detail">
-    <h3> Thông tin chi tiết đơn hàng</h3>
+    <div class=" d-flex justify-content-center">
+        <h3 class="text-bg-warning"> Thông tin chi tiết đơn hàng</h3>
+    </div>
     <p>Tên người nhận: @Model.TenNguoiNhan</p>
     <p>Địa chỉ: @Model.DiaChi</p>
     <p>Số điện thoại người nhận: @Model.SoDienThoai</p>
@@ -14,19 +16,19 @@
     <div class="d-flex flex-column">
         @foreach (var item in Model.chiTietDhVMs)
         {
-            <div class="card d-flex flex-row">
-                <div class="card-body flex-grow-1flex-grow-1">
+            <div class="card d-flex flex-row card-item">
+                <div class="card-body flex-grow-1">
                     <img class="order-product-img" src="~/image/@item.HinhAnh" alt="Ảnh SP">
                 </div>
                 <div class="card-body flex-grow-1">
                     <p>@item.TenSp-@item.MauSp-@item.SoLuong</p>
                     <p>Số lượng: @item.SoLuong</p>
-                    <p class="text-danger">Đơn giá: @item.DonGia.ToString("N0") đ</p>
+                    <p class="price">Đơn giá: @item.DonGia.ToString("N0") đ</p>
                 </div>
             </div>
         }
-        <div class="d-flex">
-            <h5 class="text-danger col justify-content-end d-flex"> Tổng tiền: @Model.TongTien.ToString("N0") đ</h5>
+        <div class="d-flex mt-5">
+            <h5 class="price col justify-content-end d-flex"> Tổng tiền: @Model.TongTien.ToString("N0") đ</h5>
         </div>
     </div>
 </div>
