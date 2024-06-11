@@ -1488,7 +1488,11 @@ body {
 /*CSS INFORCUSTOMERS */
 
 #inforcustomers {
+    width: 90%;
     margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin-top: 60px;
     margin-bottom: 60px;
 }
     /* Kiểu cho tiêu đề */

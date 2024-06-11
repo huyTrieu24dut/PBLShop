@@ -61,7 +61,7 @@ namespace PBLShop.Controllers
                         chiTietDhVM.size = item1.MaKtNavigation.Size; // null conditional operator
                         chiTietDhVM.DonGia = item1.MaMauNavigation.MaSpNavigation.DonGia;
                         chiTietDhVM.SoLuong = item1.SoLuong ?? 0;
-                        chiTietDhVM.HinhAnh = item1.MaMauNavigation.MaSpNavigation.AnhSp ?? "";
+                        chiTietDhVM.HinhAnh = item1.MaMauNavigation.AnhSp ?? "";
                         donhang.chiTietDhVMs.Add(chiTietDhVM);
                     }
                 }
@@ -161,7 +161,7 @@ namespace PBLShop.Controllers
                         chiTietDhVM.size = item1.MaKtNavigation.Size; // null conditional operator
                         chiTietDhVM.DonGia = item1.MaMauNavigation.MaSpNavigation.DonGia;
                         chiTietDhVM.SoLuong = item1.SoLuong ?? 0;
-                        chiTietDhVM.HinhAnh = item1.MaMauNavigation.MaSpNavigation.AnhSp ?? "";
+                        chiTietDhVM.HinhAnh = item1.MaMauNavigation.AnhSp ?? "";
                         donHang.chiTietDhVMs.Add(chiTietDhVM);
                     }
                 }
@@ -248,7 +248,7 @@ namespace PBLShop.Controllers
                         chiTietDhVM.size = item1.MaKtNavigation.Size; // null conditional operator
                         chiTietDhVM.DonGia = item1.MaMauNavigation.MaSpNavigation.DonGia;
                         chiTietDhVM.SoLuong = item1.SoLuong ?? 0;
-                        chiTietDhVM.HinhAnh = item1.MaMauNavigation.MaSpNavigation.AnhSp ?? "";
+                        chiTietDhVM.HinhAnh = item1.MaMauNavigation.AnhSp ?? "";
                         donhang.chiTietDhVMs.Add(chiTietDhVM);
                     }
                 }

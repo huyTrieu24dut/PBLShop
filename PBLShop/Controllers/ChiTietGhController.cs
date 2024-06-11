@@ -37,7 +37,7 @@ namespace PBLShop.Controllers
                 size = p.MaKtNavigation.Size,
                 DonGia = p.MaMauNavigation.MaSpNavigation.DonGia,
                 SoLuong = p.SoLuong,
-                HinhAnh = p.MaMauNavigation.MaSpNavigation.AnhSp,
+                HinhAnh = p.MaMauNavigation.AnhSp,
                 DanhMuc = p.MaMauNavigation.MaSpNavigation.MaDmNavigation.TenDanhMuc,
             });
             return View(result);
@@ -98,7 +98,7 @@ namespace PBLShop.Controllers
                     MauSp = p.MaMauNavigation.TenMau,
                     size = p.MaKtNavigation.Size,
                     SoLuong = p.SoLuong,
-                    HinhAnh = p.MaMauNavigation.MaSpNavigation.AnhSp,
+                    HinhAnh = p.MaMauNavigation.AnhSp,
                     DanhMuc = p.MaMauNavigation.MaSpNavigation.MaDmNavigation.TenDanhMuc
                 })
                 .ToList();
@@ -138,7 +138,7 @@ namespace PBLShop.Controllers
                     MauSp = p.MaMauNavigation.TenMau,
                     size = p.MaKtNavigation.Size,
                     SoLuong = p.SoLuong,
-                    HinhAnh = p.MaMauNavigation.MaSpNavigation.AnhSp,
+                    HinhAnh = p.MaMauNavigation.AnhSp,
                     DanhMuc = p.MaMauNavigation.MaSpNavigation.MaDmNavigation.TenDanhMuc
                 })
                 .ToList();
