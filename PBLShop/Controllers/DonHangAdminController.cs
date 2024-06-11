@@ -116,21 +116,21 @@ namespace PBLShop.Controllers
                     {
                         MaDh = donhang.MaDh,
                         NgayHoanThanh = DateTime.Now,
-                        FileHoaDon = $"Invoice_{donhang.MaDh}.pdf",
                     };
                     _context.Add(hoadon);
+                    hoadon.FileHoaDon = $"Invoice_{hoadon.MaHd}";
                     hd = hoadon;
 
                 }
                 _context.SaveChanges();
             }
+            if (maTrangThai == 4 && donhang != null)
+            {
+                return RedirectToAction("GenerateInvoicePdf", "HoaDon", new { id = hd.MaHd });
+            }
             if (maTrangThaiBanDau > 1 && maTrangThaiBanDau < 4)
             {
                 return RedirectToAction("ProgressingList", "DonHangAdmin");
-            }
-            else if (maTrangThai == 4 && donhang != null)
-            {
-                return RedirectToAction("GenerateInvoicePdf", "HoaDon", new {id = hd.MaHd});
             }
             return RedirectToAction("ReceiveList", "DonHangAdmin");
         }
