@@ -39,14 +39,15 @@
             <div class="form-group">
                 <fieldset>
                     <label for="addColors">Nhập màu sắc (mỗi màu trên một dòng, cách nhau bằng dấu phẩy):</label>
-                    <input asp-for=MauSac type="text" id="addColors" placeholder="Ví dụ: đỏ,xanh,vàng">
+                    <input asp-for=MauSac type="text" id="addColors" placeholder="Ví dụ: đỏ,xanh,vàng" required>
                 </fieldset>
             </div>
             <div class="form-group">
                 <fieldset>
                     <label for="addSizes">Nhập kích cỡ (mỗi kích cỡ trên một dòng, cách nhau bằng dấu phẩy):</label>
-                    <input asp-for=Size type="text" id="addSizes" placeholder="Ví dụ: S,M,L">
+                    <input asp-for=Size type="text" id="addSizes" placeholder="Ví dụ: S,M,L" required>
                 </fieldset>
+                <div asp-validation-summary="All" class="text-danger"></div>
             </div>
         </fieldset>
 

@@ -130,7 +130,7 @@ namespace PBLShop.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin, NhanVien")]
-        public IActionResult Create()
+        public IActionResult Create(string error = null)
         {
             var danhmucs = _context.DanhMucs.AsQueryable();
             var sanpham = new NewSanPham
@@ -143,6 +143,10 @@ namespace PBLShop.Controllers
                         TenDm = p.TenDanhMuc
                     }).ToList()
             };
+            if (!string.IsNullOrEmpty(error))
+            {
+                ModelState.AddModelError("loi", error);
+            }
 
             return View(sanpham);
         }
@@ -154,33 +158,50 @@ namespace PBLShop.Controllers
             if (ModelState.IsValid)
             {
                 List<string> MauSacs = new List<string>();
-                MauSacs.AddRange(model.MauSac.Split(",").Select(s => s.Trim()));
+                MauSacs.AddRange(model.MauSac.Split(",").Select(s => s.Trim()).Distinct());
                 List<string> Sizes = new List<string>();
-                Sizes.AddRange(model.Size.Split(",").Select(s => s.Trim()));
-                var sanpham = new SanPham
+                Sizes.AddRange(model.Size.Split(",").Select(s => s.Trim()).Distinct());
+                bool check = true;
+                foreach(var kt in Sizes)
                 {
-                    TenSp = model.TenSp,
-                    DonGia = model.DonGia,
-                    MoTa = model.MoTa,
-                    AnhSp = model.AnhSp,
-                    MaDm = model.MaDm,
-                    TrangThai = true
-                };
-                _context.Add(sanpham);
-                _context.SaveChanges();
-                foreach(var mau in MauSacs)
-                {
-                    var Mau = new MauSac
+                    if (!_context.KichThuocs.Select(p => p.Size).ToList().Contains(kt))
                     {
-                        MaSp = sanpham.MaSp,
-                        TenMau = mau,
-                    };
-                    _context.Add(Mau);
+                        check = false; 
+                        break;
+                    }
                 }
-                _context.SaveChanges();
-                string mauSac = string.Join(",", MauSacs);
-                string size = string.Join(",", Sizes);
-                return RedirectToAction("Create2", new { id = sanpham.MaSp, mauSac = mauSac, size = size });
+                if (check)
+                {
+                    var sanpham = new SanPham
+                    {
+                        TenSp = model.TenSp,
+                        DonGia = model.DonGia,
+                        MoTa = model.MoTa,
+                        AnhSp = model.AnhSp,
+                        MaDm = model.MaDm,
+                        TrangThai = true
+                    };
+                    _context.Add(sanpham);
+                    _context.SaveChanges();
+                    foreach (var mau in MauSacs)
+                    {
+                        var Mau = new MauSac
+                        {
+                            MaSp = sanpham.MaSp,
+                            TenMau = mau,
+                        };
+                        _context.Add(Mau);
+                    }
+                    _context.SaveChanges();
+                    string mauSac = string.Join(",", MauSacs);
+                    string size = string.Join(",", Sizes);
+                    return RedirectToAction("Create2", new { id = sanpham.MaSp, mauSac = mauSac, size = size });
+                }
+                else
+                {
+                    string errorMessage = "Kích thước không hợp lệ";
+                    return RedirectToAction("Create", new { error = errorMessage });
+                }
             }
             return RedirectToAction("Index", "SanPhamAdmin");
         }
