@@ -145,8 +145,9 @@ namespace PBLShop.Controllers
                             TempData["SuccessMessage"] = "Đăng nhập thành công!";
                             if (user.MaVaiTro == 3)
                                 return RedirectToAction("Index", "Home");
-                            else
-                                return RedirectToAction("Statistic", "DonHangAdmin", new { type = 2 });
+                            else if (user.MaVaiTro == 1) 
+                                return RedirectToAction("Index", "DonHangAdmin");
+                            return RedirectToAction("Statistic", "DonHangAdmin", new { type = 2 });
                         }
                     }
                 }

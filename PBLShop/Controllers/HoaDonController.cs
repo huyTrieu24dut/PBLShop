@@ -67,6 +67,7 @@ namespace PBLShop.Controllers
             System.IO.File.WriteAllBytes(pdfPath, pdf);
         }
 
+        [Authorize(Roles = "Admin, NhanVien")]
         public IActionResult GenerateInvoicePdf(int id)
         {
             var hoaDon = _context.HoaDons.Where(p => p.MaHd == id).FirstOrDefault();

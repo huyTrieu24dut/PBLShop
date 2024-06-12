@@ -46,51 +46,51 @@
                         </div>
 
                         <div class="offcanvas-body">
-                            <ul class="navbar-nav flex-grow-1 pe-3">
+                        <ul class="navbar-nav flex-grow-1 pe-3">
+                            @if (User.IsInRole("Admin"))
+                            {
                                 <li class="nav-item">
                                     <a class="nav-link active" aria-current="page" asp-action="Statistic" asp-controller="DonHangAdmin" asp-route-type="2">Tổng quan</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Quản lý sản phẩm
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-dark">
-                                        <li><a class="dropdown-item" asp-action="Create" asp-controller="SanPhamAdmin">Thêm sản phẩm</a></li>
-                                        <li><a class="dropdown-item" asp-action="Index" asp-controller="SanPhamAdmin">Xem danh sách sản phẩm</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Quản lý bán hàng
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-dark">
-                                        <li><a class="dropdown-item" asp-action="ReceiveList" asp-controller="DonHangAdmin">Đơn hàng mới</a></li>
-                                        <li><a class="dropdown-item" asp-action="ProgressingList" asp-controller="DonHangAdmin">Đơn hàng hiện tại </a></li>
-                                        <li><a class="dropdown-item" asp-action="Index" asp-controller="DonHangAdmin">Lịch sử bán hàng</a></li>
-                                    </ul>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" asp-action="Index" asp-controller="KhachHang" asp-route-trangThai="true" aria-expanded="false">
                                         Danh sách khách hàng
                                     </a>
                                 </li>
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Quản lý nhân viên
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-dark">
-                                            <li><a class="dropdown-item" asp-action="Create" asp-controller="NhanVien">Thêm nhân viên</a></li>
-                                            <li><a class="dropdown-item" asp-action="Index" asp-controller="NhanVien">Xem danh sách nhân viên</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link" asp-action="Index" asp-controller="DanhMuc" aria-expanded="false">
-                                            Quản lý danh mục
-                                        </a>
-                                    </li>
-                                }
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Quản lý nhân viên
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                        <li><a class="dropdown-item" asp-action="Create" asp-controller="NhanVien">Thêm nhân viên</a></li>
+                                        <li><a class="dropdown-item" asp-action="Index" asp-controller="NhanVien">Xem danh sách nhân viên</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" asp-action="Index" asp-controller="DanhMuc" aria-expanded="false">
+                                        Quản lý danh mục
+                                    </a>
+                                </li>
+                            } 
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Quản lý sản phẩm
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li><a class="dropdown-item" asp-action="Create" asp-controller="SanPhamAdmin">Thêm sản phẩm</a></li>
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="SanPhamAdmin">Xem danh sách sản phẩm</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Quản lý bán hàng
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li><a class="dropdown-item" asp-action="ReceiveList" asp-controller="DonHangAdmin">Đơn hàng mới</a></li>
+                                    <li><a class="dropdown-item" asp-action="ProgressingList" asp-controller="DonHangAdmin">Đơn hàng hiện tại </a></li>
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="DonHangAdmin">Lịch sử bán hàng</a></li>
+                                </ul>
+                            </li>
                         </ul>
                         </div>
                     </div>

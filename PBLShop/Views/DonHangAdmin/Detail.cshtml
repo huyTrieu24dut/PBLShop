@@ -17,10 +17,10 @@
         @foreach (var item in Model.chiTietDhVMs)
         {
             <div class="card d-flex flex-row card-item">
-                <div class="card-body flex-grow-1">
+                <div class="col-3 card-body flex-grow-1">
                     <img class="order-product-img" src="~/image/@item.HinhAnh" alt="Ảnh SP">
                 </div>
-                <div class="card-body flex-grow-1">
+                <div class="col-9 card-body flex-grow-1">
                     <p>@item.TenSp-@item.MauSp-@item.size</p>
                     <p>Số lượng: @item.SoLuong</p>
                     <p class="price">Đơn giá: @item.DonGia.ToString("N0") đ</p>

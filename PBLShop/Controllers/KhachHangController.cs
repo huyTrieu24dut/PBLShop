@@ -16,7 +16,7 @@ namespace PBLShop.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin, NhanVien")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Index(bool? trangThai)
         {
             var khachhangs = _context.NguoiDungs
@@ -56,7 +56,7 @@ namespace PBLShop.Controllers
             return View(result);
         }
 
-        [Authorize(Roles = "Admin, NhanVien")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Search(string name)
         {
             var khachhangs = _context.NguoiDungs

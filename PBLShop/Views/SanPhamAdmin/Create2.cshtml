@@ -30,7 +30,10 @@
                     for (int j = 0; j < Model.Sizes.Count; j++)
                     {
                         <tr>
-                            <td>@Model.MauSacs[i]</td>
+                            @if (isFirstRowForColor)
+                            {
+                                <td rowspan="@Model.Sizes.Count">@Model.MauSacs[i]</td>
+                            }
                             <td>@Model.Sizes[j]</td>
                             <td>
                                 <input type="number" asp-for="SoLuong[i][j]" min="0" class="form-control" style="width= 60px"/>

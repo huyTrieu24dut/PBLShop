@@ -33,7 +33,7 @@ namespace PBLShop.ViewComponents
                 size = p.MaKtNavigation.Size,
                 DonGia = p.MaMauNavigation.MaSpNavigation.DonGia,
                 SoLuong = p.SoLuong,
-                HinhAnh = p.MaMauNavigation.MaSpNavigation.AnhSp,
+                HinhAnh = p.MaMauNavigation.AnhSp,
             });
             return View(cart);
         }

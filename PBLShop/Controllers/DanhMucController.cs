@@ -15,7 +15,8 @@ namespace PBLShop.Controllers
         {
             _context = context;
         }
-        [Authorize(Roles = "Admin, NhanVien")]
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             var data = _context.DanhMucs
@@ -59,7 +60,7 @@ namespace PBLShop.Controllers
         //}
 
         [HttpPost]
-        [Authorize(Roles = "Admin, NhanVien")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create(string TenDM, int? MaDMCha)
         {
             if (ModelState.IsValid)
@@ -70,9 +71,6 @@ namespace PBLShop.Controllers
                 {
                     dm.MaDmcha = (MaDMCha == 0) ? null : MaDMCha;
                     dm.TrangThai = true;
-                }
-                if (dm.TrangThai)
-                {
                     _context.Add(dm);
                     _context.SaveChanges();
                 }
@@ -94,6 +92,7 @@ namespace PBLShop.Controllers
         //}
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Update(int id, string? TenDM, int? MaDMCha)
         {
             if (ModelState.IsValid)
@@ -125,7 +124,7 @@ namespace PBLShop.Controllers
             return RedirectToAction("Index", "DanhMuc");
         }
 
-        [Authorize(Roles = "Admin, NhanVien")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var danhMuc = _context.DanhMucs.FirstOrDefault(p => p.MaDm == id);

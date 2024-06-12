@@ -2,8 +2,8 @@
 @{
     Layout = "_LayoutAdmin";
 }
-<main class="my-5">
-    <h3 class="mb-3">Chỉnh sửa số luọng cho sản phẩm</h3>
+<main class="container">
+    <h3 class="mb-3">Chỉnh sửa số lượng cho sản phẩm</h3>
     <form asp-action="UpdateQuantity" asp-controller="SanPhamAdmin" asp-route-MaSp="@Model.MaSp" enctype="multipart/form-data">
         @for (int i = 0; i < Model.MauSacs.Count; i++)
         {
@@ -13,8 +13,8 @@
         {
             <input type="hidden" name="Sizes[@j]" value="@Model.Sizes[j]" />
         }
-        <table class="table">
-            <thead class="table-dark">
+        <table class="table table-striped mt-3">
+            <thead class="table-primary">
                 <tr>
                     <th>Màu</th>
                     <th>Kích cỡ</th>
@@ -29,7 +29,10 @@
                     for (int j = 0; j < Model.Sizes.Count; j++)
                     {
                         <tr>
-                            <td>@Model.MauSacs[i]</td>
+                            @if (isFirstRowForColor)
+                            {
+                                <td rowspan="@Model.Sizes.Count">@Model.MauSacs[i]</td>
+                            }
                             <td>@Model.Sizes[j]</td>
                             <td>
                                 <input type="number" asp-for="SoLuong[i][j]" min="0" value="@Model.SoLuong[i][j]" class="form-control" />
@@ -59,7 +62,7 @@
             </tbody>
         </table>
 
-        <div class="d-flex flex-column mt-3">
+        <div class="col justify-content-center d-flex flex-column">
             <button type="submit" class="btn btn-primary">Hoàn thành</button>
         </div>
     </form>

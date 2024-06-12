@@ -103,7 +103,7 @@ namespace PBLShop.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, NhanVien")]
         public IActionResult Update(int id, SanPhamUpdateVM model)
         {
             if (ModelState.IsValid)
